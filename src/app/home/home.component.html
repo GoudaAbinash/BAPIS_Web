@@ -1,0 +1,67 @@
+<app-header quoteNo="{{quoteNo}}"></app-header>
+<section>
+    <div class="tableGrid">
+        <div class="filter">
+            <div class="searchInput">
+                <input type="text" placeholder="Search By Quote No" [(ngModel)]="filterTicket">
+                <i class="fa fa-search"></i>
+            </div>
+            <select [(ngModel)]="pageEnd">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+        </div>
+        <div class="tableWrap">
+            <table>
+            <thead>
+                <tr>
+                <th>ID</th>
+                <th>Created By</th>
+                <th>User Name</th>
+                <th>branch Name</th>
+                <th>tran Type</th>
+                <th>quote No</th>
+                <th>customerType</th>
+                <th>Premium</th>
+                <th>created Date</th>
+                <th>Status</th>
+                <th>Policy Type</th>    
+                <th>Policy Number</th>
+                
+                <th>Action</th>    
+            </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let q of quoteList | myfilter:filterTicket | paginate:{ itemsPerPage: pageEnd, currentPage: p }">
+                    <td>{{q.id}}</td>
+                    <td>{{q.firstname}} {{q.lastName}}</td>
+                    <td>{{q.createdBy}}</td>
+                    <td>{{q.branchName}}</td>
+                    <td>{{q.tranType}}</td>
+                    <td>{{q.quoteNo}}</td>
+                    <td>{{q.customerType == "C" ? "Organization" : "Individual"}}</td>
+                    <td>{{q.totalPremium}}</td>                   
+                    <td>{{q.createdDate}}</td>
+                    <td>{{(q.currentStatus=='C') ? "Done" :"Pending" }}</td>
+                    <td>{{(q.quoteType=='SK') ? "Shop Suraksha" : (q.quoteType=='FS') ? "Fire - SFSP" : "Bharat Grih Raksha" }}</td>
+                    <td><a href="javascript:;" (click)="getPolicy(q.policyNumber)">{{q.policyNumber}}</a></td>
+                    <!-- <td><a href="javascript:;" [routerLink]="['/fgForm', enc(q.id)]">Pay Now</a></td> -->
+                    <td *ngIf="q.currentStatus !=='C'"><a href="javascript:;" (click)="redirectToQuote(q.id,q.currentStatus
+                        ,q.transactionNo,q.transactionDate,q.receiptNo,q.quoteType,q.clientId,q.policyNumber);">Check Now</a></td>
+                    <td *ngIf="q.currentStatus =='C'"><a href="javascript:;" (click)="view(q.id,q.currentStatus
+                        ,q.transactionNo,q.transactionDate,q.receiptNo,q.quoteType,q.clientId,q.policyNumber);">View</a></td>
+                </tr>
+                <tr *ngIf="!quoteList || quoteList.length==0" class="noRecord">
+                <td colspan="15">No record found!</td>
+                </tr>
+            </tbody>
+            </table>            
+        </div>
+        <div class="paginationWrap">
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
+    </div>
+</section>
+<ngx-loading [show]="loading"></ngx-loading>

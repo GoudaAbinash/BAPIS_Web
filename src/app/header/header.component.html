@@ -1,0 +1,78 @@
+<div class="hold">
+    <div class="navigation">
+        <div class="logo">
+            <img src="assets/img/logo1.png" alt="LOGO" />
+        </div>
+        <!-- <h2>Banca Portal</h2> -->
+
+        <div class="alignCenter">
+            <h3 *ngIf="quoteNo != ''">Quote No - {{ quoteNo }}</h3>
+            <h3 >LoginId - {{ userId }}</h3>
+        </div>
+        <nav role="navigation">
+            <div id="menuToggle">
+                <input type="checkbox" />
+                <span></span>
+                <span></span>
+                <span></span>
+                <ul id="menu">
+                    <li>
+                        <a routerLink="/policyCopy" routerLinkActive="active" >Download Policy</a>
+                    </li>
+                    <!-- <li><a routerLinkActive="active">Product Brochure</a></li> -->
+                    <li>
+                        <a routerLink="/home" routerLinkActive="active" *ngIf="loginFlag == 1">Checker Dashboard</a>
+                    </li>
+                    <li>
+                        <a routerLink="/quote" routerLinkActive="active" *ngIf="loginFlag == 1">Maker Dashboard</a>
+                    </li>
+                    <li>
+                        <a routerLink="/quote" routerLinkActive="active" *ngIf="loginFlag != 1">MY Dashboard</a>
+                    </li>
+                    <!-- <li>
+                        <a routerLink="/boiDash" routerLinkActive="active">Sales Dashboard</a>
+                    </li> -->
+                    <li>
+                        <a routerLink="/fireForm" routerLinkActive="active">New Quote</a>
+                    </li>
+                    <li>
+                        <a routerLink="/renewal" routerLinkActive="active">Renewal</a>
+                    </li>
+                    <li>
+                        <a routerLink="/fsrrenewal" routerLinkActive="active">FSR Renewal</a>
+                    </li>
+                    <li>
+                        <a routerLink="/fusrenewal" routerLinkActive="active">FUS Renewal</a>
+                    </li>
+                    <li>
+                        <a routerLink="/frgrenewal" routerLinkActive="active">FRG Renewal</a>
+                    </li>
+                    <li>
+                        <a routerLink="/dash" routerLinkActive="active">RW Dashboard</a>
+                    </li>
+
+                    <li>
+                        <a (click)="switchTab()">Bulk Upload</a>
+                    </li>
+                     <!--
+                    <li><a routerLink="/boi" routerLinkActive="active">Sales Data</a></li> -->
+                    <!-- <li><a routerLink='/fgadmin' routerLinkActive="active" *ngIf="loginFlag==4" >Admin</a></li> -->
+                    <!-- <li><a routerLink='/fireForm' routerLinkActive="active">New Fire Quote</a></li> -->
+                    <!-- <li><a routerLink='/report' routerLinkActive="active">Report</a></li> -->
+                    <li>
+                        <a routerLink="/faq-support" routerLinkActive="active">Support</a>
+                    </li>
+                    <hr />
+                    <!-- <li><a routerLink='/change-password' routerLinkActive="active">Change Password</a>
+                    </li> -->
+                    <li>
+                        <a routerLink="/admin-panel" routerLinkActive="active" *ngIf="isAdmin">Admin</a>
+                    </li>
+                    <li>
+                        <a class="logout" (click)="logout()">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</div>

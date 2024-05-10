@@ -1,0 +1,12 @@
+12:46:12 Module Name : CommonFunction (UCORequestAsync(string url,dynamic content=null)) Error Source : mscorlib  Error Message : An error occurred while sending the request. 
+12:46:58 Module Name : CommonFunction (UCORequestAsync(string url,dynamic content=null)) Error Source : mscorlib  Error Message : An error occurred while sending the request. 
+12:46:58 Module Name : UCOPaymentController (paymentAsync(dynamic jsonData)) Error Source : Banca  Error Message : Object reference not set to an instance of an object. 
+12:47:49 Module Name : CommonFunction (UCORequestAsync(string url,dynamic content=null)) Error Source : mscorlib  Error Message : An error occurred while sending the request. 
+12:48:57 Module Name : CommonFunction (UCORequestAsync(string url,dynamic content=null)) Error Source : mscorlib  Error Message : An error occurred while sending the request. 
+12:48:57 Module Name : UCOPaymentController (paymentAsync(dynamic jsonData)) Error Source : Banca  Error Message : Object reference not set to an instance of an object. 
+12:52:18 Module Name : CommonFunction (UCORequestAsync(string url,dynamic content=null)) Error Source : mscorlib  Error Message : An error occurred while sending the request. 
+12:52:50 Module Name : CommonFunction (UCORequestAsync(string url,dynamic content=null)) Error Source : mscorlib  Error Message : An error occurred while sending the request. 
+12:52:50 Module Name : UCOPaymentController (paymentAsync(dynamic jsonData)) Error Source : Banca  Error Message : Object reference not set to an instance of an object. 
+16:09:47 Module Name : CommonFunction (UCORequestAsync(string url,dynamic content=null)) Error Source : mscorlib  Error Message : An error occurred while sending the request. 
+16:10:44 Module Name : CommonFunction (UCORequestAsync(string url,dynamic content=null)) Error Source : mscorlib  Error Message : An error occurred while sending the request. 
+16:10:44 Module Name : UCOPaymentController (paymentAsync(dynamic jsonData)) Error Source : Banca  Error Message : Object reference not set to an instance of an object. 

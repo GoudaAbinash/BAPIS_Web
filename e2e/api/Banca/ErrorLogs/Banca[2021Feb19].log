@@ -1,0 +1,6 @@
+15:41:48 Module Name : CommonFunction (UCORequestAsync(string url,dynamic content=null)) Error Source : mscorlib  Error Message : An error occurred while sending the request. 
+15:42:34 Module Name : CommonFunction (UCORequestAsync(string url,dynamic content=null)) Error Source : mscorlib  Error Message : An error occurred while sending the request. 
+15:42:34 Module Name : UCOPaymentController (paymentAsync(dynamic jsonData)) Error Source : Banca  Error Message : Object reference not set to an instance of an object. 
+15:43:40 Module Name : CommonFunction (UCORequestAsync(string url,dynamic content=null)) Error Source : mscorlib  Error Message : An error occurred while sending the request. 
+15:46:45 Module Name : CommonFunction (UCORequestAsync(string url,dynamic content=null)) Error Source : mscorlib  Error Message : An error occurred while sending the request. 
+15:52:06 Module Name : UCOPaymentController (paymentAsync(dynamic jsonData)) Error Source : Banca  Error Message : Object reference not set to an instance of an object. 

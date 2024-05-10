@@ -1,0 +1,200 @@
+.container {
+  padding: 10px 15px;
+}
+
+.user-details-form {
+  margin-top: 10px;
+}
+
+.bulk-upload-form,
+.user-edit-form {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #333;
+  padding: 15px;
+  border-radius: 10px;
+  background-color: #fff;
+  // box-shadow: 6px 4px 5px 1px red;
+  box-shadow: rgba(102, 6, 6, 0.24) 0px 5px 10px;
+  min-width: 250px;
+}
+
+.bulk-upload-container,
+.user-edit-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 11;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0px;
+}
+
+hr {
+  margin: 10px 0px;
+}
+
+.btn {
+  margin: 2px 5px;
+}
+
+.cover {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(247, 247, 247);
+  z-index: 10;
+  animation: popup 200ms ease forwards;
+}
+
+fieldset {
+  padding: 10px;
+  padding-right: -100px;
+}
+.show-hide-password mat-icon {
+  position: absolute;
+  top: -7px;
+  right: 0px;
+  font-size: 20px;
+  cursor: pointer;
+}
+.show-hide-password {
+  position: relative;
+}
+.readonly input {
+  background-color: rgb(231, 230, 230);
+  padding: 4px;
+  margin-bottom: -5px;
+}
+
+.hold {
+  display: none;
+}
+mat-form-field {
+  margin: 0px 5px;
+}
+
+.form-row {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  margin: 5px 0px;
+}
+
+.auto-fit {
+  padding: 0px 10px;
+  justify-content: space-between;
+}
+
+.form-row input,
+mat-form-field {
+  min-width: 30%;
+}
+legend {
+  font-size: 16px;
+  font-weight: 500;
+  padding: 0px 10px;
+}
+
+i {
+  font-size: 18px;
+  margin-right: 5px;
+}
+
+.mat-icon-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+::-webkit-file-upload-button {
+  color: #333 !important;
+  background-color: #ecf0ed;
+  padding: 10px;
+  border-radius: 50px;
+  // box-shadow: 1px 0 1px #6b4559;
+  cursor: pointer;
+  outline: none;
+  border: none;
+}
+
+.color-aqua {
+  background-color: #0ea9a9;
+  color: #fff;
+}
+
+.color-light-red {
+  background-color: #bd0505;
+  color: #fff;
+}
+::-webkit-file-upload-button:hover {
+  background-color: #b6b2b2;
+  color: #fff;
+}
+
+.d-flex {
+  display: flex;
+  align-items: center;
+}
+
+@keyframes popup {
+  0% {
+    height: 0px;
+    opacity: 0px;
+  }
+  50% {
+    height: 50vh;
+    opacity: 0.5;
+  }
+  100% {
+    height: 100vh;
+    opacity: 1;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .bulk-upload-container,
+  .user-edit-container {
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -30%);
+  }
+
+  .form-row {
+    all: unset;
+  }
+  .form-row input,
+  mat-form-field {
+    min-width: 100%;
+  }
+  mat-form-field {
+    margin: 0px 0px;
+  }
+  .container {
+    padding: 10px 10px;
+  }
+  .form-submit {
+    margin-left: -10px;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .adHeader {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .bulk-upload-container,
+  .user-edit-container {
+    overflow: hidden;
+    margin: 0 auto;
+  }
+
+  .form-row {
+    all: unset;
+  }
+}

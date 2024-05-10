@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>UCOBank</title>
+  <base href="/UCO/web/">  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="styles.704ac973bdfe0fa3ed81.css"></head>
+<body>
+  <app-root></app-root>
+<script src="runtime-es2015.cdfb0ddb511f65fdc0a0.js" type="module"></script><script src="runtime-es5.cdfb0ddb511f65fdc0a0.js" nomodule defer></script><script src="polyfills-es5.0290b245fbcca09184ac.js" nomodule defer></script><script src="polyfills-es2015.ffa9bb4e015925544f91.js" type="module"></script><script src="scripts.bbe10e1331279f9903a7.js" defer></script><script src="main-es2015.600cae7cf3c9f52451bf.js" type="module"></script><script src="main-es5.600cae7cf3c9f52451bf.js" nomodule defer></script></body>
+<script>
+  function globalInput()
+  {
+    var sqlInection = ['#', '--', ';', '()', '='];
+  $('body').on('focus', 'input[type="text"]', function () {
+    $('input[type="text"]').keyup(function (e) {
+  
+      if (sqlInection.indexOf(e.target.value) > -1) {
+        e.stopPropagation();
+      }
+      e.target.value = getKeyUp(e.target.value)
+  });
+  });
+  function getKeyUp(value) {
+  return value.replace(/[#;()=]*/g, '').replace('--', '-');
+  }
+  }
+  setTimeout(function(){
+    globalInput();
+  },2000);
+ 
+  </script>
+</html>

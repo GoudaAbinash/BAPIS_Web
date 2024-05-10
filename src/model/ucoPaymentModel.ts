@@ -1,0 +1,34 @@
+    export class UCOPaymentModel {
+        mcode: string="FUTUREGEN_INS";
+        policy_type: string="NONLIFE";
+        policy_ref_no:string="";
+        policy_sub_type: string;
+        policy_name: string="";
+        proposal_no: string;
+        rrn_no: string;
+        premium_amt: string;
+        gst: string;
+        total_amt: string;
+        sum_assured_amt: string;
+        cust_id: string;
+        FGStafID: string;
+        acct_holder_name: string;
+        cust_address: string;
+        cust_pan: string;
+        cust_relation: string="";
+        nominee_name: string;
+        email_id: string;
+        mob_no: string;
+        acct_no: string;
+        maker_id: string="";
+        checker_id: string="";
+        free_text_1: string="";
+        insured_person_name_1: string ="";
+        insured_person_name_2: string="";
+        insured_person_name_3: string="";
+        insured_person_name_4: string="";
+        insured_person_name_5: string="";
+        insured_person_name_6: string="";
+        sp_code: string;
+        winNo: string;
+    }

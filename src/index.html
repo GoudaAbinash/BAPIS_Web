@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>FG BAPIS</title>
+  <base href="/" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+
+  <!-- Google Font -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&family=Poppins:wght@300&family=Roboto:wght@300&display=swap"
+
+    rel="stylesheet">
+  <!-- <link rel="stylesheet" href="./assets/plugins/styles.css"> -->
+  <!-- <script
+      src="https://arya-resources.s3.ap-south-1.amazonaws.com/fgiic-sdk/arya_api.js"
+      defer
+    ></script> -->
+  <!-- <script
+      type="text/javascript"
+      src="https://arya-resources.s3.ap-south-1.amazonaws.com/fgiic-sdk/arya_api.js"
+    ></script> -->
+  <!-- <script
+      type="text/javascript"
+      src="https://arya-resources.s3.ap-south-1.amazonaws.com/fgiic-sdk/arya_api_upload.js"
+    ></script> -->
+
+  <!-- <script type="text/javascript" src="https://ekyc.fggeneral.in/sdk/dist/arya_api_upload.js" defer></script> -->
+
+</head>
+
+<body>
+  
+  <app-root></app-root>
+  <script src="./assets/plugins/digital.js"></script>
+</body>
+<script>
+  function globalInput() {
+    var sqlInection = ["#", "--", ";", "()", "="];
+    $("body").on("focus", 'input[type="text"]', function () {
+      $('input[type="text"]').keyup(function (e) {
+        if (sqlInection.indexOf(e.target.value) > -1) {
+          e.stopPropagation();
+        }
+        e.target.value = getKeyUp(e.target.value);
+      });
+    });
+    function getKeyUp(value) {
+      return value.replace(/[#;()=]*/g, "").replace("--", "-");
+    }
+  }
+  setTimeout(function () {
+    globalInput();
+  }, 2000);
+</script>
+
+</html>

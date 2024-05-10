@@ -1,0 +1,5 @@
+15:44:28 Module Name : CommonFunction (UCORequestAsync(string url,dynamic content=null)) Error Source : mscorlib  Error Message : An error occurred while sending the request. 
+15:48:54 Module Name : CommonController (getPolicyCopy(Common obj)) Error Source : System.Net.Http  Error Message : Value cannot be null.
+Parameter name: content 
+16:51:42 Module Name : CommonController (getPolicyCopy(Common obj)) Error Source : System.Net.Http  Error Message : Value cannot be null.
+Parameter name: content 
