@@ -1,0 +1,9 @@
+<app-header quoteNo="{{quoteNo}}"></app-header>
+<section>
+    <div class="input-field">
+        <input type="text" [(ngModel)]="policy" placeholder="Enter Policy Number">
+        <a href="javascript:;" (click)="getPolicy(policy)">Search</a>
+    </div>
+    <p class="error" *ngIf="error != ''">{{error}}</p>
+</section>
+<ngx-loading [show]="loading"></ngx-loading>

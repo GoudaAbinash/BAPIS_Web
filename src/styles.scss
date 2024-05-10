@@ -1,0 +1,134 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@import '~@angular/material/theming';
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$UCOBank-primary: mat-palette($mat-indigo);
+$UCOBank-accent: mat-palette($mat-pink, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$UCOBank-warn: mat-palette($mat-red);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$UCOBank-theme: mat-light-theme($UCOBank-primary, $UCOBank-accent, $UCOBank-warn);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($UCOBank-theme);
+
+/* You can add global styles to this file, and also import other style files */
+@import "../node_modules/font-awesome/css/font-awesome.css";
+
+@-ms-viewport{
+    width: device-width;
+}
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+html{
+    font-size: 72.5%;
+}
+body{
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 1.2em;
+    overflow-x: hidden;
+}
+
+.filter-option > .mat-pseudo-checkbox {
+    display: none !important;
+}
+  
+.filter-sidenav .mat-list-item-content {
+    padding: 0 10px !important;
+    font-size: 0.875rem !important;
+}
+  
+.filter-sidenav .mat-select-trigger {
+    font-size: 1rem !important;
+}
+.alignCenter{
+    text-align: center;
+}
+.marginTB10{
+    margin: 10px 0;
+}
+.col7{
+    width: 66.666%;
+    display: inline-block;
+}
+.col2{
+    width: 50%;
+    display: inline-block;
+    padding: 0 7.5px;
+}
+.one .mat-form-field-appearance-legacy .mat-form-field-infix{
+    padding: 0.3375em 0;
+}
+.one .mat-form-field-label-wrapper{
+    top: -0.74375em;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+    box-shadow: 0 0 0px 1000px #fff inset;
+    -webkit-box-shadow: 0 0 0px 1000px #fff inset;
+}
+.marginT10{
+    margin-top: 10px!important;
+}
+.backdrop{
+    position: fixed!important;
+}
+.spinner-three-bounce{
+    position: fixed!important;
+}
+.col1{
+    width: 100%;
+    float: left;
+    padding: 0 7.5px;
+}
+.col5{
+    width: 20%;
+    float: left;
+    padding: 0 7.5px;
+}
+.upperCase{
+    text-transform: uppercase;
+    input{
+        text-transform: uppercase;
+    }
+}
+.height70{
+    height: 70px!important;
+}
+.marginB10{
+    margin-bottom: 10px;
+}
+.nopadding{
+    padding: 0!important;
+}
+.error{
+    color: rgb(177, 9, 9);
+    font-weight: bold;
+}

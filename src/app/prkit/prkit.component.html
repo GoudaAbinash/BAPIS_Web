@@ -1,0 +1,67 @@
+<div class="navigation">
+    <div class="logo">
+        <img src="assets/img/logo1.png" alt="LOGO" />
+    </div>
+
+    <div class="alignCenter">
+        <h3>LoginId - {{ userId }}</h3>
+    </div>
+    <a class="logout" (click)="logout()"><i class="fa fa-power-off"></i>Logout</a>
+</div>
+<section>
+    <div class="input-field">
+        
+            <input type="text" [(ngModel)]="receipt" placeholder="Enter Receipt Number"/>
+            <a href="javascript:;" (click)="getReceipt(receipt)">Search</a>
+     
+        <button mat-flat-button class="anc-btn color-light-brown" (click)="toggleUploadPopup()">
+            <mat-icon>get_app</mat-icon><span>PR Download</span>
+        </button>
+        <input type="text" [(ngModel)]="policy" placeholder="Enter Policy Number"/>
+        <a href="javascript:;" (click)="getPolicy(policy)">Get PDF</a>
+    </div>
+    <p class="error" *ngIf="error != ''">{{ error }}</p>
+
+</section>
+
+<div class="container user-edit-container" *ngIf="prFlag">
+    <form class="prform" id="PrMasterForm" [formGroup]="PrMasterForm" (ngSubmit)="getReport(PrMasterForm.value)"
+        name="PrMasterForm" novalidate autocomplete="off">
+        <h3>PR Download</h3>
+        <hr color="#ccc" />
+        <div class="form-group">
+            <mat-form-field class="col3">
+                <mat-label>From Date</mat-label>
+                <input matInput formControlName="FromDate" [matDatepicker]="FromDate" [max]="maximumDate"
+                    (dateChanged)="onDateChanged($event,'estimateDt');" />
+                <mat-datepicker-toggle matSuffix [for]="FromDate"></mat-datepicker-toggle>
+                <mat-datepicker #FromDate></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="col3">
+                <mat-label>To Date</mat-label>
+                <input matInput formControlName="ToDate" [matDatepicker]="ToDate" [max]="maximumDate"
+                    (dateChanged)="onDateChanged($event,'estimateDt1');" />
+                <mat-datepicker-toggle matSuffix [for]="ToDate"></mat-datepicker-toggle>
+                <mat-datepicker #ToDate></mat-datepicker>
+            </mat-form-field>
+            <!-- <p class="error" *ngIf="error != ''">{{ error }}</p> -->
+        </div>
+        <div class="form-group">
+            <div class="example-button-row">
+                <button mat-flat-button class="btn color-aqua" type="submit" [disabled]="!PrMasterForm.valid">
+                    Search
+                </button>
+                <!-- <button mat-flat-button class="btn color-light-red" type="button" (click)="toggleEditPopup()"> Cancel</button> -->
+                <button mat-flat-button class="btn pop-close-btn color-light-red" type="button"
+                    (click)="toggleUploadPopup()">
+                    <mat-icon class="close-icon">close</mat-icon>
+                </button>
+            </div>
+        </div>
+    </form>
+
+</div>
+<footer>
+    <p>© Future Generali India Insurance Company Ltd. All Rights Reserved.</p>
+</footer>
+<ngx-loading [show]="loading"></ngx-loading>

@@ -1,0 +1,355 @@
+<app-header></app-header>
+<div class="container">
+  <div class="adHeader d-flex head-buttons">
+    <button mat-flat-button class="anc-btn color-light-brown" (click)="toggleBulkIpload()" *ngIf="bulkUploadUser">
+      <mat-icon> publish</mat-icon><span>Bulk Upload</span>
+    </button>
+    <button mat-flat-button class="anc-btn color-light-brown" (click)="downloadExcelFormate()" *ngIf="bulkUploadUser">
+      <mat-icon>get_app</mat-icon><span>Template</span>
+    </button>
+    <button mat-flat-button class="anc-btn  color-light-brown" (click)="navigate('/add-bank-branch/')"
+      *ngIf="canCreateUser">
+      <mat-icon>add</mat-icon><span>Bank Master</span>
+    </button>
+    <button mat-flat-button class="anc-btn  color-light-brown" (click)="toggleEditPopup()" *ngIf="canModifyBankMaster">
+      <mat-icon>edit</mat-icon><span>Bank Master</span>
+    </button>
+    <button mat-flat-button class="anc-btn  color-light-brown" (click)="toggleBankMapPopup()" *ngIf="canMapSolToBanks">
+      <mat-icon>transform</mat-icon><span>Bank Mapping</span>
+    </button>
+    <button mat-flat-button class="anc-btn  color-light-brown" (click)="toggleApproval()" *ngIf="isbulkUploadApprover">
+      <mat-icon>done</mat-icon><span>Approvals</span>
+    </button>
+    <button mat-flat-button class="anc-btn  color-light-brown" (click)="toogleMyUploads()" *ngIf="bulkUploadUser">
+      <i class="fa fa-cube" aria-hidden="true"></i><span>My Uploads</span>
+    </button>
+    <button mat-flat-button class="anc-btn  color-light-brown" (click)="navigate('/application-logs')"
+      *ngIf="isSuperUser">
+      <i class="fa fa-history" aria-hidden="true"></i><span>App Logs</span>
+    </button>
+  </div>
+
+  <fieldset class="admin-dashboard" *ngIf="canViewDashBoard">
+    <legend>Admin Panel</legend>
+    <a mat-flat-button class="color-light-brown refresh-button" (click)="refreshPage()">
+      <i class="fa fa-refresh"></i><span>Refresh</span>
+    </a>
+    <div class="dashboard-blocks">
+      <div class="block">
+        <h4>BANK-SOL MAPPING ({{currentDateTime | date:"dd/MM/yyyy":"+0000"}})</h4>
+        <hr color="#333" />
+        <div class="block-entry" *ngFor="let item of bankMstrReportData;">
+          <p class="bold">{{item.Bank}}</p>
+          <p class="bold">{{item.Count}}</p>
+        </div>
+      </div>
+      <div class="uploaded-files-div">
+        <h2 class="title">Recent Uploads</h2>
+        <div class="tableGrid">
+          <div class="filter">
+            <div class="searchInput">
+              <input type="text" placeholder="Search by file id" [(ngModel)]="filterdFiles">
+              <i class="fa fa-search"></i>
+            </div>
+            <select [(ngModel)]="pageEnd">
+              <option value="10">10</option>
+              <option value="25">25</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+            </select>
+          </div>
+          <div class="tableWrap">
+            <table class="tbl">
+              <thead>
+                <tr>
+                  <th *ngIf="isSuperUser">Download</th>
+                  <th>Batch Id</th>
+                  <th>Type</th>
+                  <th>Uploaded By</th>
+                  <th>Status</th>
+                  <th>File Name</th>
+                  <th>File Size</th>
+                  <th>File Id</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="let u of uploadedFilesData | customFilter:filterdFiles | paginate:{ itemsPerPage: pageEnd, currentPage: p }">
+                  <td *ngIf="isSuperUser"><a class="anc-xl-file" (click)="downloadServerFiles(u.filePath,u.UUID)"><i
+                        class="fa fa-file-excel-o">
+                        Click</i></a></td>
+                  <td>{{u['BatchId']}}</td>
+                  <td>{{u['Type']}}</td>
+                  <td>{{u['uploadedBy']}}</td>
+                  <td>{{u['TransactionStatus']}}</td>
+                  <td>{{u['fileName']}}</td>
+                  <td>{{u['fileSize'] / 1000}} kb</td>
+                  <td>{{u['UUID']}}</td>
+                  <td>{{u['uploadeDate'] | date:"dd/MM/yyyy":"+0000"}}</td>
+                </tr>
+                <tr *ngIf="!uploadedFilesData || uploadedFilesData.length==0" class="noRecord">
+                  <td colspan="13">No record found!</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="paginationWrap">
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </fieldset>
+  <div class="container bulk-upload-container" *ngIf="bulkUploadFlag">
+    <form class="bulk-upload-form" (ngSubmit)="bulkFileUpload()">
+      <h3>Bulk Upload</h3>
+      <hr color="#ccc" />
+      <div class="form-group">
+        <input type="file" accept=".xls,.xlsx" id="bulkFile" name="file" class="upload-box"
+          (change)="onSelectFile($event)">
+      </div>
+      <div class="form-group">
+        <div class="example-button-row">
+          <button mat-flat-button class="btn color-aqua" type="submit" [disabled]="!isFileSelected">Upload</button>
+          <!-- <button mat-flat-button class="btn color-light-red" type="button" (click)="toggleBulkIpload()">
+            Cancel</button> -->
+          <button mat-flat-button class="btn pop-close-btn color-light-red" type="button" (click)="toggleBulkIpload()">
+            <mat-icon class="close-icon">close</mat-icon>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+
+  <div class="container user-edit-container" *ngIf="edituserFlag">
+    <form class="user-edit-form" id="user-edit-form" [formGroup]="bankMasterEditForm"
+      (ngSubmit)="editBankMaster(bankMasterEditForm.value)">
+      <h3>Edit Bank Master</h3>
+      <hr color="#ccc" />
+      <div class="form-group">
+        <mat-form-field class="col3">
+          <mat-label>User Id</mat-label>
+          <input matInput placeholder="Ex. 894458" formControlName="user_Id" (blur)="getBanksMappedByUserIdSolId()">
+        </mat-form-field>
+        <mat-form-field class="col3">
+          <mat-label>Sole Id</mat-label>
+          <input matInput placeholder="Ex. 894458" formControlName="sol_Id" (blur)="getBanksMappedByUserIdSolId()">
+        </mat-form-field>
+        <mat-form-field class="col3">
+          <mat-label>Select Bank Name</mat-label>
+          <mat-select formControlName="bankName" size="1">
+            <mat-option>-- Select --</mat-option>
+            <mat-option *ngFor="let item of banksMappedToUser; index as i;" [value]="item">{{item.bankName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="form-group">
+        <div class="example-button-row">
+          <button mat-flat-button class="btn color-aqua" type="submit"
+            [disabled]="!bankMasterEditForm.valid">Submit</button>
+          <!-- <button mat-flat-button class="btn color-light-red" type="button" (click)="toggleEditPopup()"> Cancel</button> -->
+          <button mat-flat-button class="btn pop-close-btn color-light-red" type="button" (click)="toggleEditPopup()">
+            <mat-icon class="close-icon">close</mat-icon>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+
+  <div class="container bankMapping-container" *ngIf="isSuperUser && bankMapFlag">
+    <form class="bank-mapping-form" id="user-edit-form" [formGroup]="bankMappingForm"
+      (ngSubmit)="MapSolId(bankMappingForm,$event)">
+      <!-- <pre>{{bankMappingForm.value | json}}</pre> -->
+      <h3>Bank Master Mapping</h3>
+      <hr color="#ccc" />
+      <div class="form-row">
+        <mat-form-field class="col3">
+          <mat-label>Sol Id</mat-label>
+          <input matInput placeholder="Ex. 1998" type="text" name="solID" formControlName="solID">
+        </mat-form-field>
+        <mat-form-field class="col3">
+          <mat-label>Bank Name</mat-label>
+          <input matInput placeholder="Ex. BOI" name="bankName" formControlName="bankName">
+        </mat-form-field>
+      </div>
+      <div class="form-row">
+        <mat-form-field class="col3">
+          <mat-label>Receipt Vendor Name</mat-label>
+          <input matInput placeholder="Ex. BOIBANK" name="receiptVendorName" formControlName="receiptVendorName">
+        </mat-form-field>
+        <mat-form-field class="col3">
+          <mat-label>Receipt User Name</mat-label>
+          <input matInput placeholder="Ex. BOIBANK" type="text" name="receiptUserName"
+            formControlName="receiptUserName">
+        </mat-form-field>
+      </div>
+      <div class="form-row">
+        <mat-form-field class="col3 readonly">
+          <mat-label>Created By</mat-label>
+          <input matInput placeholder="Ex. System" formControlName="createdBy" readonly>
+        </mat-form-field>
+        <mat-form-field class="readonly">
+          <mat-label>Created Date</mat-label>
+          <input matInput formControlName="createdDate" readonly>
+        </mat-form-field>
+      </div>
+      <h4 class="or_divider">OR</h4>
+      <div id="file-uplaod-div">
+        <input type="file" accept=".xls,.xlsx" id="mappingExceldwn" [formControl]="mappingFileSelectedFlag" name="file"
+          class="upload-box" (change)="onSelectFile($event)">
+      </div>
+
+      <div class="example-button-row">
+        <button mat-flat-button class="btn map-btn color-aqua" type="submit"
+          [disabled]="!(mappingFileSelectedFlag.value || bankMappingForm.valid)">Proceed</button>
+
+        <button mat-flat-button class="btn color-light-brown" type="button"
+          (click)="downloadBankMappingExcel()">Download Template</button>
+      </div>
+      <button mat-flat-button class="btn pop-close-btn color-light-red" type="button" (click)="toggleBankMapPopup()">
+        <mat-icon class="close-icon">close</mat-icon>
+      </button>
+    </form>
+  </div>
+  <div class="fileuploadsApproval-container" *ngIf="toggleApprovalFlag">
+    <h2 class="title">Pending Approvals</h2>
+    <hr />
+    <div class="tableGrid">
+      <div class="filter">
+        <select [(ngModel)]="approvalPnPageEnd">
+          <option value="10">10</option>
+          <option value="25">25</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+      </div>
+      <div class="tableWrap">
+        <table class="tbl">
+          <thead>
+            <tr>
+              <th>Decision</th>
+              <th>Uploaded By</th>
+              <th>Type</th>
+              <th>Status</th>
+              <th>File Name</th>
+              <th>File Id</th>
+              <th>File Size</th>
+              <th>Date</th>
+              <th>Download</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let u of approvalPnFileUplodas | paginate:{ itemsPerPage: approvalPnPageEnd, currentPage: approvalP } let i = index">
+              <td><button class="btn tbl-btn" (click)="chnageStaus(u.UUID,'Approved',u['BatchId'])">
+                  <mat-icon>check_circle</mat-icon>Approve
+                </button><br />
+                <button class="btn-reject tbl-btn" (click)="chnageStaus(u.UUID,'Rejected',u['BatchId'])">
+                  <mat-icon>cancel</mat-icon>Reject
+                </button>
+              </td>
+              <td>{{u['uploadedBy']}}</td>
+              <td>{{u['Type']}}</td>
+              <td>{{u['TransactionStatus']}}</td>
+              <td>{{u['fileName']}}</td>
+              <td [id]="u['UUID']">{{u['UUID']}}</td>
+              <td>{{u['fileSize'] / 1000}} kb</td>
+              <td>{{u['uploadeDate'] | date:"dd/MM/yyyy":"+0000"}}</td>
+              <td *ngIf="isSuperUser"><a class="anc-xl-file" (click)="downloadServerFiles(u.filePath,u.UUID)"><i
+                    class="fa fa-file-excel-o">
+                    Click</i></a></td>
+            </tr>
+            <tr *ngIf="!approvalPnFileUplodas || approvalPnFileUplodas.length==0" class="noRecord">
+              <td colspan="13">No record found!</td>
+            </tr>
+          </tbody>
+        </table>
+        <button mat-flat-button class="btn pop-close-btn color-light-red" type="button" (click)="toggleApproval()">
+          <mat-icon class="close-icon">close</mat-icon>
+        </button>
+      </div>
+      <div class="paginationWrap">
+        <pagination-controls (pageChange)="approvalP = $event"></pagination-controls>
+      </div>
+    </div>
+  </div>
+  <div class="myUploads-container" *ngIf="toogleMyUploadsflag">
+    <h2 class="title">My Uploads</h2>
+    <hr />
+    <div class="tableGrid">
+      <div class="filter">
+        <select [(ngModel)]="myFileUploadsPageEnd">
+          <option value="10">10</option>
+          <option value="25">25</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+      </div>
+      <div class="tableWrap">
+        <table class="tbl">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Batch Id</th>
+              <th>Type</th>
+              <th>Uploaded By</th>
+              <th>Status</th>
+              <th>File Name</th>
+              <th>File Size</th>
+              <th>File Id</th>
+              <th>Date</th>
+              <th>Download</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let u of uploadedFilesData | filterFiles:loggedUser  | paginate:{ itemsPerPage: myFileUploadsPageEnd, currentPage: myFileUploadsP } let i = index">
+              <td *ngIf="u['TransactionStatus'] == 'Approved'"><button [id]="u['UUID']" class="btn tbl-btn"
+                  (click)="commitApprovedFiles(u.filePath,u.UUID,i)">
+                  <mat-icon>done</mat-icon>Commit
+                </button></td>
+              <td *ngIf="u['TransactionStatus'] != 'Approved'"></td>
+              <td>{{u['BatchId']}}</td>
+              <td>{{u['Type']}}</td>
+              <td>{{u['uploadedBy']}}</td>
+              <td>{{u['TransactionStatus']}}</td>
+              <td>{{u['fileName']}}</td>
+              <td>{{u['fileSize'] / 1000}} kb</td>
+              <td>{{u['UUID']}}</td>
+              <td>{{u['uploadeDate'] | date:"dd/MM/yyyy":"+0000"}}</td>
+              <td><a class="anc-xl-file" (click)="downloadServerFiles(u.filePath,u.UUID)"><i class="fa fa-file-excel-o">
+                    Click</i></a></td>
+            </tr>
+            <tr *ngIf="!uploadedFilesData || uploadedFilesData.length==0" class="noRecord">
+              <td colspan="13">No record found!</td>
+            </tr>
+          </tbody>
+        </table>
+        <button mat-flat-button class="btn pop-close-btn color-light-red" type="button" (click)="toogleMyUploads()">
+          <mat-icon class="close-icon">close</mat-icon>
+        </button>
+      </div>
+      <div class="paginationWrap">
+        <pagination-controls (pageChange)="myFileUploadsP = $event"></pagination-controls>
+      </div>
+    </div>
+    <div class="myfileCommitCove" *ngIf="commitFileFlag"></div>
+  </div>
+  <div class="cover coveranimation"
+    *ngIf="bulkUploadFlag || edituserFlag || bankMapFlag || toggleApprovalFlag || toogleMyUploadsflag"></div>
+
+  <!-- <div class="cover coveranimation fileUploadCover" *ngIf="loading">
+    <div class="file-upload-counter-div">
+      <img src="../../assets/loading.gif" alt="" srcset="">
+      <h4>Please wait...</h4>
+      <small>Responce Time : <span>30 sec</span></small>
+    </div>
+  </div> -->
+
+  <ngx-loading [show]="loading"></ngx-loading>
+</div>

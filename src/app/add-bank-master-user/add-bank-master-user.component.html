@@ -1,0 +1,146 @@
+<app-header></app-header>
+<div class="container" *ngIf="canCreate">
+  <section class="d-flex head-buttons">
+    <button mat-flat-button class="color-light-red" (click)="previous()">
+      <i class="fa fa-arrow-left"></i><span>Previous</span>
+    </button>
+  </section>
+</div>
+<div class="container" *ngIf="canCreate">
+  <form [formGroup]="userDetailsForm" class="row user-details-form" id="user-details-form" autocomplete="off"
+    (ngSubmit)="createUser(userDetailsForm,$event)">
+    <fieldset>
+      <!-- <pre>{{userDetailsForm.value | json}}</pre> -->
+      <legend>Bank Details</legend>
+      <div class="form-row">
+        <mat-form-field>
+          <mat-label>User Id</mat-label>
+          <input matInput placeholder="Ex. 894458" type="number" formControlName="userId">
+        </mat-form-field>
+        <mat-form-field class="col3">
+          <mat-label>Zone</mat-label>
+          <input matInput placeholder="Ex. Mumbai" formControlName="zone">
+        </mat-form-field>
+        <mat-form-field class="col3">
+          <mat-label>Bank Branch code (Sol Id)</mat-label>
+          <input matInput placeholder="Ex. 1998" type="text" formControlName="solId"
+            (blur)="setReceiptUserVendorBank($event)">
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field class="col3">
+          <mat-label>FGI Branch Code</mat-label>
+          <input matInput placeholder="Ex. 46536852" type="number" formControlName="fgiBrCode">
+        </mat-form-field>
+        <mat-form-field class="col3">
+          <mat-label>Bank Branch Name</mat-label>
+          <input matInput placeholder="Ex. FCC- Ashram Road" formControlName="branchName">
+        </mat-form-field>
+        <mat-form-field class="col3">
+          <mat-label>Branch Category</mat-label>
+          <input matInput placeholder="Ex. S" formControlName="branchCategory">
+        </mat-form-field>
+      </div>
+      <div class="form-row">
+        <mat-form-field class="col3">
+          <mat-label>FGI Zone</mat-label>
+          <input matInput placeholder="Ex. Mumbai Zone" formControlName="fgiZone">
+        </mat-form-field>
+        <mat-form-field class="col3">
+          <mat-label>FGI Office</mat-label>
+          <input matInput placeholder="Ex. Fort" formControlName="fgiOffice">
+        </mat-form-field>
+        <mat-form-field class="col3">
+          <mat-label>Branch Scale</mat-label>
+          <input matInput placeholder="Ex. 10" type="text" formControlName="branchScale">
+        </mat-form-field>
+      </div>
+      <div class="form-row">
+        <mat-form-field class="col3">
+          <mat-label>FGI Branch Category</mat-label>
+          <input matInput placeholder="Ex. A" formControlName="fgiBranchCategory">
+        </mat-form-field>
+        <mat-form-field class="col3">
+          <mat-label>FG Branch Code</mat-label>
+          <input matInput placeholder="Ex.10" type="number" formControlName="fgBranchCode">
+        </mat-form-field>
+        <mat-form-field class="readonly">
+          <mat-label>Created Date</mat-label>
+          <input matInput formControlName="createdDate" readonly>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field class="readonly">
+          <mat-label>Updated Date</mat-label>
+          <input matInput formControlName="updatedDate" readonly>
+        </mat-form-field>
+        <mat-form-field class="col3 readonly">
+          <mat-label>Created By</mat-label>
+          <input matInput placeholder="System" formControlName="createdBy" readonly>
+        </mat-form-field>
+        <mat-form-field class="col3 readonly">
+          <mat-label>Updated By</mat-label>
+          <input matInput placeholder="Ex. System" formControlName="updatedBy" readonly>
+        </mat-form-field>
+
+      </div>
+      <div class="form-row">
+        <!-- <mat-form-field class="col3 show-hide-password">
+          <mat-label>Pin</mat-label>
+          <input [type]="hidePassword ? 'password' : 'text'" matInput name="pin"  formControlName="pin">
+          <mat-icon matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+            <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </mat-icon>
+        </mat-form-field> -->
+
+        <mat-form-field class="col3">
+          <mat-label>Agent Code</mat-label>
+          <input matInput placeholder="Ex. 60005106" type="number" formControlName="agentCode">
+        </mat-form-field>
+        <mat-form-field class="col3">
+          <mat-label>SP Code</mat-label>
+          <input matInput placeholder="Ex. SP0071315035" formControlName="SpCode">
+        </mat-form-field>
+        <!-- <mat-form-field class="col3 readonly">
+          <mat-label>Bank Name</mat-label>
+          <input matInput placeholder="Ex. BOI" formControlName="bankName">
+        </mat-form-field> -->
+
+        <mat-form-field class="col1 select-feild">
+          <mat-label>Select Bank Name</mat-label>
+          <mat-select formControlName="bankName" size="1" (selectionChange)="setReceiptUserVendorBank($event)">
+            <mat-option>-- Select --</mat-option>
+            <mat-option *ngFor="let item of permittedBanks; index as i;" [value]="item">{{item}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row form-row auto-fit">
+        <!-- <mat-form-field class="col3">
+          <mat-label>Login Flag</mat-label>
+          <input matInput placeholder="Ex. 2" formControlName="loginFlag">
+        </mat-form-field> -->
+
+        <mat-form-field class="col3 readonly">
+          <mat-label>Receipt User Name</mat-label>
+          <input matInput placeholder="Ex. BOIBANK" formControlName="receiptUserName" readonly>
+        </mat-form-field>
+        <mat-form-field class="col3 readonly">
+          <mat-label>Receipt Vendor Name</mat-label>
+          <input matInput placeholder="Ex. BOIBANK" formControlName="receiptVendorName" readonly>
+        </mat-form-field>
+      </div>
+      <div class="col1">
+        <button mat-raised-button type="submit" class="btn form-submit color-aqua"
+          [disabled]="!userDetailsForm.valid">Submit</button>
+      </div>
+    </fieldset>
+  </form>
+
+
+</div>
+
+<div class="cover coveranimation" *ngIf="bulkUploadFlag || edituserFlag"></div>
+<ngx-loading [show]="loading"></ngx-loading>

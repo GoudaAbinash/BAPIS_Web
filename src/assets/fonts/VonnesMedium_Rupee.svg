@@ -1,0 +1,70 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
+<metadata>
+Created by FontForge 20170731 at Thu Sep  5 11:12:59 2013
+ By Aleksey,,,
+Copyright (c) 2013 by (c) Summit Information Technologies Pvt. Ltd.. All rights reserved.
+</metadata>
+<defs>
+<font id="VonnesMedium_Rupee" horiz-adv-x="422" >
+  <font-face 
+    font-family="Vonnes Medium_Rupee"
+    font-weight="400"
+    font-stretch="normal"
+    units-per-em="1000"
+    panose-1="2 0 5 5 4 0 0 2 0 3"
+    ascent="800"
+    descent="-200"
+    bbox="-180 -176 748 949"
+    underline-thickness="15"
+    underline-position="-74"
+    unicode-range="U+0020-FB02"
+  />
+<missing-glyph horiz-adv-x="500" 
+ />
+    <glyph glyph-name=".notdef" horiz-adv-x="500" 
+ />
+    <glyph glyph-name=".null" horiz-adv-x="0" 
+ />
+    <glyph glyph-name="nonmarkingreturn" horiz-adv-x="333" 
+ />
+    <glyph glyph-name="space" unicode=" " horiz-adv-x="283" 
+ />
+    <glyph glyph-name="R" unicode="R" horiz-adv-x="828" 
+d="M610 686q10 -9 21 -21.5t20 -28.5t15 -34.5t7 -40.5h75l-19 -83h-55q-7 -65 -34 -108.5t-68 -70t-92.5 -37.5t-107.5 -11h-54l294 -250h-199l-281 259l-3 89h183q94 0 143.5 35.5t62.5 93.5h-435l19 83h416q-6 36 -23.5 60t-41 38.5t-51 20.5t-54.5 6h-268l22 84h646
+l-22 -84h-116v0z" />
+    <glyph glyph-name="grave" unicode="`" horiz-adv-x="828" 
+d="M610 686q10 -9 21 -21.5t20 -28.5t15 -34.5t7 -40.5h75l-19 -83h-55q-7 -65 -34 -108.5t-68 -70t-92.5 -37.5t-107.5 -11h-54l294 -250h-199l-281 259l-3 89h183q94 0 143.5 35.5t62.5 93.5h-435l19 83h416q-6 36 -23.5 60t-41 38.5t-51 20.5t-54.5 6h-268l22 84h646
+l-22 -84h-116v0z" />
+    <glyph glyph-name="dotlessi" unicode="&#x131;" horiz-adv-x="276" 
+d="M74 0v538h128v-538h-128z" />
+    <glyph glyph-name="Lslash" unicode="&#x141;" horiz-adv-x="712" 
+d="M97 0v310l-84 -26v83l84 27v376h151v-319l231 65v-84l-116 -32q-22 -6 -42.5 -12t-36.5 -11q-19 -5 -36 -10v-252h409l43 -115h-603z" />
+    <glyph glyph-name="lslash" unicode="&#x142;" horiz-adv-x="309" 
+d="M218 358v-358h-127v307l-75 -29v79l75 29v384h127v-333l74 29v-80z" />
+    <glyph glyph-name="Zcaron" unicode="&#x17d;" horiz-adv-x="744" 
+d="M36 -1v100l479 558h-453v113h646v-110l-466 -545h461v-116h-667zM415 799h-74l-122 150h97l62 -74l63 74h97z" />
+    <glyph glyph-name="zcaron" unicode="&#x17e;" horiz-adv-x="572" 
+d="M37 0v80l310 361h-295v97h470v-86l-316 -357h322v-95h-491zM326 570h-74l-122 150h97l62 -74l63 74h97z" />
+    <glyph glyph-name="caron" unicode="&#x2c7;" 
+d="M248 579h-74l-122 150h97l62 -74l63 74h97z" />
+    <glyph glyph-name="breve" unicode="&#x2d8;" 
+d="M371 705q-5 -56 -42 -86.5t-118 -30.5q-77 0 -115.5 30.5t-43.5 86.5h79q2 -20 21.5 -34t58.5 -14q40 0 59 12.5t22 35.5h79v0z" />
+    <glyph glyph-name="dotaccent" unicode="&#x2d9;" 
+d="M154 590v119h115v-119h-115z" />
+    <glyph glyph-name="ring" unicode="&#x2da;" 
+d="M323 684q0 -23 -9 -43.5t-24 -35.5t-35.5 -24t-43.5 -9t-43.5 9t-35.5 24t-24 35.5t-9 43.5t9 43.5t24 35.5t35.5 24t43.5 9t43.5 -9t35.5 -24t24 -35.5t9 -43.5zM263 684q0 22 -15 37.5t-37 15.5q-21 0 -36.5 -15.5t-15.5 -37.5t15.5 -37t36.5 -15q22 0 37 15t15 37z
+" />
+    <glyph glyph-name="ogonek" unicode="&#x2db;" 
+d="M345 -149q-17 -11 -45.5 -19t-67.5 -8q-51 0 -82.5 21.5t-31.5 67.5q0 42 35.5 67t100.5 25v-59q-23 -2 -40 -8.5t-17 -24.5q0 -27 47 -27q22 0 41.5 6t32.5 14l27 -55v0z" />
+    <glyph glyph-name="hungarumlaut" unicode="&#x2dd;" 
+d="M289 579h-78l91 152h98zM151 579h-78l90 152h98z" />
+    <glyph glyph-name="fraction" unicode="&#x2044;" horiz-adv-x="234" 
+d="M-97 -1h-83l509 771h82z" />
+    <glyph glyph-name="uniFB01" unicode="&#xfb01;" horiz-adv-x="644" 
+d="M442 0v434h-202v-434h-129v434h-84v97h85v61q0 40 14 72.5t40 56t62.5 36.5t82.5 13h82v-99h-10t-20 0.5t-20 0.5h-10q-40 0 -66.5 -23t-26.5 -71v-47h330v-531h-128z" />
+    <glyph glyph-name="uniFB02" unicode="&#xfb02;" horiz-adv-x="640" 
+d="M438 0v770h128v-770h-128zM343 434h-103v-434h-129v434h-84v97h85v75q0 37 13.5 67.5t38.5 52t59 33t76 11.5h76v-99h-7t-15 0.5t-15 0.5h-8q-45 0 -67.5 -26t-22.5 -61v-54h103v-97z" />
+  </font>
+</defs></svg>

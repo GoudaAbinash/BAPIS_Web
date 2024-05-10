@@ -1,0 +1,12 @@
+11:35:56 Module Name : UCOPaymentController (paymentAsync(dynamic jsonData)) Error Source : Banca  Error Message : Object reference not set to an instance of an object. 
+11:44:54 Module Name : UCOPaymentController (paymentAsync(dynamic jsonData)) Error Source : Banca  Error Message : Object reference not set to an instance of an object. 
+11:57:56 Module Name : UCOPaymentController (paymentAsync(dynamic jsonData)) Error Source : Banca  Error Message : Object reference not set to an instance of an object. 
+13:28:57 Module Name : Common (getPolicyCopy(Common obj)) Error Source : System.Data  Error Message : There is no row at position 0. 
+13:28:57 Module Name : CommonController (getPolicyCopy(Common obj)) Error Source : System.Net.Http  Error Message : Value cannot be null.
+Parameter name: content 
+13:29:13 Module Name : Common (getPolicyCopy(Common obj)) Error Source : System.Data  Error Message : There is no row at position 0. 
+13:29:13 Module Name : CommonController (getPolicyCopy(Common obj)) Error Source : System.Net.Http  Error Message : Value cannot be null.
+Parameter name: content 
+18:07:46 Module Name : UCOPaymentController (paymentAsync(dynamic jsonData)) Error Source : mscorlib  Error Message : Padding is invalid and cannot be removed. 
+18:16:34 Module Name : UCOPaymentController (paymentAsync(dynamic jsonData)) Error Source : mscorlib  Error Message : Padding is invalid and cannot be removed. 
+18:23:41 Module Name : UCOPaymentController (paymentAsync(dynamic jsonData)) Error Source : mscorlib  Error Message : Padding is invalid and cannot be removed. 

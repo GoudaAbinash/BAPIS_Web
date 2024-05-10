@@ -1,0 +1,80 @@
+<app-header quoteNo="{{quoteNo}}"></app-header>
+<section>
+    <div class="tableGrid">
+        <div class="linkSendWrap">
+            <a routerLink="/boi"><i class="fa fa-plus-circle"></i> Upload Doc</a>
+        </div>
+        <div class="filter">
+            <div class="searchInput">
+                <input type="text" placeholder="Search By Insured Name" [(ngModel)]="filterTicket">
+                <i class="fa fa-search"></i>
+            </div>
+            <select [(ngModel)]="pageEnd">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+        </div>
+        <div class="tableWrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Created By</th>
+                        <th>Insured Name</th>
+                        <th>Client ID</th>
+                        <th>Customer ID</th>
+                        <th>Bank Staf ID</th>
+                        <th>FG Branch</th>
+                        <th>FG Staf ID</th>
+                        <th>NEFT</th>
+                        <th>created Date</th>
+                        <th>Premium</th>
+                        <th>Proposal Doc</th>
+                        <th>Renewal Doc</th>
+                        <th>Other Doc</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr
+                        *ngFor="let q of quoteList | salesfilter:filterTicket | paginate:{ itemsPerPage: pageEnd, currentPage: p }">
+                        <td>{{q.ID}}</td>
+                        <td>{{q.createdBy}}</td>
+                        <td>{{q.name}}</td>
+                        <td>{{q.bank_branch_client_id}}</td>
+                        <td>{{q.bank_customer_id}}</td>
+                        <td>{{q.bank_staf_id}}</td>
+                        <td>{{q.fg_branch}}</td>
+                        <td>{{q.fg_staf_id}}</td>
+                        <td>{{q.neft}}</td>
+                        <td>{{q.createdDate}}</td>
+                        <td>{{q.premium}}</td>
+                        <td>
+                            <a href="{{link}}doc/{{q.ID}}/{{q.proposal_doc}}" *ngIf="q.proposal_doc" target="new"
+                                download><i class="fa fa-download"></i></a>
+                            <p *ngIf="!q.proposal_doc">-</p>
+                        </td>
+                        <td>
+                            <a href="{{link}}doc/{{q.ID}}/{{q.renewal_doc}}" *ngIf="q.renewal_doc" target="new"
+                                download><i class="fa fa-download"></i></a>
+                            <p *ngIf="!q.renewal_doc">-</p>
+                        </td>
+                        <td>
+                            <a href="{{link}}doc/{{q.ID}}/{{q.other_doc}}" *ngIf="q.other_doc" target="new" download><i
+                                    class="fa fa-download"></i></a>
+                            <p *ngIf="!q.other_doc">-</p>
+                        </td>
+                    </tr>
+                    <tr *ngIf="!quoteList || quoteList.length==0" class="noRecord">
+                        <td colspan="15">No record found!</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="paginationWrap">
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
+    </div>
+</section>
+<ngx-loading [show]="loading"></ngx-loading>

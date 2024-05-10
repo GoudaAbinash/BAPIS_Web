@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Banca.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Banca_BO_PROD_Service" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://online.futuregenerali.in/BO/Service.svc</Value>
+    </Setting>
+    <Setting Name="Banca_MQUAT_Service" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://10.1.41.124/mq/Service.asmx</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

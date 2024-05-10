@@ -1,0 +1,25 @@
+.input-field{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    input{
+        padding: 10px 7px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        box-shadow: inset 0px 0px 3px 0px #c3c3c3;
+        margin-right: 10px;
+    }
+    a{
+        text-decoration: none;
+        background: #ab0303;
+        color: #fff;
+        padding: 6px 10px 9px;
+        border-radius: 5px;
+    }
+}
+.error{
+    text-align: center;
+    padding: 10px;
+    color: red;
+}

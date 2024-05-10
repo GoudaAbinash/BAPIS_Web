@@ -1,0 +1,80 @@
+<app-header></app-header>
+<form [formGroup]="quoteGeneraion" autocomplete="off">
+    <fieldset>
+        <legend>Sales Details</legend>
+        <mat-form-field class="col3">
+            <mat-label>Insured Name</mat-label>
+            <input matInput placeholder="Ex. Anil patra" formControlName="insName">
+        </mat-form-field>
+        <mat-form-field class="col3">
+            <mat-label>Premium</mat-label>
+            <input matInput placeholder="100000" formControlName="premium">
+        </mat-form-field>
+        <mat-form-field class="col3">
+            <mat-label>IMD code</mat-label>
+            <input matInput placeholder="Ex. 60030813" formControlName="IMDCode">
+        </mat-form-field>
+        <mat-form-field class="col3">
+            <mat-label>NEFT payment reference number</mat-label>
+            <input matInput placeholder="Ex. S123VDJRU" formControlName="NEFTRefNo">
+        </mat-form-field>
+        <mat-form-field class="col3">
+            <mat-label>FG branch</mat-label>
+            <input matInput placeholder="Ex. " formControlName="FGBranch">
+        </mat-form-field>
+        <mat-form-field class="col3">
+            <mat-label>Bank branch client id</mat-label>
+            <input matInput placeholder="Ex. 4667755" formControlName="bankBranch">
+        </mat-form-field>
+        <mat-form-field class="col3">
+            <mat-label>FG staff id</mat-label>
+            <input matInput placeholder="Ex. 894458" formControlName="FGStafID">
+        </mat-form-field>
+        <mat-form-field class="col3">
+            <mat-label>Bank customer id</mat-label>
+            <input matInput placeholder="Ex. 55270984" formControlName="bankCustID">
+        </mat-form-field>
+        <mat-form-field class="col3">
+            <mat-label>Bank staff id</mat-label>
+            <input matInput placeholder="Ex. 3489767" formControlName="bankStaffID">
+        </mat-form-field>
+        <mat-form-field class="col4">
+            <mat-label>Banca Segment</mat-label>
+            <mat-select formControlName="bancaSegement">
+               <mat-option>-- Select --</mat-option>
+               <mat-option value="CRLB">Cross sell to Loan Book</mat-option>
+               <mat-option value="LOBK">Loan Book</mat-option>
+               <mat-option value="RSSB">Retail sales to Saving Account</mat-option>
+            </mat-select>
+            <mat-error *ngIf="CD.bancaSegement.invalid">Please select Banca Segment Type</mat-error>
+        </mat-form-field>
+        <div class="input-field width100">
+            <div class="imgWrap">
+              <p></p>
+              <label>Proposal Document</label>
+              <input type="file" id="myFile" (change)="onSelectedFile($event);">
+              <span><i class="fa fa-paperclip" aria-hidden="true"></i>Choose a File..</span>
+            </div>
+        </div>
+        <div class="input-field width100">
+            <div class="imgWrap">
+              <p></p>
+              <label>Renewal Document</label>
+              <input type="file" id="myFile1" (change)="onSelectedFile($event);">
+              <span><i class="fa fa-paperclip" aria-hidden="true"></i>Choose a File..</span>
+            </div>
+        </div>
+        <div class="input-field width100">
+            <div class="imgWrap">
+              <p></p>
+              <label>Other Document</label>
+              <input type="file" id="myFile2" (change)="onSelectedFile($event);">
+              <span><i class="fa fa-paperclip" aria-hidden="true"></i>Choose a File..</span>
+            </div>
+        </div>
+        <div class="col1 alignCenter marginTB10">
+            <button mat-raised-button color="warn" (click)="saveData();">Submit</button>
+        </div>
+    </fieldset>
+</form>
+<ngx-loading [show]="loading"></ngx-loading>

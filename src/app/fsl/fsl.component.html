@@ -1,0 +1,846 @@
+<app-header quoteNo="{{ quoteNo }}"></app-header>
+<h4 style="text-align: center">Sookshma Lite</h4>
+<!-- <pre>{{quoteGeneraion.value | json}}</pre> -->
+<form [formGroup]="quoteGeneraion" autocomplete="off" [hidden]="ridrectToPay">
+    <fieldset class="coverForm">
+        <legend>Customer Detailes</legend>
+
+        <mat-form-field class="col4">
+            <mat-label>Cover Type</mat-label>
+            <mat-select (selectionChange)="changeCoverType($event)" formControlName="coverType">
+                <mat-option>-- Select --</mat-option>
+                <mat-option value="LTD">FRG-Grih Raksha</mat-option>
+                <mat-option value="FSL">FSL-Sookshma Lite</mat-option>
+                <mat-option value="SK">FSR-Shop Suraksha</mat-option>
+                <mat-option value="SFSP">FUS-Sookshma Udyam</mat-option>
+                <mat-option value="GLL">GLL-Griha Lite</mat-option>
+            </mat-select>
+            <mat-error *ngIf="CD.coverType.invalid">Please select Cover Type</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="col4">
+            <mat-label>Bank Branch Name*:</mat-label>
+            <input disabled readonly matInput placeholder="1998 - FCC- Ashram Road" formControlName="branchName"
+                *ngIf="loginFlag == '1'" />
+            <input matInput placeholder="1998 - FCC- Ashram Road" formControlName="branchName"
+                [(ngModel)]="filterTicket" *ngIf="loginFlag == '2' || loginFlag == '3'" (keyup)="showBranchList()" />
+            <div class="branchListWrap" *ngIf="loginFlag == '2' || loginFlag == '3'" [hidden]="branchFlag">
+                <a href="javascript:;" *ngFor="let b of branchList | filterBranch : filterTicket"
+                    (click)="setSpCode(b)">{{ b.SOL_ID }} - {{ b.BRANCH_NAME }}</a>
+            </div>
+        </mat-form-field>
+        <mat-form-field class="col4">
+            <mat-label>FG Branch Code*:</mat-label>
+            <input disabled readonly matInput formControlName="fgBrachCode1" />
+        </mat-form-field>
+        <mat-form-field class="col4">
+            <mat-label>Bank Branch Code*:</mat-label>
+            <input disabled readonly matInput formControlName="bankBranch" />
+        </mat-form-field>
+        <mat-form-field class="col4">
+        <mat-label>Transaction Type*:</mat-label>
+        <!-- <input matInput value="New" formControlName="tranType" /> -->
+        <mat-select  formControlName="tranType">
+          <mat-option>-- Select --</mat-option>
+          <mat-option value="New">New Business</mat-option>
+          <mat-option value="Renewal">Renewal</mat-option>
+        </mat-select>
+        <mat-error *ngIf="CD.tranType.invalid">Please select transaction type</mat-error>
+      </mat-form-field>
+        <mat-form-field class="col4">
+            <mat-label>Customer Type*</mat-label>
+            <mat-select (selectionChange)="changeCustomerType($event)" formControlName="customerType">
+                <mat-option>-- Select --</mat-option>
+                <mat-option value="Individual">Individual</mat-option>
+                <mat-option value="Organization">Organization</mat-option>
+            </mat-select>
+            <mat-error *ngIf="CD.customerType.invalid">Please select customer type</mat-error>
+        </mat-form-field>
+        <mat-form-field class="col4">
+            <mat-label>Salutation *</mat-label>
+            <mat-select formControlName="salutation">
+                <mat-option>-- Select --</mat-option>
+                <mat-option *ngFor="let s of salutationList" [value]="s.value">
+                    {{ s.name }}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="CD.salutation.invalid">Please choose an Salutation</mat-error>
+        </mat-form-field>
+        <mat-form-field class="col4">
+            <mat-label>{{ isCompany ? "Company" : "First" }} Name *</mat-label>
+            <input matInput  formControlName="firstName" type="text" placeholder="Ex. ABC" />
+        </mat-form-field>
+        <mat-form-field *ngIf="!isCompany" class="col4">
+            <mat-label>Last Name *</mat-label>
+            <input matInput formControlName="lastName" type="text" placeholder="Ex. XYZ" />
+        </mat-form-field>
+        <mat-form-field class="col4">
+            <mat-label>Contact Number *</mat-label>
+            <input matInput formControlName="contactNo" maxlength="10" (change)="contactNo(CD.contactNo.value)"
+                numbersOnly />
+        </mat-form-field>
+        <mat-form-field class="col4">
+            <mat-label>Email *</mat-label>
+            <input matInput formControlName="email" placeholder="Ex. pat@example.com" />
+        </mat-form-field>
+        <mat-form-field class="col4">
+            <mat-label>Bank Name*</mat-label>
+            <input disabled readonly matInput formControlName="bankName" />
+        </mat-form-field>
+        <mat-form-field class="col4">
+            <mat-label>Bank Staff ID</mat-label>
+            <input matInput formControlName="bankStaffID" type="text" />
+        </mat-form-field>
+        <mat-form-field class="col4">
+            <mat-label>Bank Cust ID</mat-label>
+            <input matInput formControlName="bankCustID" type="text" />
+        </mat-form-field>
+        <mat-form-field class="col4">
+            <mat-label>FG Staff ID *</mat-label>
+            <input matInput formControlName="FGStafID" type="text" />
+            <mat-error *ngIf="CD.FGStafID.invalid">Please enter FG Staff ID</mat-error>
+        </mat-form-field>
+        <mat-form-field class="col4">
+            <mat-label>Name of the Financer</mat-label>
+            <input matInput formControlName="financInterest" />
+        </mat-form-field>
+        <mat-form-field class="col4">
+            <mat-label>Loan AC No.</mat-label>
+            <input matInput formControlName="loanAcNo" />
+        </mat-form-field>
+        <mat-form-field class="col4">
+            <mat-label>Comments/Remarks</mat-label>
+            <input matInput formControlName="imdGeneral" type="text" />
+        </mat-form-field>
+
+        <mat-form-field class="col4">
+            <mat-label>Business Type*</mat-label>
+            <mat-select formControlName="businessType" (selectionChange)="setRateAsPerOccupation(CD.businessType.value)"
+                [disabled]="disableSelect">
+                <mat-option>-- Select --</mat-option>
+                <mat-option *ngFor="let detail of occupationList1['default']" [value]="detail.Risk_Code">
+                    <span matTooltip="{{ detail.Name }}">{{ detail.Name }}</span>
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="CD.businessType.invalid">Please choose a Business Type</mat-error>
+        </mat-form-field>
+        
+        <mat-form-field class="col4">
+            <mat-label>Business Description</mat-label>
+            <input matInput formControlName="businessDesc" type="text" />
+        </mat-form-field>
+        <mat-form-field class="col4">
+            <mat-label>Pincode *</mat-label>
+            <input matInput type="text" formControlName="pincode" (change)="getDetails(CD.pincode.value)"
+                maxlength="6" />
+            <mat-error *ngIf="CD.pincode.invalid">Please enter pin code</mat-error>
+        </mat-form-field>
+        <mat-form-field class="col4">
+            <mat-label>Select Zone</mat-label>
+            <mat-select formControlName="zoneNo" (selectionChange)="setZone(CD.zoneNo.value)">
+                <mat-option value="">- Select Zone -</mat-option>
+                <mat-option value="1">1</mat-option>
+                <mat-option value="2">2</mat-option>
+                <mat-option value="3">3</mat-option>
+                <mat-option value="4">4</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="col4">
+            <mat-label>SP CODE *</mat-label>
+            <input readonly matInput type="text" formControlName="spCode" />
+        </mat-form-field>
+        <mat-form-field class="col4">
+            <mat-label>Banca Segment *</mat-label>
+            <mat-select formControlName="bancaSegement" [disabled]="disableSelect">
+                <mat-option>-- Select --</mat-option>
+                <mat-option value="CRLB">Cross sell to Loan Book</mat-option>
+                <mat-option value="LOBK">Loan Book</mat-option>
+                <mat-option value="RSSB">Retail sales to Saving Account</mat-option>
+            </mat-select>
+            <mat-error *ngIf="CD.bancaSegement.invalid">Please select Banca Segment Type</mat-error>
+        </mat-form-field>
+    </fieldset>
+    <!--Policy Details -->
+    <fieldset class="coverForm">
+        <legend>Policy Details</legend>
+        <mat-form-field class="col4">
+            <mat-label>Policy Tenure *</mat-label>
+            <mat-select formControlName="polTenure">
+                <mat-option>-- Select --</mat-option>
+                <mat-option *ngFor="let t of tenureList" [value]="t">
+                    {{ t }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="col4">
+            <mat-label>Risk Start Date *</mat-label>
+            <input matInput formControlName="riskDate" (dateChange)="changRiskStart()" [matDatepicker]="riskDate"
+                [min]="maximumRiskD" />
+            <mat-datepicker-toggle matSuffix [for]="riskDate"></mat-datepicker-toggle>
+            <mat-datepicker #riskDate></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field class="col4">
+            <mat-label>Risk End Date *</mat-label>
+            <input readonly matInput formControlName="riskEndDate" type="text" />
+        </mat-form-field>
+        <mat-checkbox (change)="anyClaimCall($event)">Any Claim Reported in last 3 years</mat-checkbox>
+        <mat-form-field class="col4">
+            <mat-label>Previous Insurance co name</mat-label>
+            <input matInput formControlName="polInsName" type="text" />
+        </mat-form-field>
+        <mat-form-field class="col4">
+            <mat-label>Policy Number</mat-label>
+            <input matInput formControlName="polNumber" type="text" />
+        </mat-form-field>
+        <mat-form-field class="col4">
+            <mat-label>Policy Expiry date</mat-label>
+            <input matInput formControlName="policyExpDate" [matDatepicker]="policyExpDate" [min]="maximumDOB" />
+            <mat-datepicker-toggle matSuffix [for]="policyExpDate"></mat-datepicker-toggle>
+            <mat-datepicker #policyExpDate></mat-datepicker>
+        </mat-form-field>
+    </fieldset>
+    <!-- Mandatory Policy Details -->
+    <fieldset class="coverForm">
+        <legend>Mandatory Covers</legend>
+        <div class="fw">
+            <div class="childCheckBox">
+                <!-- old discounting paramenter till 17-04-2022 -->
+                 <mat-form-field class="col3" *ngIf="CD.businessType.value!==''">
+                    <mat-label>Age of Building *</mat-label>
+                    <mat-select formControlName="buildingAge" (selectionChange)="setDiscount();"> 
+                         <!-- //[disabled]="disableValue" -->
+                        <mat-option value="">-- Select --</mat-option>
+                        <mat-option value="0">5 – 10 year</mat-option>
+                        <mat-option value="5">upto 15 Year </mat-option>
+                        <mat-option value="10">Above 15 year</mat-option>
+                    </mat-select>
+                    <!-- <mat-error *ngIf="CD.buildingAge.invalid">Please select Age of Building</mat-error> -->
+                </mat-form-field>
+
+                <mat-form-field class="col3" *ngIf="CD.businessType.value!==''">
+                    <mat-label>Construction Type *</mat-label>
+                    <mat-select formControlName="constructDetails" (selectionChange)="setDiscount();">
+                        <mat-option value="">-- Select --</mat-option>
+                        <mat-option value="5">Kutcha</mat-option>
+                        <mat-option value="0">Pukka</mat-option>
+                    </mat-select>
+                    <!-- <mat-error *ngIf="CD.constructDetails.invalid">Please select Construction Type</mat-error> -->
+                </mat-form-field> 
+                 <mat-form-field class="col3" *ngIf="CD.businessType.value!==''">
+                    <mat-label>Fire Protection devices installed*</mat-label>
+                    <mat-select formControlName="fireProtection" (selectionChange)="setDiscount();">
+                        <mat-option value="">-- Select --</mat-option>
+                        <mat-option value="5">No FEA</mat-option>
+                    </mat-select>
+                    <!-- <mat-error *ngIf="CD.fireProtection.invalid">Please select Fire Protection devices</mat-error> -->
+                </mat-form-field>
+               
+
+                <mat-form-field class="col3" *ngIf="CD.businessType.value !== ''">
+                    <mat-label>Distance between the risk to be covered and nearest Fire Brigade</mat-label>
+                    <mat-select formControlName="distancebrigad" (selectionChange)="setDiscount()"
+                        [hidden]="disableValue">
+                        <mat-option value="">-- Select --</mat-option>
+                        <mat-option value="0">>15 KM to <= 20KM</mat-option>
+                        <mat-option value="5">>20 KM</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                     <mat-form-field class="col3" *ngIf="CD.businessType.value !== ''">
+                    <mat-label>Distance from the nearest water body</mat-label>
+                    <mat-select formControlName="distancewaterbody" (selectionChange)="setDiscount()"
+                        [hidden]="disableValue">
+                        <mat-option value="">-- Select --</mat-option>
+                        <mat-option value="0">>250 Meters and  <= 500 Meters </mat-option>
+                        <mat-option value="10">less than 250 Meter  </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="col3" *ngIf="CD.businessType.value !== ''">
+                    <mat-label>Watchmen on Duty (Round the Clock) at Storage Facility</mat-label>
+                    <mat-select formControlName="Watchmanonduty" (selectionChange)="setDiscount()"
+                        [hidden]="disableValue">
+                        <mat-option value="">-- Select --</mat-option>
+                        <mat-option value="5">No</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="col3" *ngIf="CD.businessType.value !== ''">
+                    <mat-label>Basement Storage Arrangements</mat-label>
+                    <mat-select formControlName="BasementStorage" (selectionChange)="setDiscount()"
+                    [hidden]="disableValue">
+                        <mat-option value="">-- Select --</mat-option>
+                        <mat-option value="0">No</mat-option>
+                        <mat-option value="5">Yes</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="col3" *ngIf="CD.businessType.value !== ''">
+                    <mat-label>Good Housekeeping</mat-label>
+                    <mat-select formControlName="GoodHouse" (selectionChange)="setDiscount()"
+                    [disabled]="disableparameter">
+                        <mat-option value="">-- Select --</mat-option>
+                        <mat-option value="0">Yes</mat-option>
+                        <mat-option value="5">No</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="col3" *ngIf="CD.businessType.value !== ''">
+                    <mat-label>Stock composition <60%</mat-label>
+                    <mat-select formControlName="Stockcomposition" (selectionChange)="setDiscount()"
+                        [hidden]="disableValue">
+                        <mat-option value="">-- Select --</mat-option>
+                        <mat-option value="0">No</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="col3" *ngIf="CD.businessType.value !== ''">
+                    <mat-label>State of Industrial manufacturing unit</mat-label>
+                    <mat-select formControlName="manufacturingunit" (selectionChange)="setDiscount()"
+                        [hidden]="disableValue">
+                        <mat-option value="">-- Select --</mat-option>
+                        <mat-option value="0">Silent</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="col3" *ngIf="CD.businessType.value !== ''">
+                    <mat-label>Floors of the Building</mat-label>
+                    <mat-select formControlName="FloorsofBuilding" (selectionChange)="setDiscount()"
+                        [hidden]="disableValue">
+                        <mat-option value="">-- Select --</mat-option>
+                        <mat-option value="0">Single floor</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="col3" *ngIf="CD.businessType.value !== ''">
+                    <mat-label>Construction quality/Structure </mat-label>
+                    <mat-select formControlName="Construction" (selectionChange)="setDiscount()"
+                        [hidden]="disableValue">
+                        <mat-option value="">-- Select --</mat-option>
+                        <mat-option value="0">Superior Construction</mat-option>
+                        <mat-option value="5">Class I Construction</mat-option>
+                        <mat-option value="10">Class II Construction</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+
+                <mat-form-field class="col3" *ngIf="CD.businessType.value !== ''">
+                    <mat-label>Electrical Installation/Wiring</mat-label>
+                    <mat-select formControlName="electInswiring" (selectionChange)="setDiscount()"
+                    [disabled]="disableparameter">
+                        <mat-option value="">-- Select --</mat-option>
+                        <mat-option value="5">Lose Wiring / Electrical Installation</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="col3" *ngIf="CD.businessType.value !== ''">
+                    <mat-label>Average Age of the equipment</mat-label>
+                    <mat-select formControlName="Averagequipment" (selectionChange)="setDiscount()"
+                        [hidden]="disableValue">
+                        <mat-option value="">-- Select --</mat-option>
+                        <mat-option value="0">5-10 Year </mat-option>
+                        <mat-option value="5">10-15 Year </mat-option>
+                        <mat-option value="10">15-20 year</mat-option>
+                        <mat-option value="15">20-25 Year </mat-option>
+                        <mat-option value="20">Above 25 year</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+
+
+                <mat-form-field class="col3" *ngIf="CD.businessType.value !== ''" [hidden]="disableValue">
+                    <mat-label>Total Loading(%)</mat-label>
+                    <input matInput formControlName="loadingDisc" type="Number" value="10" disabled readonly />
+                </mat-form-field>
+
+                <mat-form-field class="col3" *ngIf="CD.loadingDisc.value >= '85'" [hidden]="disableValue" (change)="setDiscount()">
+                    <mat-label>Commercial loding(%)</mat-label>
+                    <input matInput formControlName="commercialoding" type="Number"/>
+                </mat-form-field>
+
+                <div *ngIf="!blockProcess">
+                    <div class="one child-covers">
+                        <mat-checkbox (change)="commonCoverChange($event, 'B') ;showTerrorism($event,tersimRef)" class="subchk"
+                            formControlName="buildMain">Building</mat-checkbox>
+                        <div class="SI_Premium_Child_Cover" *ngIf="CD.buildMain.value">
+                            <div class="input-Field">
+                                <input type="number" placeholder="Sum Insured" formControlName="fireBuilding"
+                                    (focusout)="validateMaxMin($event, 0, 50000000);showTerrorism($event,tersimRef)"  
+                                    (change)="buildIngPre(CD.fireBuilding.value, '1A**')" />
+                                <span *ngIf="!CD.fireBuilding.valid">{{
+                                    CD.fireBuilding.errors
+                                    }}</span>
+                            </div>
+                            <div class="input-Field">
+                                <input type="number" placeholder="Premium" formControlName="fireBuildingPre" readonly />
+                            </div>
+                            <div class="input-Field">
+                                <input type="text" placeholder="Description" formControlName="buildingdetails"
+                                    maxlength="60" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="one child-covers">
+                        <mat-checkbox class="subchk" (change)="commonCoverChange($event, 'PF') ;showTerrorism($event,tersimRef)"
+                            formControlName="plinthFoundMain">Plinth & Foundation</mat-checkbox>
+                        <div class="SI_Premium_Child_Cover" *ngIf="CD.plinthFoundMain.value">
+                            <div class="input-Field">
+                                <input type="number" placeholder="Sum Insured" formControlName="plinthFound"
+                                    (focusout)="validateMaxMin($event, 0, 30000000);showTerrorism($event,tersimRef)"
+                                    (change)="plinthFoundPre(CD.plinthFound.value)" />
+                            </div>
+                            <div class="input-Field">
+                                <input type="number" placeholder="Premium" formControlName="plinthFoundP" readonly />
+                            </div>
+                            <div class="input-Field">
+                                <input type="text" placeholder="Description" formControlName="plinthFounddetails"
+                                    maxlength="60" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="one child-covers">
+                        <mat-checkbox class="subchk" (change)="commonCoverChange($event, 'PM') ;showTerrorism($event,tersimRef)"
+                            formControlName="plantMacMain">Plant & machinery</mat-checkbox>
+                        <div class="SI_Premium_Child_Cover" *ngIf="CD.plantMacMain.value">
+                            <div class="input-Field">
+                                <input type="number" placeholder="Sum Insured" formControlName="plantMac"
+                                    (focusout)="validateMaxMin($event, 0, 200000000);showTerrorism($event,tersimRef)"
+                                    (change)="plantMacPre(CD.plantMac.value)" />
+                            </div>
+                            <div class="input-Field">
+                                <input type="number" placeholder="Premium" formControlName="plantMacP" readonly />
+                            </div>
+                            <div class="input-Field">
+                                <input type="text" placeholder="Description" formControlName="plantMacndetails"
+                                    maxlength="60" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="one child-covers">
+                        <mat-checkbox class="subchk" (change)="commonCoverChange($event, 'FF');showTerrorism($event,tersimRef)"
+                            formControlName="furnFixFitMain">Furniture,Fixtures & Fittings</mat-checkbox>
+                        <div class="SI_Premium_Child_Cover" *ngIf="CD.furnFixFitMain.value">
+                            <div class="input-Field">
+                                <input type="number" placeholder="Sum Insured" formControlName="furnFixFit"
+                                    (focusout)="validateMaxMin($event, 0, 200000000);showTerrorism($event,tersimRef)"
+                                    (change)="furnFixFitPre(CD.furnFixFit.value)" />
+                            </div>
+                            <div class="input-Field">
+                                <input type="number" placeholder="Premium" formControlName="furnFixFitP" readonly />
+                            </div>
+                            <div class="input-Field">
+                                <input type="text" placeholder="Description" formControlName="furnFixFitdetails"
+                                    maxlength="60" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="one child-covers">
+                        <mat-checkbox (change)="commonCoverChange($event, 'C');showTerrorism($event,tersimRef)" class="subchk"
+                            formControlName="fireContentsMain">Other Content</mat-checkbox>
+                        <div class="SI_Premium_Child_Cover" *ngIf="CD.fireContentsMain.value">
+                            <div class="input-Field">
+                                <input type="number" placeholder="Sum Insured" formControlName="fireContent"
+                                    (focusout)="validateMaxMin($event, 0, 50000000);showTerrorism($event,tersimRef)"
+                                    (change)="fireContentPre(CD.fireContent.value)" />
+                            </div>
+                            <div class="input-Field">
+                                <input type="number" placeholder="Premium" formControlName="fireContentP" readonly />
+                            </div>
+                            <div class="input-Field">
+                                <input type="text" placeholder="Description" formControlName="fireContentdetails"
+                                    maxlength="60" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="one child-covers">
+                        <mat-checkbox (change)="commonCoverChange($event, 'S');showTerrorism($event,tersimRef)" formControlName="stockMain">Stocks (Not
+                            on Floater)</mat-checkbox>
+                        <div class="SI_Premium_Child_Cover" *ngIf="CD.stockMain.value">
+                            <div class="input-Field">
+                                <input type="number" placeholder="Sum Insured"
+                                    (focusout)="validateMaxMin($event, 0, 200000000);showTerrorism($event,tersimRef)"
+                                    (change)="stockPre(CD.stock.value)" formControlName="stock" />
+                            </div>
+                            <div class="input-Field">
+                                <input type="number" placeholder="Premium" formControlName="stockP" readonly />
+                            </div>
+                            <div class="input-Field">
+                                <input type="text" placeholder="Description" formControlName="stockdetails"
+                                    maxlength="60" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="one child-covers">
+                        <mat-checkbox class="subchk" (change)="showTerrorism($event)" #tersimRef formControlName="terrorismMain">Terrorism</mat-checkbox>
+                        <div class="SI_Premium_Child_Cover" *ngIf="CD.terrorismMain.value">
+                            <div class="input-Field">
+                                <input type="number" placeholder="Sum Insured" formControlName="fireTerrSum" readonly />
+                            </div>
+                            <div class="input-Field">
+                                <input type="number" placeholder="Premium" formControlName="fireTerrPre" readonly />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="one child-covers">
+                        <mat-checkbox class="subchk" formControlName="burglarymMain" [disabled]="checkBurglaryAmt == 0">
+                            Burglary</mat-checkbox>
+                        <div class="SI_Premium_Child_Cover" *ngIf="CD.burglarymMain.value">
+                            <div class="input-Field">
+                                <input type="text" placeholder="Set Rate" formControlName="burglaryRate"
+                                    (change)="checkRate(CD.burglaryRate.value)" maxlength="5" />
+                            </div>
+                            <div class="input-Field">
+                                <input type="number" placeholder="Sum Insured" (focusout)="validateMaxMin($event,1, 30000000)"formControlName="burglarySum" readonly />
+                            </div>
+                            <div class="input-Field">
+                                <input type="number" placeholder="Premium" formControlName="burglaryPre" readonly />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="one child-covers">
+                        <mat-checkbox class="subchk" formControlName="setBurglaryFlag1"
+                            [disabled]="checkBurglaryAmt == 0">First Loss Percentage</mat-checkbox>
+                        <div class="SI_Premium_Child_Cover" *ngIf="CD.setBurglaryFlag1.value">
+                            <div class="select-field">
+                                <select formControlName="burglaryPercent">
+                                    <option value="">-- Select Percentage --</option>
+                                    <option value="25">25 %</option>
+                                    <option value="25">30 %</option>
+                                    <option value="25">35 %</option>
+                                    <option value="25">40 %</option>
+                                    <option value="50">50 %</option>
+                                    <option value="75">100 %</option>
+                                </select>
+                                <span *ngIf="onSubmit && CD.burglaryPercent.invalid">Please select Percentage</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="checkCalc">
+                        <button mat-raised-button color="warn" class="marginT10" (click)="calculate()">
+                            Calculate
+                        </button>
+                    </div>
+                </div>
+                <div *ngIf="blockProcess" class="error">
+                    Please contact our nearest branch
+                </div>
+            </div>
+        </div>
+    </fieldset>
+
+    <!-- Additional Cover Details -->
+    <fieldset [hidden]="addressFlag" class="shopAddress">
+        <legend>Risk Address</legend>
+        <mat-form-field class="col4">
+            <mat-label>Address 1*</mat-label>
+            <input matInput formControlName="add1" type="text" maxlength="30" />
+        </mat-form-field>
+        <mat-form-field class="col4">
+            <mat-label>Address 2*</mat-label>
+            <input matInput formControlName="add2" type="text" maxlength="30" />
+        </mat-form-field>
+        <mat-form-field class="col4">
+            <mat-label>Address 3</mat-label>
+            <input matInput formControlName="add3" type="text" maxlength="30" />
+        </mat-form-field>
+        <mat-form-field class="col4">
+            <mat-label>Land Mark *</mat-label>
+            <input matInput formControlName="landmark" type="text" maxlength="30" />
+        </mat-form-field>
+        <mat-form-field class="col4">
+            <mat-label>City/District *</mat-label>
+            <input matInput formControlName="city" type="text" maxlength="30" />
+        </mat-form-field>
+        <!-- <mat-form-field class="col4">
+            <mat-label>Land Mark *</mat-label>
+            <input matInput formControlName="landmark" type="text">
+        </mat-form-field> -->
+        <mat-form-field class="col4">
+            <mat-label>State *</mat-label>
+            <input matInput formControlName="state" type="text" maxlength="40" />
+        </mat-form-field>
+        <mat-form-field class="col4">
+            <mat-label>Country *</mat-label>
+            <input matInput formControlName="country" type="text" maxlength="10" />
+        </mat-form-field>
+    </fieldset>
+    <fieldset class="communicationAdd" [hidden]="addressFlag">
+        <legend>Communication Address</legend>
+        <!-- <mat-checkbox class="col1" value="FAP" (change)="setAddress($event);">Is Communication address same as Shop
+            Address?</mat-checkbox> -->
+        <div class="overflw-wrap">
+            <mat-checkbox value="FAP" (change)="setAddress($event)"></mat-checkbox>
+            <p>Is Communication address same as Shop Address?</p>
+        </div>
+        <mat-form-field class="col4">
+            <mat-label>Address 1*</mat-label>
+            <input matInput formControlName="comadd1" type="text" />
+        </mat-form-field>
+        <mat-form-field class="col4">
+            <mat-label>Address 2</mat-label>
+            <input matInput formControlName="comadd2" type="text" />
+        </mat-form-field>
+        <mat-form-field class="col4">
+            <mat-label>Address 3</mat-label>
+            <input matInput formControlName="comadd3" type="text" />
+        </mat-form-field>
+        <mat-form-field class="col4">
+            <mat-label>Land Mark *</mat-label>
+            <input matInput formControlName="comlandmark" type="text" />
+        </mat-form-field>
+        <mat-form-field class="col4">
+            <mat-label>City/District *</mat-label>
+            <input matInput formControlName="comcity" type="text" />
+        </mat-form-field>
+        <!-- <mat-form-field class="col4">
+            <mat-label>Landmark *</mat-label>
+            <input matInput formControlName="comlandmark" type="text">
+        </mat-form-field> -->
+        <mat-form-field class="col4">
+            <mat-label>State *</mat-label>
+            <input matInput formControlName="comstate" type="text" />
+        </mat-form-field>
+        <mat-form-field class="col4">
+            <mat-label>Country *</mat-label>
+            <input matInput formControlName="comcountry" type="text" />
+        </mat-form-field>
+        <mat-form-field class="col4 upperCase">
+            <mat-label>Pan Number</mat-label>
+            <input matInput formControlName="panNo" type="text" />
+        </mat-form-field>
+        <mat-form-field class="col4">
+            <mat-label>GSTIN Number</mat-label>
+            <input matInput formControlName="GSTNo" type="text" />
+        </mat-form-field>
+    </fieldset>
+    <!-- for ckyc -->
+    <fieldset class="shopAddress" [hidden]="addressFlag" [disabled]="disableckyc">
+        <legend>Ckyc Verification</legend>
+
+        <mat-form-field class="col4">
+            <mat-label>Full Name *</mat-label>
+            <input matInput formControlName="fullname" type="text" />
+            <mat-error *ngIf="CD.fullname.invalid">Please enter full name</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="col4">
+            <mat-label>{{
+                CD.customerType.value == "Individual"
+                ? "Date Of Birth"
+                : "Date Of Incorpation"
+                }}
+                *</mat-label>
+            <input matInput formControlName="dobDate" (dateChange)="getAge()" [matDatepicker]="dobDate"
+                [max]="maximumDOB" placeholder="mm/dd/yyyy" />
+            <mat-datepicker-toggle matSuffix [for]="dobDate"></mat-datepicker-toggle>
+            <mat-datepicker #dobDate></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="col4" *ngIf="CD.customerType.value == 'Individual'">
+            <mat-label>Gender *</mat-label>
+            <mat-select formControlName="gender">
+                <mat-option>-- Select --</mat-option>
+                <mat-option value="M">Male</mat-option>
+                <mat-option value="F">Female</mat-option>
+            </mat-select>
+            <mat-error *ngIf="CD.gender.invalid">Please select Gender</mat-error>
+        </mat-form-field>
+
+        <!-- <mat-checkbox (change)="anyClaimCall($event)">Any Claim Reported in last 3 years</mat-checkbox> -->
+
+        <mat-form-field class="col4">
+            <mat-label>ID Type *</mat-label>
+            <mat-select formControlName="idtype">
+                <mat-option value="">-- Select --</mat-option>
+                <mat-option value="CKYC">CKYC</mat-option>
+                <mat-option value="Pan">Pan</mat-option>
+                <mat-option value="AADHAAR" *ngIf="CD.customerType.value == 'Individual'">Aadhar</mat-option>
+                <mat-option value="CIN" *ngIf="CD.customerType.value != 'Individual'">CIN</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="col4">
+            <mat-label>ID Number</mat-label>
+            <input matInput formControlName="idnum" type="text" />
+        </mat-form-field>
+
+        <mat-form-field class="col4" *ngIf="ckycflag" readonly>
+            <mat-label>Ckyc Number</mat-label>
+            <input matInput formControlName="ckycno" type="text" />
+        </mat-form-field>
+        <mat-form-field class="col4" *ngIf="ckycref" readonly>
+            <mat-label>Ckyc Ref.No</mat-label>
+            <input matInput formControlName="proposal" type="text" />
+        </mat-form-field>
+        <button mat-raised-button color="warn" [style.display]="verfyilagf ? 'none' : 'inline-block'"
+            (click)="verifyckyc()">
+            Verify
+        </button>
+    </fieldset>
+
+    <fieldset [hidden]="addressFlag">
+        <legend>Annexure Details</legend>
+        <form [formGroup]="annexureForm">
+            <div formArrayName="detailSections">
+                <div *ngFor="let a of getSections(annexureForm); let $index = index" class="annexureFormContainer">
+                    <a href="javascript:void(0)" *ngIf="$index != 0" (click)="removeAnnexureForm($index)"
+                        class="removeFile" title="Delete File">Remove (<i class="fa fa-remove"></i>)</a>
+                    <div class="addItemWrap" [formGroupName]="$index">
+                        <mat-form-field class="col5">
+                            <mat-label>Cover Type*</mat-label>
+                            <mat-select formControlName="coverType">
+                                <mat-option value="">-- Select Cover --</mat-option>
+                                <mat-option *ngFor="let a of annexureWithValue" [value]="a.name">
+                                    {{ a.name }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="col5">
+                            <mat-label>Item Description</mat-label>
+                            <input matInput formControlName="itemDesc" type="text" />
+                        </mat-form-field>
+                        <mat-form-field class="col5">
+                            <mat-label>Make</mat-label>
+                            <input matInput formControlName="make" type="text" />
+                        </mat-form-field>
+                        <mat-form-field class="col5">
+                            <mat-label>Year of Mfg</mat-label>
+                            <input matInput formControlName="YearofMFG" type="number" />
+                        </mat-form-field>
+                        <mat-form-field class="col5">
+                            <mat-label>Sum Insured</mat-label>
+                            <input matInput formControlName="sumins" type="number" (change)="compareSumIn($index)" />
+                        </mat-form-field>
+                        <div class="col1"></div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="hrefWrap">
+            <a href="javascript:;" (click)="addAnnexureForm()">(<i class="fa fa-plus"></i>) Add More Annexure</a>
+        </div>
+    </fieldset>
+    <fieldset [hidden]="addressFlag">
+        <legend>Documents</legend>
+        <mat-label>Proposal Form :- </mat-label>
+        <input type="file" id="myFile" name="filename" />
+        <mat-label>Other Document :- </mat-label>
+        <input type="file" id="myFile1" name="filename" /><br />
+        <mat-label>If you want a Booklet print of the Policy, please click on Yes option :-
+        </mat-label>
+        <mat-radio-group class="col3 radio-btn" aria-label="Select an option" formControlName="printFlag">
+            <mat-radio-button value="Y">Yes</mat-radio-button>
+            <mat-radio-button value="N" [checked]="true">No</mat-radio-button>
+        </mat-radio-group><br />
+    </fieldset>
+    <fieldset *ngIf="showQuote">
+        <legend>Premium Summary & Payment</legend>
+        <div class="premiumWrap">
+            <p>
+                Net Premium : <b> <i class="fa fa-rupee"></i>{{ netPremium }}</b>
+            </p>
+            <!-- <p>Discount/Loading : <b> <i class="fa fa-rupee"></i>{{discountLoad}}</b></p> -->
+            <p>
+                GST ( 18% ) : <b> <i class="fa fa-rupee"></i>{{ gst }}</b>
+            </p>
+            <p>
+                Total Premium : <b> <i class="fa fa-rupee"></i>{{ totalPre }}</b>
+            </p>
+        </div>
+        <div class="paymentMethod" *ngIf="saveAndPayment || paymentOptReq">
+            <div class="col1">
+                <mat-label>Payment Method *</mat-label>
+                <mat-radio-group class="col3 radio-btn" aria-label="Select an option" formControlName="paymentMethod"
+                    (change)="selectPayMethod(CD.paymentMethod.value)">
+                    <mat-radio-button value="S">Saving Account</mat-radio-button>
+                    <mat-radio-button value="B">Bank Reference ID</mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div class="col1 marginT10">
+                <mat-form-field class="col4" *ngIf="CD.paymentMethod.value == 'S'">
+                    <mat-label>Saving/Current Account No. *</mat-label>
+                    <input matInput formControlName="customerAcNo" numbersOnly />
+                </mat-form-field>
+                <mat-form-field class="col4" *ngIf="CD.paymentMethod.value == 'B'">
+                    <mat-label>Bank Reference No. *</mat-label>
+                    <input matInput type="text" formControlName="bankRefNo"
+                        (change)="getReceiptDeatils(CD.bankRefNo.value)" />
+                    <a href="javascript:;" (click)="getReceiptDeatils(CD.bankRefNo.value)" class="search"><i
+                            class="fa fa-search"></i></a>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="btnWrap" *ngIf="currentStatus != 'C' || checkBurgalaryPolicy">
+            <button mat-raised-button color="warn" (click)="modify()" *ngIf="!checkCalc && !makePaymentFlag">
+                Modify
+            </button>
+            <button mat-raised-button color="warn" (click)="updateQuote()" *ngIf="updateQuoteFlag">
+                Update Quote
+            </button>
+            <button mat-raised-button color="warn" (click)="quote()" *ngIf="issueQuoteFlag">
+                Create Quote
+            </button>
+            <button mat-raised-button color="warn" (click)="saveQuoteDetails()" *ngIf="saveQuoteDetailsFlag">
+                Save
+            </button>
+            <button mat-raised-button color="warn" (click)="saveQuoteDetails()" *ngIf="saveAndPayment">
+                Save & Payment
+            </button>
+            <button mat-raised-button color="warn" (click)="payment()" *ngIf="makePaymentFlag">
+                Make Payment
+            </button>
+        </div>
+    </fieldset>
+</form>
+<div *ngIf="ridrectToPay">
+    <div class="redirectMsg" *ngIf="showRedirectMsg">
+        <p>Your payment request is being processed....</p>
+        <p>Please Don't Refresh..</p>
+    </div>
+    <div class="suscessRes" *ngIf="!showRedirectMsg">
+        <p>Payment is successful</p>
+        <p>
+            Quote No - <b>{{ quoteNo }}</b>
+        </p>
+        <p>
+            Customer Name - <b>{{ customerName }}</b>
+        </p>
+        <p>
+            Customer ID - <b>{{ bankCustID }}</b>
+        </p>
+        <p>
+            Customer Ac No - <b>{{ AcNo }}</b>
+        </p>
+        <p>
+            FG Transaction ID - <b>{{ trnID }}</b>
+        </p>
+        <p *ngIf="policyNo">
+            {{ policyText }}
+            <a rel="noopener noreferrer" (click)="policyDownload(policyNo)">{{
+                policyNo
+                }}</a>
+            <a rel="noopener noreferrer" (click)="policyDownload(policyNo1)">&nbsp;&nbsp;&nbsp; {{ policyNo1 }}</a>
+        </p>
+    </div>
+</div>
+<div class="overlay" [ngClass]="{ active: showReceipt }"></div>
+<div class="receiptPopup" [ngClass]="{ active: showReceipt }">
+    <a href="javascript:;" (click)="closePop()" class="close">x</a>
+    <table>
+        <tr>
+            <th></th>
+            <th>Receipt No.</th>
+            <th>Amount</th>
+        </tr>
+        <tr *ngFor="let r of receiptList; let $index = index">
+            <td><input type="checkbox" (change)="selectReceipt(r, $event)" /></td>
+            <td>{{ r.receiptno }}</td>
+            <td>{{ r.balanceamt }}</td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <span>Amount : <b>{{ totalRA }}</b></span>
+            </td>
+        </tr>
+    </table>
+    <p class="error" *ngIf="checkReceiptAmt">
+        Receipt amt cann't less then total premium amt.
+    </p>
+    <a href="javascript:;" class="continue" (click)="bookWithReceiptNo()">Continue</a>
+</div>
+<ngx-loading [show]="loading"></ngx-loading>
