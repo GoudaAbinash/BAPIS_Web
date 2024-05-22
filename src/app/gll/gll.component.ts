@@ -377,6 +377,8 @@ export class GLLComponent implements OnInit {
   PGB = true;
   HPSCB = true;
   PBGB = true;
+  PUPGB=true;
+  VKGB=true;
   HPG = true;
   TPUC = true;
   verfyilagf = false;
@@ -414,6 +416,8 @@ export class GLLComponent implements OnInit {
       lastName: new FormControl("", Validators.required),
       contactNo: new FormControl("", Validators.required),
       email: new FormControl("", Validators.required),
+      AltcontactNo: new FormControl("", null),
+      Altemail: new FormControl("", null),
       bankStaffID: new FormControl("", null),
       bankCustID: new FormControl("", null),
       FGStafID: new FormControl("", Validators.required),
@@ -507,7 +511,7 @@ export class GLLComponent implements OnInit {
       EQFlag: new FormControl(null, null),
       winNo: new FormControl("", null),
       applNo: new FormControl("", null),
-      printFlag: new FormControl("N", null),
+      printFlag: new FormControl("N", ),
       totalPremium: new FormControl(0, null),
       PAFlag: new FormControl(null, null),
       eqMain: new FormControl(false),
@@ -543,6 +547,8 @@ export class GLLComponent implements OnInit {
       this.TPUC = false;
       this.HPSCB = false;
       this.PBGB = false;
+      this.PUPGB=false;
+      this.VKGB=false;
     }
     if (this.loginFlag == "2" || this.loginFlag == "3") {
       this.branchList = sessionData;
@@ -970,6 +976,9 @@ export class GLLComponent implements OnInit {
       this.router.navigate(["gll"]);
     } else if (val == "LTD") {
       this.router.navigate(["fireForm"]);
+    }
+    else if (val == "FGL") {
+      this.router.navigate(["fgl"]);
     }
     if (val == "SFSP") {
       this.router.navigate(["sfsp"]);

@@ -1,5 +1,5 @@
 <app-header quoteNo="{{ quoteNo }}"></app-header>
-<h4 style="text-align: center">Sookshma Udyam SURAKSHA</h4>
+<h4 style="text-align: center">FG Burglary</h4>
 <!-- <pre>{{quoteGeneraion.value | json}}</pre> -->
 <form [formGroup]="quoteGeneraion" autocomplete="off" [hidden]="ridrectToPay">
     <fieldset>
@@ -112,7 +112,7 @@
         </mat-form-field>
         <mat-form-field class="col4">
           <mat-label>Loan AC No.</mat-label>
-          <input matInput maxlength="60"  formControlName="loanAcNo" />
+          <input matInput maxlength="60" formControlName="loanAcNo" />
         </mat-form-field>
         <mat-form-field class="col4">
           <mat-label>IMD General Comments</mat-label>
@@ -429,7 +429,8 @@
                     <input matInput formControlName="loadingDisc" type="text" disabled readonly />
                 </mat-form-field>
                 <div *ngIf="!blockProcess">
-                    <div class="one child-covers">
+
+                    <!-- <div class="one child-covers">
                         <mat-checkbox (change)="commonCoverChange($event, 'B');setTerrPre()" class="subchk"
                             formControlName="buildMain">Building</mat-checkbox>
                         <div class="SI_Premium_Child_Cover" *ngIf="CD.buildMain.value">
@@ -449,8 +450,8 @@
                                     maxlength="60" />
                             </div>
                         </div>
-                    </div>
-                    <div class="one child-covers">
+                    </div> -->
+                    <!-- <div class="one child-covers">
                         <mat-checkbox class="subchk" (change)="commonCoverChange($event, 'PF');setTerrPre()"
                             formControlName="plinthFoundMain">Plinth & Foundation</mat-checkbox>
                         <div class="SI_Premium_Child_Cover" *ngIf="CD.plinthFoundMain.value">
@@ -467,7 +468,8 @@
                                     maxlength="60" />
                             </div>
                         </div>
-                    </div>
+                    </div> -->
+                    
                     <div class="one child-covers">
                         <mat-checkbox class="subchk" (change)="commonCoverChange($event, 'PM');setTerrPre()"
                             formControlName="plantMacMain">Plant & machinery</mat-checkbox>
@@ -540,7 +542,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="one child-covers">
+                    <!-- <div class="one child-covers">
                         <mat-checkbox class="subchk" (change)="setTerrPre()" formControlName="terrorismMain"disabled>Terrorism</mat-checkbox>
                         <div class="SI_Premium_Child_Cover" *ngIf="CD.terrorismMain.value">
                             <div class="input-Field">
@@ -550,7 +552,7 @@
                                 <input type="number" placeholder="Premium" formControlName="fireTerrPre" readonly />
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="one child-covers">
                         <mat-checkbox class="subchk" formControlName="burglarymMain" [disabled]="checkBurglaryAmt == 0">

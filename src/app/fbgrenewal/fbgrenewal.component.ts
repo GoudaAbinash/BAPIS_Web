@@ -5,28 +5,35 @@ import $ from "jquery";
 import { ActivatedRoute, Router } from "@angular/router";
 import { UCOPaymentModel } from "src/model/ucoPaymentModel";
 import { Receipt } from "src/model/receipt";
-import { THIS_EXPR } from "@angular/compiler/src/output/output_ast";
+import * as data from "../json/18092023occupation.json";
+import * as data1 from "../json/occupation1.json";
 declare var AJL;
-
 interface Animal {
   name: string;
   value: string;
 }
+
 @Component({
-  selector: 'app-frgrenewal',
-  templateUrl: './frgrenewal.component.html',
-  styleUrls: ['./frgrenewal.component.scss']
+  selector: 'app-fbgrenewal',
+  templateUrl: './fbgrenewal.component.html',
+  styleUrls: ['./fbgrenewal.component.scss']
 })
-export class FrgrenewalComponent implements OnInit {
+export class FbgrenewalComponent implements OnInit {
+
   animals: Animal[] = [
     { name: "Mr", value: "Mr" },
     { name: "Mrs", value: "Mrs" },
   ];
+
+  occupationList = data1;
+  occupationList1 = data;
+
   covers: Animal[] = [
     { name: "Building", value: "1A**" },
     { name: "Content", value: "1B**" },
     { name: "Tenant Liability", value: "1L**" },
     { name: "Alternate Accommodation", value: "1M**" },
+    { name: "Escalation", value: "1O**" },
     { name: "Omission to Insure Addition", value: "1P**" },
   ];
   Percentage = [{ name: "25" }, { name: "40" }, { name: "50" }, { name: "75" }];
@@ -37,10 +44,22 @@ export class FrgrenewalComponent implements OnInit {
   ];
   Alliedcheck = false;
   buildingRate = 0.14;
+  removalDebrisRate = 0.345;
+  consultingRate = 0.345;
+  escalationRate = 0.1725;
+
+  impactRate = 0.01725;
+  ommissionRate = 0.345;
+  terrorisRate = 0.23;
+  stfiRate = 0.075;
+  eleEquip = 1.0;
+  eleSTFI = 0.3;
   zone1 = 0.25;
   zone2 = 0.15;
   zone3 = 0.1;
   zone4 = 0.05;
+  verfyilagf = false;
+  ckycflag = false;
   industirlzone1 = 1.0;
   industirlzone2 = 0.5;
   industirlzone3 = 0.2;
@@ -54,6 +73,9 @@ export class FrgrenewalComponent implements OnInit {
   fgReceiptNo = "";
   totalBasicPremium = 0;
   basicOoccupationRate = 0;
+  basicOoccupationRateTemp = 0;
+  sfspStfiRate = 0;
+  sfspStfiRateFix = 0;
   setTerroRateSFSP = 0;
   sfspSetEQ = 0;
   workRate = 0.55;
@@ -64,19 +86,16 @@ export class FrgrenewalComponent implements OnInit {
   fgClientId;
   totalPre = 0;
   annexureWithValue = [];
-  tenureList = [];
+  tenureList = ["1"];
   showQuote = false;
   onSubmit = false;
   checkCalc = true;
-  ckycname = true;
   addressFlag = true;
   issueQuoteFlag = true;
   updateQuoteFlag = false;
   saveQuoteDetailsFlag = false;
   saveAndPayment = false;
-  disableckyc = false;
   makePaymentFlag = false;
-  makePaymentFlagModify = false;
   isCompany = false;
   blockProcess = false;
   loading = false;
@@ -100,15 +119,20 @@ export class FrgrenewalComponent implements OnInit {
       value: "Mrs",
     },
   ];
-  
-  employeeForm: any;
+  sumInsuredLimit: number;
+  distancebrigade: any;
+  basementstoa: any;
+  goodhousek: any;
+  electInswiring: any;
+  distancebrigad: string;
+  basementst: string;
+  goodhouse: string;
+  electInswir: string;
   detailExpData = [];
   quoteNo = "";
   totalFirSum = 0;
   branchFlag = true;
   ridrectToPay = false;
-  isLongDwelling = true;
-  paymentOptReq = false;
   showRedirectMsg = true;
   customerName = "";
   bankCustID = "";
@@ -127,7 +151,6 @@ export class FrgrenewalComponent implements OnInit {
   spCode = "";
   coverType = "";
   stateName = "";
-  landmarkName = "";
   country = "";
   fgBrachCode;
   industrialType = "";
@@ -137,249 +160,40 @@ export class FrgrenewalComponent implements OnInit {
   buildDisc: number;
   discountLoad = "";
   filterTicket = "";
-  statename = "";
-
-  occupationMaster = [
-    { Description: "Accountant", Code: "ACCT" },
-    { Description: "Actor/Actress", Code: "ACTR" },
-    { Description: "Admin Executive", Code: "AMEX" },
-    { Description: "Advocate", Code: "ADVO" },
-    { Description: "Agent (Insurance)", Code: "AGET" },
-    { Description: "Air Force", Code: "AIRF" },
-    { Description: "Architect", Code: "ARCH" },
-    { Description: "Army", Code: "ARMY" },
-    { Description: "Baggage Porter", Code: "BAPR" },
-    { Description: "Barbers", Code: "BARB" },
-    { Description: "Barman", Code: "BARM" },
-    { Description: "Beauticians", Code: "BEAU" },
-    { Description: "Beggar", Code: "BEGG" },
-    { Description: "Boilerman", Code: "BLRM" },
-    { Description: "Brokers", Code: "BROK" },
-    { Description: "Builder", Code: "BULD" },
-    { Description: "Businessman", Code: "BUSM" },
-    { Description: "Businessman", Code: "BUS1" },
-    { Description: "Carpenter", Code: "CARP" },
-    { Description: "Cashier", Code: "CASH" },
-    { Description: "Chemical Engineer", Code: "CEME" },
-    { Description: "Chemist", Code: "CMST" },
-    { Description: "Choreographer", Code: "CHPR" },
-    { Description: "Civil Engineer", Code: "CVLE" },
-    { Description: "Cleaner", Code: "CLNR" },
-    { Description: "Computer Engineer", Code: "COME" },
-    { Description: "Construction Site Worker", Code: "CONW" },
-    { Description: "Consultant", Code: "CONS" },
-    { Description: "Cook", Code: "COOK" },
-    { Description: "Crane Operator", Code: "CROP" },
-    { Description: "CLASS-1", Code: "CLS1" },
-    { Description: "CLASS-2", Code: "CLS2" },
-    { Description: "Dancer", Code: "DNCR" },
-    { Description: "Deliveryman", Code: "DELI" },
-    { Description: "Dentist", Code: "DENT" },
-    { Description: "Designer", Code: "DESG" },
-    { Description: "Die-Cutting Machine Operator", Code: "DIEC" },
-    { Description: "Director", Code: "DIR" },
-    { Description: "Diver (Commercial/Military)", Code: "DIVE" },
-    { Description: "Doctor", Code: "DOCT" },
-    { Description: "Draughtsman", Code: "DRAU" },
-    { Description: "Driver", Code: "DRIV" },
-    { Description: "Electrical", Code: "ELEC" },
-    { Description: "Electricians", Code: "ELET" },
-    { Description: "Engineer", Code: "ENGR" },
-    { Description: "Estate Agents", Code: "ESTA" },
-    { Description: "Executive", Code: "EXEC" },
-    { Description: "Explosives handler", Code: "EXHL" },
-    { Description: "EDP Operator", Code: "EDPO" },
-    { Description: "Factory Workers", Code: "FACT" },
-    { Description: "Farmer", Code: "FARM" },
-    { Description: "Fireman", Code: "FIRE" },
-    { Description: "Fisherman", Code: "FISH" },
-    { Description: "Fitter", Code: "FITR" },
-    { Description: "Flight Steward/Stewardess", Code: "FLIG" },
-    { Description: "Foreman", Code: "FORE" },
-    { Description: "Forest Officer", Code: "FORO" },
-    { Description: "Forklift Operator", Code: "FKOP" },
-    { Description: "Foundary Worker", Code: "FOUD" },
-    { Description: "Furnacemen", Code: "FURN" },
-    { Description: "Gas Attendant", Code: "GASA" },
-    { Description: "Geologist", Code: "GEOL" },
-    { Description: "Hawkers", Code: "HAWK" },
-    { Description: "Health Worker", Code: "HLTW" },
-    { Description: "Helper", Code: "HELP" },
-    { Description: "Hospital Attendant", Code: "HOAT" },
-    { Description: "Hotel & Restaurant Waiters", Code: "HOTW" },
-    { Description: "Househusband", Code: "HSHB" },
-    { Description: "Housewife/ Househusband", Code: "HSWF" },
-    { Description: "Human Resource Officer", Code: "HROF" },
-    { Description: "Infants & Toddlers", Code: "INFA" },
-    { Description: "Jeweler", Code: "JWLR" },
-    { Description: "Jockey", Code: "JOCK" },
-    { Description: "Judge", Code: "JUDG" },
-    { Description: "Juvenille", Code: "JUVN" },
-    { Description: "Laboratory Technician", Code: "LABT" },
-    { Description: "Labourer", Code: "LABR" },
-    { Description: "Lecturer", Code: "LCTR" },
-    { Description: "Machine Operators", Code: "MOPR" },
-    { Description: "Machinist", Code: "MACH" },
-    { Description: "Maintenance Engineer", Code: "MAIN" },
-    { Description: "Manager", Code: "MGR" },
-    { Description: "Marine Engineer", Code: "MARE" },
-    { Description: "Mariner", Code: "MARI" },
-    { Description: "Marketing Executive", Code: "MKTG" },
-    { Description: "Mason/ Plasterer", Code: "MASN" },
-    { Description: "Mechanic", Code: "MECH" },
-    { Description: "Mechanical Engineer", Code: "MEEN" },
-    { Description: "Milkman", Code: "MILK" },
-    { Description: "Miner", Code: "MINR" },
-    { Description: "Mining Engineer", Code: "MINE" },
-    { Description: "Musician/ Singer", Code: "MUSI" },
-    { Description: "Navy", Code: "NAVY" },
-    { Description: "Nurse", Code: "NURS" },
-    { Description: "Officer", Code: "OFFR" },
-    { Description: "Oil Refinery Worker", Code: "OILW" },
-    { Description: "Other Occupation", Code: "OTHR" },
-    { Description: "Painter", Code: "PAIN" },
-    { Description: "Pathologist", Code: "PATH" },
-    { Description: "Pensioner", Code: "PENS" },
-    { Description: "Peon", Code: "PEON" },
-    { Description: "Pharmacist", Code: "PHAR" },
-    { Description: "Pilot", Code: "PLOT" },
-    { Description: "Plant Technician", Code: "PLTE" },
-    { Description: "Plumber", Code: "PLUM" },
-    { Description: "Police / Constable", Code: "POLM" },
-    { Description: "Politician", Code: "PLTN" },
-    { Description: "Postman", Code: "POST" },
-    { Description: "Power Plant Operator", Code: "PWRO" },
-    { Description: "Priest", Code: "PRST" },
-    { Description: "Principal", Code: "PRPL" },
-    { Description: "Private Job", Code: "PVJB" },
-    { Description: "Production Engineer", Code: "PRDE" },
-    { Description: "Professional", Code: "PRFS" },
-    { Description: "Professor", Code: "PROF" },
-    { Description: "Radio & TV Technician", Code: "RTEC" },
-    { Description: "Radiologist", Code: "RADO" },
-    { Description: "Radiotherapist", Code: "RTHE" },
-    { Description: "Receptionist", Code: "RECP" },
-    { Description: "Reporter", Code: "RPTR" },
-    { Description: "Retired", Code: "RETR" },
-    { Description: "Rigger", Code: "RIGR" },
-    { Description: "Salesmen", Code: "SALE" },
-    { Description: "Sanitary Inspector", Code: "SANI" },
-    { Description: "Scientist", Code: "SCIE" },
-    { Description: "Seaman/Sailor", Code: "SAIL" },
-    { Description: "Secretary", Code: "SECR" },
-    { Description: "Security Guard", Code: "SECG" },
-    { Description: "Self Employed", Code: "SEEM" },
-    { Description: "Servant", Code: "SERV" },
-    { Description: "Service", Code: "SVCM" },
-    { Description: "Shipping Clerk", Code: "SHCL" },
-    { Description: "Shipyard Worker", Code: "SHIP" },
-    { Description: "Site Foreman", Code: "STFM" },
-    { Description: "Site Operation Technologist", Code: "SOPT" },
-    { Description: "Social Worker", Code: "SOCI" },
-    { Description: "Sports Person", Code: "SPOT" },
-    { Description: "Stenographer", Code: "STNP" },
-    { Description: "Student", Code: "STUD" },
-    { Description: "Student", Code: "STDN" },
-    { Description: "Stunt performer", Code: "STUN" },
-    { Description: "Supervisor", Code: "SUPV" },
-    { Description: "Sweeper", Code: "SWEP" },
-    { Description: "Tailor", Code: "TAIL" },
-    { Description: "Teacher", Code: "TEAC" },
-    { Description: "Technician", Code: "TECH" },
-    { Description: "Traffic Police", Code: "TFPO" },
-    { Description: "Train Driver", Code: "MRTC" },
-    { Description: "Tutor", Code: "TUTO" },
-    { Description: "Underwriter", Code: "UNDA" },
-    { Description: "Unemployed", Code: "UNEM" },
-    { Description: "UBER", Code: "UBER" },
-    { Description: "Welder", Code: "WELD" },
-    { Description: "Wireman", Code: "WIRE" },
-    { Description: "Wood Cutter", Code: "WOCU" },
-    { Description: "Writer", Code: "WRIT" },
-    { Description: "X-Ray Technician", Code: "XRAY" },
-  ];
-  nomineeRealtionMaster = [
-    { Description: "Agent/Broker", Code: "AGNT" },
-    { Description: "Aunty", Code: "AUNT" },
-    { Description: "Brother", Code: "BROT" },
-    { Description: "Business", Code: "BUSI" },
-    { Description: "Carrier", Code: "CRER" },
-    { Description: "Child", Code: "CHLD" },
-    { Description: "Cleaner", Code: "CLNR" },
-    { Description: "Consignee", Code: "CNSE" },
-    { Description: "Consignor", Code: "CNSR" },
-    { Description: "Corporate Subsidiary", Code: "SUB" },
-    { Description: "Cousin", Code: "COUS" },
-    { Description: "Daughter", Code: "DAUG" },
-    { Description: "Daughter in law", Code: "DAIN" },
-    { Description: "Employee", Code: "SEE" },
-    { Description: "Employee", Code: "EEE" },
-    { Description: "Employer", Code: "EER" },
-    { Description: "Family", Code: "FAMI" },
-    { Description: "Father", Code: "FATH" },
-    { Description: "Friend", Code: "FRND" },
-    { Description: "FG", Code: "FGGI" },
-    { Description: "Grandchild", Code: "GRCH" },
-    { Description: "Grandfather", Code: "GRFA" },
-    { Description: "Grandmother", Code: "GRMO" },
-    { Description: "GrandParent", Code: "GRPA" },
-    { Description: "Great Grandchild (Generic)", Code: "GRGC" },
-    { Description: "Great GrandParent", Code: "GRGP" },
-    { Description: "Helper", Code: "HELP" },
-    { Description: "Holding Company (Corporation)", Code: "CORP" },
-    { Description: "Husband", Code: "HUSB" },
-    { Description: "Legal Executor", Code: "EXEC" },
-    { Description: "Legal Guardian", Code: "GUAR" },
-    { Description: "Legal Heir n", Code: "HEIR" },
-    { Description: "Main Driver", Code: "MDRV" },
-    { Description: "Mother", Code: "MOTH" },
-    { Description: "Neighbor", Code: "NEIG" },
-    { Description: "NONE", Code: "NONE" },
-    { Description: "Others", Code: "OTHE" },
-    { Description: "Owner", Code: "OWNE" },
-    { Description: "Parent", Code: "PARE" },
-    { Description: "Partner", Code: "PART" },
-    { Description: "Primary Insured", Code: "SELF" },
-    { Description: "Self Employed", Code: "SLEM" },
-    { Description: "Servant", Code: "SERV" },
-    { Description: "Sibling", Code: "SIB" },
-    { Description: "Sister", Code: "SIST" },
-    { Description: "Son", Code: "SON" },
-    { Description: "Spouse", Code: "SPOU" },
-    { Description: "SELF", Code: "INJU" },
-    { Description: "Uncle", Code: "UNCL" },
-    { Description: "Wife", Code: "WIFE" },
-    { Description: "Workshop", Code: "WKSH" },
-  ];
-  disableSelect = false;
-  disfirstName = false;
+  disableckyc = false;
   loginFlag = "";
   branchList = [];
+  occupationObj: any;
   receiptList = [];
-  checkedValue: any;
   showReceipt = false;
   totalRA = 0;
   multipleReceipt = [];
   payerid = "";
+  disableValue = false;
   instrumentdate = "";
   duplicateNameFalg = false;
   checkReceiptAmt = false;
+  disableSelect = false;
+  checkBurglaryAmt = 0;
+  paymentOptReq = false;
+  checkBurgalaryPolicy = false;
   receiptusername = "";
   receiptvendorname = "";
+  ageOfBuildingCode = "";
+  fireProtectionCode = "";
+  constructDetailsCode = "";
+  landmarkName = "";
+  policyNo1 = "";
+  burgalarypolicyNo = "";
   bankName = "";
-  onlyUCO = true;
-  BRKGB = true;
-  PGB = true;
-  HPSCB = true;
-  PBGB=true;
-  HPG = true;
-  TPUC = true;
-  verfyilagf = false;
-  ckycflag = false;
+  changerate = "";
   ckycref = false;
+  obj1: { userid: string; policyNo: any; };
+
+  nwpolicyno = '';
+
   insuranceData: any;
   addresses: any;
-  obj1: { userid: string; policyNo: any; };
   clienttype: any;
   clientNo: any;
   agentNo: any;
@@ -398,12 +212,12 @@ export class FrgrenewalComponent implements OnInit {
   OccupancyName: any;
   startdate: string;
   enddate: string;
-  addressflag: boolean;
-  policyrnwNo: any;
   policystartDt: string;
   riskRate: number;
   electronicEqRate: number;
   flopRate: number;
+  addressflag: boolean;
+  policyrnwNo: any;
   policyIssuedFlag: boolean = false;
   constructor(
     private api: CommonService,
@@ -418,14 +232,17 @@ export class FrgrenewalComponent implements OnInit {
     this.currentStatus = this.activeR.snapshot.paramMap.get("status");
     console.log(this.currentStatus);
     this.quoteGeneraion = new FormGroup({
+      policyNo: new FormControl('', Validators.required),
       bankName: new FormControl("", Validators.required),
+      proposal: new FormControl("", null),
       createdBy: new FormControl("", Validators.required),
       branchName: new FormControl("", Validators.required),
       bankBranch: new FormControl("", Validators.required),
       fgBrachCode1: new FormControl("", Validators.required),
+      fgbranchName: new FormControl("", Validators.required),
       tranType: new FormControl("Renewal", Validators.required),
-      coverType: new FormControl("", Validators.required),
-      customerType: new FormControl("I", Validators.required),
+      coverType: new FormControl("FBG", Validators.required),
+      customerType: new FormControl("Individual", Validators.required),
       salutation: new FormControl("", Validators.required),
       firstName: new FormControl("", Validators.required),
       // lastName: new FormControl("", Validators.required),
@@ -438,34 +255,34 @@ export class FrgrenewalComponent implements OnInit {
       financInterest: new FormControl("", null),
       loanAcNo: new FormControl("", null),
       bankRefNo: new FormControl("", null),
+      businessDesc: new FormControl(""),
       imdGeneral: new FormControl("", null),
+      businessType: new FormControl("", null),
+      loadingDisc: new FormControl("", null),
       pincode: new FormControl("", Validators.required),
-
-      fgbranchName: new FormControl("", Validators.required),
-      businessType: new FormControl("", Validators.required),
       zoneNo: new FormControl("", Validators.required),
-      OccupancyCode: new FormControl('', Validators.required),
-      OccupancyName: new FormControl('', Validators.required),
-      policyNo: new FormControl("", Validators.required),
-      clientno: new FormControl("", Validators.required),
-
-      // for ckyc
-      fullname: new FormControl("", null),
-      idnum: new FormControl("", null),
-      proposal: new FormControl("", null),
-      dobDate: new FormControl("", null),
-      idtype: new FormControl("", null),
-      gender: new FormControl("", null),
       spCode: new FormControl("", Validators.required),
-      polTenure: new FormControl("", Validators.required),
+      clientno: new FormControl('', Validators.required),
+      polTenure: new FormControl("1", Validators.required),
       riskDate: new FormControl("", Validators.required),
       riskEndDate: new FormControl("", Validators.required),
-      bancaSegement: new FormControl("", Validators.required),
+      bancaSegement: new FormControl("", null),
       riskOcc: new FormControl("NH", Validators.required),
-      buildingAge: new FormControl("0", Validators.required),
-      constructDetails: new FormControl("P", Validators.required),
-      fireProtection: new FormControl("0", Validators.required),
-      roundTheClock: new FormControl("0", Validators.required),
+      OccupancyCode: new FormControl('', Validators.required),
+      OccupancyName: new FormControl('', Validators.required),
+      // buildingAge: new FormControl('', Validators.required),
+      constructDetails: new FormControl("", null),
+      distancebrigade: new FormControl("", null),
+      basementstoa: new FormControl("", null),
+      goodhousek: new FormControl("", null),
+      electInswiring: new FormControl("", null),
+      fireProtection: new FormControl("", null),
+      buildingdetails: new FormControl("", null),
+      plinthFounddetails: new FormControl("", null),
+      plantMacndetails: new FormControl("", null),
+      furnFixFitdetails: new FormControl("", null),
+      fireContentdetails: new FormControl("", null),
+      stockdetails: new FormControl("", null),
       paymentMethod: new FormControl("", null),
       polInsName: new FormControl(""),
       polNumber: new FormControl(""),
@@ -490,27 +307,43 @@ export class FrgrenewalComponent implements OnInit {
       city: new FormControl("", null),
       landmark: new FormControl("", null),
       state: new FormControl("", null),
-      country: new FormControl("", null),
+      country: new FormControl("India", null),
       comadd1: new FormControl("", null),
       comadd2: new FormControl("", null),
       comadd3: new FormControl("", null),
       comcity: new FormControl("", null),
       comlandmark: new FormControl("", null),
       comstate: new FormControl("", null),
-      comcountry: new FormControl("", null),
+      comcountry: new FormControl("India", null),
       panNo: new FormControl("", null),
       GSTNo: new FormControl("", null),
+      iibLoading: new FormControl("", null),
+      // fireAlliedPerils: new FormControl(false),
       buildingCode: new FormControl("", null),
       fireBuilding: new FormControl(null, null),
       fireBuildingPre: new FormControl(0, null),
       fireContent: new FormControl(null, null),
-      ckycno: new FormControl(null, null),
       fireContentP: new FormControl(0, null),
+      plinthFound: new FormControl(null, null),
+      plinthFoundP: new FormControl(0, null),
+      plantMac: new FormControl(null, null),
+      plantMacP: new FormControl(0, null),
+      furnFixFit: new FormControl(null, null),
+      furnFixFitP: new FormControl(0, null),
+      stock: new FormControl(null, null),
+      stockP: new FormControl(0, null),
       stockSel: new FormControl("", null),
       discount: new FormControl(0, null),
       loading: new FormControl(0, null),
+      // otherStock: new FormControl(null, null),
+      // otherStockP: new FormControl(null, null),
       longTermTerrorism: new FormControl("", null),
+      fireTerrSum: new FormControl(null, null),
       longTermTerrSum: new FormControl(null, null),
+      fireTerrPre: new FormControl(0, null),
+      burglaryRate: new FormControl(null, null),
+      burglarySum: new FormControl(null, null),
+      burglaryPre: new FormControl(0, null),
       coverContentSum: new FormControl(null, null),
       coverContentPre: new FormControl(0, null),
       PASelfSum: new FormControl(null, null),
@@ -518,52 +351,63 @@ export class FrgrenewalComponent implements OnInit {
       PASpouseSum: new FormControl(null, null),
       PASpousePre: new FormControl(0, null),
       longTermTerrPre: new FormControl(0, null),
+      escalation: new FormControl("", null),
+      escalationSum: new FormControl(null, null),
+      escalationPre: new FormControl(null, null),
+      ommission: new FormControl("", null),
+      // for ckyc
+      fullname: new FormControl("", null),
+      idnum: new FormControl("", null),
+      dobDate: new FormControl("", null),
+      idtype: new FormControl("", null),
+      gender: new FormControl("", null),
+      ckycno: new FormControl(null, null),
+      ommissionSum: new FormControl(null, null),
+      ommissionPre: new FormControl(null, null),
+      impactDamage: new FormControl(null, null),
+      removalDebris: new FormControl(null, null),
+      removalDebrisP: new FormControl(0, null),
       noOfEmp: new FormControl(null, null),
       insuredAge: new FormControl(null, null),
       nomineeName: new FormControl(null, null),
       nomineeRel: new FormControl("", null),
+      STFIFlag: new FormControl(null, null),
+      STFI: new FormControl(null, null),
+      STFIPre: new FormControl(0, null),
       STFISel: new FormControl("YES", null),
       EQFlag: new FormControl(null, null),
+      EQ: new FormControl(null, null),
       winNo: new FormControl("", null),
       applNo: new FormControl("", null),
-      printFlag: new FormControl("N", null),
+      printFlag: new FormControl("", null),
       totalPremium: new FormControl(0, null),
+      setBurglaryFlag1: new FormControl(null, null),
+      burglaryPercent: new FormControl(null, null),
       PAFlag: new FormControl(null, null),
       eqMain: new FormControl(false),
       buildMain: new FormControl(false),
       fireContentsMain: new FormControl(false),
+      plinthFoundMain: new FormControl(false),
+      plantMacMain: new FormControl(false),
+      furnFixFitMain: new FormControl(false),
+      stockMain: new FormControl(false),
       terrorismMain: new FormControl(false),
+      burglarymMain: new FormControl(false),
       coverContent: new FormControl(false),
       PASelfMain: new FormControl(false),
       PASpouseMain: new FormControl(false),
       nwpolicyno: new FormControl(''),
+
     });
-    let myPastDat = new Date(this.maximumRiskD);
-    myPastDat.setDate(myPastDat.getDate() - 30);
-    this.maximumRiskD = new Date(myPastDat);
+    let myPastDate = new Date(this.maximumRiskD);
+    myPastDate.setDate(myPastDate.getDate() - 30);
+    this.maximumRiskD = new Date(myPastDate);
     this.initFormSection();
     this.addAnnexureForm();
-
     let sessionData = this.api.decy(sessionStorage.getItem("userDetails"));
     this.loginFlag = sessionData[0].loginFlag;
     this.receiptusername = sessionData[0].receiptusername;
     this.receiptvendorname = sessionData[0].receiptvendorname;
-    this.bankName = sessionData[0].bankname;
-    if (
-      this.bankName == "BOI" ||
-      this.bankName == "GBC" ||
-      this.bankName == "BOM" ||
-      this.bankName == "SHGB"
-    ) {
-      // || this.bankName == "HPG" || this.bankName == "PGB" || this.bankName == "TPUC"
-      this.onlyUCO = false;
-      this.BRKGB = false;
-      this.PGB = false;
-      this.HPG = false;
-      this.TPUC = false;
-      this.HPSCB = false;
-      this.PBGB=false;
-    }
     if (this.loginFlag == "2" || this.loginFlag == "3") {
       this.branchList = sessionData;
       this.quoteGeneraion.removeControl("bankStaffID");
@@ -581,10 +425,8 @@ export class FrgrenewalComponent implements OnInit {
       this.bankName = sessionData[0].bankname;
       console.log(this.bankName);
     }
-    this.tenureList = this.range(1, 1);
-    this.quoteGeneraion.patchValue({
-      polTenure: 1,
-    });
+  //  alert(this.agentCode);
+
     this.setFormVal("spCode", this.spCode);
     this.quoteGeneraion.patchValue({
       branchName: this.branchCode
@@ -606,9 +448,7 @@ export class FrgrenewalComponent implements OnInit {
             let allData = JSON.parse(res[0].allData);
             let annexData = JSON.parse(res[0].annexureData);
             this.payerid = res[0].payerID;
-
             this.addressFlag = false;
-            // console.log(allData.ckycno);
             // if (allData.ckycno != null || allData.ckycref != null) {
             //   this.verfyilagf = true;
             //   this.disableckyc = true;
@@ -621,40 +461,60 @@ export class FrgrenewalComponent implements OnInit {
             //   this.ckycflag = true;
             // }
             this.quoteGeneraion.patchValue(res[0]);
+            this.quoteGeneraion.patchValue(allData);
             if (this.loginFlag == "2" || this.loginFlag == "3") {
-              console.log(allData);
               var isPresent = sessionData.find(function (el) {
                 return el.SOL_ID === allData.branchName.split(" - ")[0];
               });
-              if (isPresent) {
-                this.setSpCode(isPresent);
-              }
+              this.setSpCode(isPresent);
             }
+            this.changeCustomerType({ value: allData.customerType });
+            this.policyNo = res[0].policyNumber;
+            this.burgalarypolicyNo = res[0].policyNumber_burglary
+              ? res[0].policyNumber_burglary
+              : "";
+            //this.currentStatus = res[0].currentStatus;
             setTimeout(() => {
-              this.quoteGeneraion.patchValue(allData);
+              this.quoteGeneraion.patchValue({
+                add1: allData.add1,
+                add2: allData.add2,
+                add3: allData.add3,
+                city: allData.city,
+                landmark: allData.landmark,
+                state: allData.state,
+                country: allData.country,
+                comadd1: allData.comadd1,
+                comadd2: allData.comadd2,
+                comadd3: allData.comadd3,
+                comcity: allData.comcity,
+                comlandmark: allData.comlandmark,
+                comstate: allData.comstate,
+                comcountry: allData.comcountry,
+                panNo: allData.panNo,
+                GSTNo: allData.GSTNo,
+                businessType: allData.businessType,
+                buildingAge: allData.buildingAge,
+                fireProtection: allData.fireProtection,
+                constructDetails: allData.constructDetails,
+                polTenure: allData.polTenure,
+              });
             }, 100);
-            if (
-              this.bankName == "BOI" ||
-              this.bankName == "GBC" ||
-              this.bankName == "BOM" ||
-              this.bankName == "SHGB" ||
-              this.bankName == "HPG" ||
-              this.bankName == "PGB" ||
-              this.bankName == "TPUC" ||
-              this.bankName == "PBGB" ||
-              this.bankName == "HPSCB"
-            ) {
-              this.loadingDisc = 30;
-            } else {
-              this.loadingDisc =
-                Number(allData.buildingAge) +
-                Number(allData.fireProtection) +
-                Number(allData.roundTheClock);
-            }
+            this.loadingDisc =
+              Number(allData.buildingAge) +
+              Number(allData.fireProtection) +
+              Number(allData.constructDetails);
+            this.setRateAsPerOccupation(allData.businessType);
             this.quoteNo = res[0].quoteNo;
             this.trnID = res[0].trnID;
-            console.log(this.trnID);
-            this.totalFirSum = allData.fireBuilding + allData.fireContent;
+
+            this.totalFirSum =
+              allData.fireBuilding +
+              allData.fireContent +
+              allData.plinthFound +
+              allData.plantMac +
+              allData.furnFixFit +
+              allData.stock;
+
             allData.coverContent
               ? this.setAnnexureWithValue(
                   "Cover for Valuable Contents",
@@ -664,6 +524,7 @@ export class FrgrenewalComponent implements OnInit {
             if (annexData) {
               if (annexData.length > 1) {
                 annexData.forEach((item, key) => {
+                  console.log(item, key);
                   if (key >= 1) {
                     const control = <FormArray>(
                       this.annexureForm.get("detailSections")
@@ -682,18 +543,22 @@ export class FrgrenewalComponent implements OnInit {
                 arr.controls[0].patchValue(annexData[0]);
               }
             }
-            this.disableSelect = true;
             setTimeout(() => {
               $(".coverForm input").prop("disabled", true);
               $(".fw > mat-checkbox, .one > mat-checkbox").addClass("disable");
             }, 500);
+
             this.issueQuoteFlag = false;
             if (this.userName == res[0].createdBy) {
               if (this.loginFlag == "2" || this.loginFlag == "3") {
-                this.makePaymentFlag = true;
                 this.paymentOptReq = true;
+                this.makePaymentFlag = true;
               } else {
                 this.updateQuoteFlag = true;
+              }
+              if (allData.burglarymMain && res[0].policyNumber_burglary == "") {
+                this.makePaymentFlag = true;
+                this.checkBurgalaryPolicy = true;
               }
             } else {
               this.updateQuoteFlag = false;
@@ -719,9 +584,7 @@ export class FrgrenewalComponent implements OnInit {
               }, 500);
               var d = new Date();
               d.setFullYear(d.getFullYear() - 1, d.getMonth());
-              console.log(d);
               this.maximumDOB = d;
-              this.maximumRiskD = d;
             }
             this.checkCalc = false;
             this.showQuote = true;
@@ -742,6 +605,7 @@ export class FrgrenewalComponent implements OnInit {
             this.gst = parseFloat(((netLocal * 18) / 100).toFixed(2));
             this.totalPre = netLocal + this.gst;
             this.totalPre = Math.round(this.totalPre);
+            console.log(this.totalPre);
             this.getDetails(res[0].pincode);
           }
           this.loading = false;
@@ -752,12 +616,11 @@ export class FrgrenewalComponent implements OnInit {
         }
       );
     }
-    this.setDiscount();
   }
 
   changeCustomerType(e) {
     let val = e.value;
-    if (val == "C") {
+    if (val == "Organization") {
       this.salutationList = [
         {
           name: "M/S",
@@ -823,7 +686,7 @@ export class FrgrenewalComponent implements OnInit {
   }
   initForm() {
     return new FormGroup({
-      aneCoverType: new FormControl("", Validators.required),
+      coverType: new FormControl("", Validators.required),
       itemDesc: new FormControl("", Validators.required),
       make: new FormControl("", Validators.required),
       YearofMFG: new FormControl("", Validators.required),
@@ -836,68 +699,70 @@ export class FrgrenewalComponent implements OnInit {
       if (type == "B") {
         this.setFormVal("fireBuildingPre", 0);
         this.setFormVal("fireBuilding", 0);
+      } else if (type == "PF") {
+        //plinthFound
+        this.setFormVal("plinthFoundP", 0);
+        this.setFormVal("plinthFound", 0);
+      } else if (type == "PM") {
+        this.setFormVal("plantMacP", 0);
+        this.setFormVal("plantMac", 0);
+      } else if (type == "FF") {
+        this.setFormVal("furnFixFitP", 0);
+        this.setFormVal("furnFixFit", 0);
+      } else if (type == "S") {
+        this.setFormVal("stockP", 0);
+        this.setFormVal("stock", 0);
       } else if (type == "C") {
         this.setFormVal("fireContentP", 0);
         this.setFormVal("fireContent", 0);
-       
       }
       this.setTotalFirSum("Y");
-      
     }
   }
   setTotalFirSum(type = "Y") {
     this.totalBasicPremium =
       Number(this.quoteGeneraion.value.fireBuildingPre) +
-      Number(this.quoteGeneraion.value.fireContentP);
+      Number(this.quoteGeneraion.value.fireContentP) +
+      Number(this.quoteGeneraion.value.plinthFoundP) +
+      Number(this.quoteGeneraion.value.plantMacP) +
+      Number(this.quoteGeneraion.value.furnFixFitP) +
+      Number(this.quoteGeneraion.value.stockP);
     this.totalFirSum =
       this.quoteGeneraion.value.fireBuilding +
+      this.quoteGeneraion.value.fireContent +
+      this.quoteGeneraion.value.plinthFound +
+      this.quoteGeneraion.value.plantMac +
+      this.quoteGeneraion.value.furnFixFit +
+      this.quoteGeneraion.value.stock;
+    this.checkBurglaryAmt =
+      this.quoteGeneraion.value.furnFixFit +
+      this.quoteGeneraion.value.plantMac +
+      this.quoteGeneraion.value.stock +
       this.quoteGeneraion.value.fireContent;
-      console.log(this.totalFirSum);
-  }
-  setPolTenure(val) {
-    if (this.quoteGeneraion.value.fireBuilding > 1) {
-      if (
-        this.quoteGeneraion.value.buildingAge == "" ||
-        this.quoteGeneraion.value.fireProtection == "" ||
-        this.quoteGeneraion.value.roundTheClock == ""
-      ) {
-        alert("Please select all mandatory drop down!");
-        this.quoteGeneraion.patchValue({
-          fireBuilding: 0,
-          fireContentP: 0,
-        });
-        return false;
-      }
+    if (this.checkBurglaryAmt > 0 && this.quoteGeneraion.value.burglaryRate) {
+      this.checkRate(this.quoteGeneraion.value.burglaryRate);
     }
-    this.setDiscount();
-    this.changRiskStart();
+  }
+  checkMandateDropDown(formName) {
+    // if (this.quoteGeneraion.value.fireProtection == "") {
+    // alert("Please select all mandatory drop down!");
+    // console.log(formName);
+    // this.quoteGeneraion.get(formName).setValue(0);
+    // return false;
+    // } else {
+    this.setTerrPre();
+    return true;
+    // }
   }
   buildIngPre(val, code) {
     this.setTotalFirSum();
-    if (
-      this.quoteGeneraion.value.buildingAge == "" ||
-      this.quoteGeneraion.value.fireProtection == "" ||
-      this.quoteGeneraion.value.roundTheClock == ""
-    ) {
-      alert("Please select all mandatory drop down!");
+    let flag = this.checkMandateDropDown("fireBuilding");
+    if (flag) {
       this.quoteGeneraion.patchValue({
-        fireBuilding: 0,
+        fireBuildingPre: Number(
+          (val * this.basicOoccupationRate) / 1000
+        ).toFixed(2),
       });
-      return false;
-    } else {
-      let longTermBildPre =
-        ((val * 0.267) / 1000) * this.yrDiscount * this.buildDisc;
-      this.quoteGeneraion.patchValue({
-        fireBuildingPre: (
-          longTermBildPre * this.quoteGeneraion.value.polTenure
-        ).toFixed(2), //toFixed(2)
-      });
-      if (val > 0) {
-        this.quoteGeneraion.patchValue({
-          terrorismMain: true,
-        });
-        this.setTerrPreDwelling();
-      }
     }
     this.quoteGeneraion.patchValue({
       buildingCode: code,
@@ -905,18 +770,69 @@ export class FrgrenewalComponent implements OnInit {
   }
   fireContentPre(val) {
     this.setTotalFirSum();
-    let longTermBildPre =
-      ((val * 0.217) / 1000) * this.yrDiscount * this.buildDisc;
-    this.quoteGeneraion.patchValue({
-      fireContentP: (
-        longTermBildPre * this.quoteGeneraion.value.polTenure
-      ).toFixed(2),
-    });
-    if (val > 0 && this.quoteGeneraion.value.fireBuilding > 0) {
+    let flag = this.checkMandateDropDown("fireContent");
+    if (flag) {
       this.quoteGeneraion.patchValue({
-        terrorismMain: true,
+        fireContentP: Number(
+          ((val * this.basicOoccupationRate) / 1000).toFixed(2)
+        ),
       });
-      this.setTerrPreDwelling();
+    }
+  }
+  plinthFoundPre(val) {
+    this.setTotalFirSum();
+    let flag = this.checkMandateDropDown("plinthFound");
+    if (flag) {
+      this.quoteGeneraion.patchValue({
+        plinthFoundP: Number(
+          ((val * this.basicOoccupationRate) / 1000).toFixed(2)
+        ),
+      });
+    }
+  }
+  plantMacPre(val) {
+    this.setTotalFirSum();
+    let flag = this.checkMandateDropDown("plantMac");
+    if (flag) {
+      this.quoteGeneraion.patchValue({
+        plantMacP: Number(
+          ((val * this.basicOoccupationRate) / 1000).toFixed(2)
+        ),
+      });
+    }
+  }
+  furnFixFitPre(val) {
+    this.setTotalFirSum();
+    let flag = this.checkMandateDropDown("furnFixFit");
+    if (flag) {
+      this.quoteGeneraion.patchValue({
+        furnFixFitP: Number(
+          ((val * this.basicOoccupationRate) / 1000).toFixed(2)
+        ),
+      });
+    }
+  }
+  stockPre(val) {
+    this.setTotalFirSum();
+    let flag = this.checkMandateDropDown("stock");
+    if (flag) {
+      this.quoteGeneraion.patchValue({
+        stockP: Number(((val * this.basicOoccupationRate) / 1000).toFixed(2)),
+      });
+    }
+  }
+  checkRate(v) {
+    if (v < 0.1) {
+      alert("Rate cannot less then 0.10");
+      this.quoteGeneraion.patchValue({
+        burglaryRate: 0,
+      });
+    } else {
+      let amt = (this.checkBurglaryAmt * v) / 1000;
+      this.quoteGeneraion.patchValue({
+        burglarySum: this.checkBurglaryAmt,
+        burglaryPre: amt,
+      });
     }
   }
   setFormVal(name, value) {
@@ -927,33 +843,86 @@ export class FrgrenewalComponent implements OnInit {
   }
   changeCoverType(e) {
     let val = e.value;
-    this.tenureList = [];
     this.coverType = val;
     if (val == "SK") {
       this.router.navigate(["fgForm"]);
-
-    }else if (val == "FSL") {
-      this.router.navigate(["fsl"]);
-      
-    }else if (val == "GLL") {
-      this.router.navigate(["gll"]);
     }
     if (val == "SFSP") {
       this.router.navigate(["sfsp"]);
+    }
+    else if (val == "FSL") {
+      this.router.navigate(["fsl"]);
+    } else if (val == "GLL") {
+      this.router.navigate(["gll"]);
+    }
+    else {
+      this.router.navigate(["fireForm"]);
+    }
+  }
+  setBuildRate() {
+    if (this.quoteGeneraion.value.polTenure > 9) {
+      this.buildingRate = 0.00007;
+    } else if (this.quoteGeneraion.value.polTenure == 3) {
+      this.buildingRate = 0.000119;
+    } else if (this.quoteGeneraion.value.polTenure == 4) {
+      this.buildingRate = 0.000112;
+    } else if (this.quoteGeneraion.value.polTenure == 5) {
+      this.buildingRate = 0.000105;
+    } else if (this.quoteGeneraion.value.polTenure == 6) {
+      this.buildingRate = 0.000098;
+    } else if (this.quoteGeneraion.value.polTenure == 7) {
+      this.buildingRate = 0.000091;
+    } else if (this.quoteGeneraion.value.polTenure == 8) {
+      this.buildingRate = 0.000084;
+    } else if (this.quoteGeneraion.value.polTenure == 9) {
+      this.buildingRate = 0.000077;
+    } else {
+      this.buildingRate = this.basicOoccupationRate;
     }
   }
   range(start, end) {
     if (start === end) return [start];
     return [start, ...this.range(start + 1, end)];
   }
+  setTerrPre() {
+    let amount = 0;
+    if (this.totalFirSum > 0) {
+      amount = Number(
+        ((this.totalFirSum * this.terrorisRate) / 1000).toFixed(2)
+      );
+      this.quoteGeneraion.patchValue({
+        terrorismMain: true,
+        fireTerrSum: Number(this.totalFirSum.toFixed(2)),
+        fireTerrPre: Number(amount.toFixed(2)),
+        // totalsum: Number((this.totalFirSum).toFixed(2))
+      });
+    } else {
+      this.quoteGeneraion.patchValue({
+        terrorismMain: false,
+        fireTerrSum: 0,
+        fireTerrPre: 0,
+      });
+    }
+    // if(this.totalFirSum > this.sumInsuredLimit){
+    //   alert('Total sum insured limit is Exceed');
+    //   return false;
+
+    // }
+    //  return true;
+
+    this.setTotalFirSum("N");
+  }
   changRiskStart() {
+    // this.setRateAsPerOccupation(this.changerate);
     let date = this.quoteGeneraion.value.riskDate;
+    console.log(date);
     if (date) {
       let year = date.getFullYear();
       let month = date.getMonth();
       let day = date.getDate();
+      //polTenure
       var c = new Date(
-        year + this.quoteGeneraion.value.polTenure,
+        year + Number(this.quoteGeneraion.value.polTenure),
         Number(month),
         Number(day) - 1
       );
@@ -963,63 +932,75 @@ export class FrgrenewalComponent implements OnInit {
         (c.getMonth() + 1) +
         "-" +
         c.getDate();
+      console.log(endDt);
       endDt = this.api.getFormattedDate(endDt, "mm/dd/yyyy");
       this.quoteGeneraion.patchValue({
         riskEndDate: endDt,
       });
+      console.log(endDt);
+      // if (endDt < '05/31/2023'){
+      //   this.occupationList = data;
+      //   // var o = this.occupationList['default'].find(function(data, i){
+      //   //   if(data.Risk_Code === this.changerate){
+      //   //     return data;
+      //   //   }
+      //   //   console.log(o,'Karthikl ')
+      //   // });
+      //   console.log(this.occupationList);
+      // }else{
+      //   this.occupationList = data1;
+      //   console.log(this.occupationList);
+
+      // }
+    }
+  }
+  saveDetails() {
+    this.onSubmit = true;
+    console.log(this.quoteGeneraion.value);
+    if (this.quoteGeneraion.status == "VALID") {
+      this.api.saveData(this.quoteGeneraion.value).subscribe(
+        (sus) => {
+          console.log(sus);
+          if (sus.ResponseFlag == 1) {
+            alert("Data saved successfully");
+          }
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
     }
   }
   calculate() {
-    console.log(this.quoteGeneraion.value);
-    if (
-      Number(this.quoteGeneraion.value.fireContentP) > 1 ||
-      Number(this.quoteGeneraion.value.fireBuildingPre) > 1
-    ) {
-      this.showQuote = true;
-      this.netPremium =
-        Number(this.quoteGeneraion.value.fireBuildingPre) +
-        Number(this.quoteGeneraion.value.fireContentP) +
-        Number(this.quoteGeneraion.value.longTermTerrPre) +
-        Number(this.quoteGeneraion.value.PASelfPre) +
-        Number(this.quoteGeneraion.value.PASpousePre) +
-        Number(this.quoteGeneraion.value.coverContentPre);
-      console.log(this.netPremium);
-      this.netPremium = parseFloat(this.netPremium.toFixed(3));
-      let disLoad = 0;
-      let netLocal = this.netPremium;
-      if (this.quoteGeneraion.value.discount > 0) {
-        disLoad = (this.netPremium * this.quoteGeneraion.value.discount) / 100;
-        netLocal = this.netPremium - disLoad;
-      } else {
-        disLoad = (this.netPremium * this.quoteGeneraion.value.loading) / 100;
-        netLocal = this.netPremium + disLoad;
-      }
-      this.discountLoad =
-        (this.quoteGeneraion.value.discount > 0 ? "-" : "+") +
-        disLoad.toFixed(2);
-      // this.gst = parseFloat((this.netPremium * 18 / 100).toFixed(3));
-      // this.totalPre = this.netPremium + this.gst;
-      // this.totalPre = parseFloat(this.totalPre.toFixed(3));
-      this.gst = parseFloat(((netLocal * 18) / 100).toFixed(2));
-      this.totalPre = netLocal + this.gst;
-      this.totalPre = Math.round(this.totalPre);
-      this.checkCalc = false;
-      this.quoteGeneraion.patchValue({
-        totalPremium: this.netPremium,
-      });
-      $(".coverForm input").prop("disabled", true);
-      this.disfirstName = true;
-      this.disableSelect = true;
-      $(".fw > mat-checkbox, .one > mat-checkbox").addClass("disable");
-      this.quoteGeneraion.get("polTenure").disable();
-      this.scrollToBottom();
-    } else {
-      alert("Please select atleast one Mandatory Cover");
-    }
+    this.showQuote = true;
+    this.netPremium =
+      Number(this.quoteGeneraion.value.fireBuildingPre) +
+      Number(this.quoteGeneraion.value.fireContentP) +
+      Number(this.quoteGeneraion.value.plinthFoundP) +
+      Number(this.quoteGeneraion.value.plantMacP) +
+      Number(this.quoteGeneraion.value.furnFixFitP) +
+      Number(this.quoteGeneraion.value.stockP) +
+      Number(this.quoteGeneraion.value.fireTerrPre) +
+      Number(this.quoteGeneraion.value.burglaryPre);
+    this.netPremium = parseFloat(this.netPremium.toFixed(3));
+    let disLoad = 0;
+    let netLocal = this.netPremium;
+    this.discountLoad =
+      (this.quoteGeneraion.value.discount > 0 ? "-" : "+") + disLoad.toFixed(2);
+    this.gst = parseFloat(((netLocal * 18) / 100).toFixed(2));
+    this.totalPre = netLocal + this.gst;
+    this.totalPre = Math.round(this.totalPre);
+    this.checkCalc = false;
+    this.quoteGeneraion.patchValue({
+      totalPremium: this.netPremium,
+    });
+    $(".coverForm input").prop("disabled", true);
+    this.disableSelect = true;
+    this.disableValue = true;
+    $(".fw > mat-checkbox, .one > mat-checkbox").addClass("disable");
+    this.quoteGeneraion.get("polTenure").disable();
+    this.scrollToBottom();
     this.createAnnexueList();
-    if (!this.makePaymentFlag) {
-      this.issueQuoteFlag = true;
-    }
   }
   scrollToBottom() {
     setTimeout(() => {
@@ -1029,7 +1010,6 @@ export class FrgrenewalComponent implements OnInit {
       });
     }, 100);
   }
-
   quote() {
 
     this.onSubmit = true;
@@ -1043,7 +1023,6 @@ export class FrgrenewalComponent implements OnInit {
     console.log(this.quoteGeneraion.status);
     if (this.quoteGeneraion.status == "VALID") {
       this.loading = true;
-      debugger;
       let obj = this.quoteGeneraion.value;
       if (this.quoteGeneraion.value.coverType == "FRG") {
         obj.quoteType = "FR";
@@ -1062,7 +1041,7 @@ export class FrgrenewalComponent implements OnInit {
       obj.loanAcNo = this.quoteGeneraion.value.loanAcNo;
       obj.ckycflag = this.quoteGeneraion.value.verfyilagf;
       obj.firePolicy = this.quoteGeneraion.value.firePolicy;
-      console.log(this.quoteGeneraion.value.coverType);
+      console.log(this.quoteGeneraion.value.covertype);
       obj.allData = JSON.stringify(this.quoteGeneraion.value);
       obj.customerName = this.customerName;
       obj.policyDate= this.startdate;
@@ -1104,10 +1083,12 @@ export class FrgrenewalComponent implements OnInit {
       });
     }
   }
-
   createAnnexueList() {
     this.annexureWithValue = [];
+    //this.setAnnexureWithValue("Fire & Allied Perils", this.totalFirSum);
     let obj = this.quoteGeneraion.value;
+    //this.setAnnexureWithValue("STFI", obj.STFI);
+    //this.setAnnexureWithValue("Earth Quake", obj.EQ);
     this.setAnnexureWithValue(
       "Cover for Valuable Contents",
       obj.coverContentSum
@@ -1115,7 +1096,6 @@ export class FrgrenewalComponent implements OnInit {
   }
   updateQuote() {
     let obj = this.quoteGeneraion.value;
-    console.log(this.quoteNo);
     obj.id = this.quoteNo;
     obj.AnnexData = JSON.stringify(this.annexureForm.value.detailSections);
     obj.allData = JSON.stringify(this.quoteGeneraion.value);
@@ -1134,19 +1114,10 @@ export class FrgrenewalComponent implements OnInit {
     }
   }
   saveQuoteDetails() {
-   
-    const arr = <FormArray>this.annexureForm.controls.detailSections;
     this.updateQuote();
     if (this.quoteGeneraion.status == "VALID") {
-      if (this.annexureWithValue.length > 0 && arr.status != "VALID") {
-        alert("Please fill the Annexure Details");
-        return false;
-      }
       if (this.loginFlag != "1") {
-        if (
-          this.quoteGeneraion.value.paymentMethod == "" &&
-          this.loginFlag != ""
-        ) {
+        if (this.quoteGeneraion.value.paymentMethod == "") {
           alert("Please choose the payment method");
           return false;
         } else {
@@ -1183,281 +1154,71 @@ export class FrgrenewalComponent implements OnInit {
         quoteNo: this.quoteNo,
         trnID: this.trnID,
       };
-      console.log(obj1);
+      //if ($('#myFile')[0].files.length > 0){
+      this.loading = true;
+      const formData = new FormData();
+      formData.append("quoteNo", this.quoteNo);
       if ($("#myFile")[0].files.length > 0) {
-        this.loading = true;
-        const formData = new FormData();
-        formData.append("quoteNo", this.quoteNo);
-        if ($("#myFile")[0].files.length > 0) {
-          let file = $("#myFile")[0].files[0];
-          let name = $("#myFile")[0].files[0].name;
-          formData.append("FileByte", file);
-          formData.append("FileName", name);
-        }
-        if ($("#myFile1")[0].files.length > 0) {
-          let file = $("#myFile1")[0].files[0];
-          let name = $("#myFile1")[0].files[0].name;
-          formData.append("FileByte1", file);
-          formData.append("FileName1", name);
-        }
-
-        this.api.updateData(obj1).subscribe(
-          (sus) => {
-            if (
-              $("#myFile1")[0].files.length > 0 ||
-              $("#myFile")[0].files.length > 0
-            ) {
-              this.api.uploadDoc(formData).subscribe(
-                (res) => {
-                  if (this.loginFlag == "1") {
-                    this.router.navigate(["quote"]);
-                  } else {
-                    this.payment();
-                  }
-                },
-                (err) => {
-                  if (
-                    err.error["text"] == "Done" ||
-                    err.error["text"] == "Success"
-                  ) {
-                    if (this.loginFlag == "1") {
-                      this.router.navigate(["quote"]);
-                    } else {
-                      this.payment();
-                    }
-                  }
-                }
-              );
-            } else {
-              if (this.loginFlag == "1") {
-                this.router.navigate(["quote"]);
-              } else {
-                this.payment();
-              }
-            }
-          },
-          (err) => {
-            console.log(err);
-          }
-        );
-      } else {
-        this.api.updateData(obj1).subscribe(
-          (sus) => {
-            const formData = new FormData();
-            if (
-              $("#myFile1")[0].files.length > 0 ||
-              $("#myFile")[0].files.length > 0
-            ) {
-              this.api.uploadDoc(formData).subscribe(
-                (res) => {
-                  if (this.loginFlag == "1") {
-                    this.router.navigate(["quote"]);
-                  } else {
-                    this.payment();
-                  }
-                },
-                (err) => {
-                  if (
-                    err.error["text"] == "Done" ||
-                    err.error["text"] == "Success"
-                  ) {
-                    if (this.loginFlag == "1") {
-                      this.router.navigate(["quote"]);
-                    } else {
-                      this.payment();
-                    }
-                  }
-                }
-              );
-            } else {
-              if (this.loginFlag == "1") {
-                this.router.navigate(["quote"]);
-              } else {
-                this.payment();
-              }
-            }
-          },
-          (err) => {
-            console.log(err);
-          }
-        );
+        let file = $("#myFile")[0].files[0];
+        let name = $("#myFile")[0].files[0].name;
+        formData.append("FileByte", file);
+        formData.append("FileName", name);
       }
-      // else {
-      //   alert("Please upload Proposal Form to continue!");
+      if ($("#myFile1")[0].files.length > 0) {
+        let file = $("#myFile1")[0].files[0];
+        let name = $("#myFile1")[0].files[0].name;
+        formData.append("FileByte1", file);
+        formData.append("FileName1", name);
+      }
+      this.api.updateData(obj1).subscribe(
+        (sus) => {
+          if (
+            $("#myFile1")[0].files.length > 0 ||
+            $("#myFile")[0].files.length > 0
+          ) {
+            this.api.uploadDoc(formData).subscribe(
+              (res) => {
+                console.log(res);
+                this.loading = false;
+                if (this.loginFlag == "1") {
+                  this.router.navigate(["quote"]);
+                } else {
+                  this.payment();
+                }
+              },
+              (err) => {
+                this.loading = false;
+                console.log(err.error["text"]);
+                if (
+                  err.error["text"] == "Done" ||
+                  err.error["text"] == "Success"
+                ) {
+                  this.loading = false;
+                  if (this.loginFlag == "1") {
+                    this.router.navigate(["quote"]);
+                  } else {
+                    this.payment();
+                  }
+                }
+              }
+            );
+          } else {
+            if (this.loginFlag == "1") {
+              this.router.navigate(["quote"]);
+            } else {
+              this.payment();
+            }
+          }
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+      // }else{
+      //   alert("Please upload Proposal Form to continue!")
       // }
     }
   }
-
-  // aryaApiCall() {
-  //   // alert("hi");
-  //   // var obj = {
-  //   //   proposal_id: quoteNo,
-  //   // };
-  //   // console.warn(obj);
-  //   this.api.getCkyctoken(obj).subscribe((success) => {
-  //     debugger;
-  //     console.log(success);
-  //     console.log(success.token);
-  //     if (success.token && success.token != "") {
-  //       console.warn(success.token);
-  //       var obj = {
-  //         pan: "",
-  //         dob: "",
-  //       };
-  //       alert("SKD Called Successful !");
-  //       //debugger;
-  //       AJL.aryafns.initMod(
-  //         sus.token,
-  //         "QUOTE1234567",
-  //         obj,
-  //         (data) => {
-  //           debugger;
-  //           // var str = success.token.concat(quoteNo.toString());
-  //           console.warn(data);
-  //         },
-  //         (error) => {
-  //           alert("Arya.Ai token creation failed !");
-  //           console.error(error);
-  //         }
-  //       );
-  //     // }
-  //   };
-
-  verifyckyc() {
-    if (this.quoteGeneraion.status == "VALID"){
-    this.loading = true;
-    //  this.updateQuote();
-    let obj = {};
-    
-    this.api.getCkyctoken(obj).subscribe(
-      
-      (sus) => {
-        this.quoteGeneraion.patchValue({
-          proposal: sus.ProposalNo,
-        });
-        console.log(sus);
-        console.log(sus[0].Token);
-        var cto = sus[0].Token;
-        let dt = new Date(sus.dobDate);
-        var pid = sus[0].ProposalNo;
-        console.log(dt);
-        if (sus.token != "") {
-          let obj = this.quoteGeneraion.value;
-          obj.req_id = this.quoteNo;
-          console.log(this.quoteNo);
-          obj.proposal_id = pid;
-          obj.full_name = this.quoteGeneraion.value.fullname;
-          obj.customer_type = this.quoteGeneraion.value.customerType;
-          obj.gender = this.quoteGeneraion.value.gender;
-          var ds = new Date(
-            this.quoteGeneraion.value.dobDate
-          ).toLocaleDateString("en-CA");
-          var ds1 = new Date(ds)
-            .toLocaleDateString("pt-br")
-            .split("/")
-            .join("-");
-          obj.dob = ds1;
-          obj.id_type = this.quoteGeneraion.value.idtype;
-          obj.id_num = this.quoteGeneraion.value.idnum;
-          // var pid=sus.ProposalNo;
-
-          console.log(pid);
-          this.api.createCKYC(obj).subscribe(
-            (sus) => {
-              console.log(sus);
-              if (sus.ckyc_remarks == "OK") {
-                console.log(sus.result.ckyc_number);
-                this.ckycref = true;
-                this.ckycflag = true;
-                this.quoteGeneraion.patchValue({
-                  ckycno: sus.result.ckyc_number,
-                  fullname: sus.result.customer_name,
-                  dobdate: sus.result.dob,
-                  // idtype: sus.result.id_type,
-                  firstName:
-                    sus.result.first_name +
-                    " " +
-                    (sus.result.middle_name == null
-                      ? ""
-                      : sus.result.middle_name),
-                  lastName: sus.result.last_name,
-                  idnum: sus.result.id_num,
-                  proposal: "",
-                });
-                this.loading = false;
-                alert("CKYC Status : verified!");
-                this.verfyilagf = true;
-                this.disableckyc = true;
-                this.ckycname = true;
-                // $(".coverForm input").prop("disabled", false);
-                let text =
-                  "On Click of OK, you are agreeing to issue the policy with CKYC name Please confirm ? \n" +
-                  sus.result.customer_name;
-                if (confirm(text) == true) {
-                  $(".coverForm input").prop("disabled", true);
-                } else {
-                  $(".coverForm input").prop("disabled", false);
-                }
-                // this.updateQuote();
-              } else {
-                this.loading = false;
-                alert("CKYC Status : Verification failed!");
-                this.verfyilagf = true;
-                this.disableckyc = true;
-                this.ckycname = true;
-                // var obj = {
-                //   pan: this.quoteGeneraion.value.idnum,
-                //   dob: ds1,
-                // };
-                // console.log(this.quoteNo);
-                // console.log(obj);
-                // AJL.aryafns.initMod(cto, pid, obj, (data) => {
-                //   console.log(data);
-                //   if (
-                //     data.verified == "Success"
-                //   ) {
-                //     alert("CKYC Status: Document Upload Verified!");
-                //     this.ckycref = false;
-                //     this.ckycflag = false;
-                //     this.quoteGeneraion.patchValue({
-                //       ckycno: "",
-                //       // fullname: data.api_result.registered_name,
-                //       proposal: data.proposal_id,
-                //       // idnum: "",
-                //     });
-                //     this.verfyilagf = true;
-                //     this.ckycname = true;
-                //     this.disableckyc = true;
-                //     this.updateQuote();
-                //   } else {
-                //     this.loading = false;
-                //     alert("CKYC Status: Verified failed!");
-                //     this.quoteGeneraion.patchValue({
-                //       ckycno: "",
-                //       fullname: data.api_result.registered_name,
-                //       proposal: "",
-                //       idnum: "",
-                //     });
-                //   }
-                // });
-              }
-            },
-            (err) => {
-              console.log(err);
-            }
-          );
-        } else {
-          alert("token not found!");
-        }
-      },
-      (err) => {
-        console.log("token creation failed");
-      }
-    );
-  }
-  }
-
-
   getUcoData() {
     this.loading = true;
     this.quoteGeneraion.enable();
@@ -1472,15 +1233,13 @@ export class FrgrenewalComponent implements OnInit {
     ucoPayment.policy_sub_type = "CAR"; //will be changed
     ucoPayment.cust_relation = "Self";
     ucoPayment.proposal_no = this.quoteNo;
-    ucoPayment.rrn_no =
-      this.trnID == null
-        ? "FGUBQTXN" + Math.floor(Math.random() * Math.floor(100000))
-        : this.trnID;
+    ucoPayment.rrn_no = this.trnID;
     ucoPayment.premium_amt = String(this.netPremium);
     ucoPayment.gst = String(this.gst);
     ucoPayment.total_amt = String(this.totalPre);
     ucoPayment.sum_assured_amt = String(this.totalFirSum);
     ucoPayment.cust_id = this.bankCustID;
+    //ucoPayment.FGStafID = this.FGStafID;
     ucoPayment.acct_holder_name = this.customerName;
     ucoPayment.cust_address =
       this.quoteGeneraion.value.add1 +
@@ -1491,18 +1250,21 @@ export class FrgrenewalComponent implements OnInit {
       this.quoteGeneraion.value.state +
       this.quoteGeneraion.value.country;
     ucoPayment.cust_pan = this.quoteGeneraion.value.panNo;
+    //  ucoPayment.cust_relation=this.quoteGeneraion.value.cus
     ucoPayment.nominee_name = this.quoteGeneraion.value.nomineeRel;
     ucoPayment.email_id = this.quoteGeneraion.value.email;
     ucoPayment.mob_no = this.quoteGeneraion.value.contactNo;
     ucoPayment.acct_no = String(this.AcNo);
-    ucoPayment.maker_id = this.branchCode + "_BH";
-    ucoPayment.checker_id = this.branchCode + "_ABH";
     //ucoPayment.maker_id = "1870_BH";
     //ucoPayment.checker_id = "1870_ABH";
+    ucoPayment.maker_id = this.branchCode + "_BH";
+    ucoPayment.checker_id = this.branchCode + "_ABH";
+    //ucoPayment.free_text_1=this.customerName;
     ucoPayment.insured_person_name_1 = this.customerName;
-    ucoPayment.policy_name = "SHOP";
-    ucoPayment.sp_code = this.quoteGeneraion.value.spCode;
-    //ucoPayment.sp_code = "SP0071315035";
+    ucoPayment.policy_name = "SFSP";
+    ucoPayment.sp_code = this.quoteGeneraion.value.spCode; // "SP0071315035";
+
+    //  this.loading = false;
     this.ridrectToPay = true;
     return ucoPayment;
   }
@@ -1566,7 +1328,6 @@ export class FrgrenewalComponent implements OnInit {
       }
     });
   }
-
   updateRctPayerID() {
     let obj = {
       receiptNo: this.fgReceiptNo,
@@ -1601,6 +1362,7 @@ export class FrgrenewalComponent implements OnInit {
   }
   payment() {
     this.updateQuote();
+    console.log(this.quoteGeneraion);
     if (this.quoteGeneraion.status == "VALID") {
       let ucoPayment: UCOPaymentModel = new UCOPaymentModel();
       ucoPayment = this.getUcoData();
@@ -1612,7 +1374,6 @@ export class FrgrenewalComponent implements OnInit {
       };
       this.api.generateWinNo(obj).subscribe(
         (sus) => {
-          this.loading = true;
           if (sus.ResponseFlag == "1") {
             this.quoteGeneraion.patchValue({
               winNo: JSON.parse(sus.ResponseMessage)["Table"][0].winnumber,
@@ -1624,7 +1385,7 @@ export class FrgrenewalComponent implements OnInit {
               console.log(tran);
               tran = tran.split("|");
               this.loading = true;
-              //.policy_ref_no = tran[0]+Math.floor(Math.random() * 100000);  // For UAT
+              //ucoPayment.policy_ref_no = tran[0]+Math.floor(Math.random() * 100000);  // For UAT
               ucoPayment.policy_ref_no = tran[0];
               let receiptData: Receipt = new Receipt();
               this.fgClientId = tran[3]; //this.fgiBRCode
@@ -1635,7 +1396,6 @@ export class FrgrenewalComponent implements OnInit {
                 receiptData.tranDate = this.api.getFormattedSaveDate(
                   new Date()
                 ); //transDate; //"28-12-2020"// transDate; //.replace("-","/");
-                receiptData.tranRefDate = transDate;
               }
               if (this.currentStatus == "P") {
                 this.createClient(receiptData, ucoPayment);
@@ -1646,7 +1406,13 @@ export class FrgrenewalComponent implements OnInit {
                 this.fgReceiptNo = tran[2];
                 this.generatePDF(ucoPayment);
               } else if (this.currentStatus == "D") {
-                this.updateUcoPolicy(ucoPayment);
+                if (this.checkBurgalaryPolicy) {
+                  this.generateBurglaryPDF();
+                } else {
+                  this.updateUcoPolicy(ucoPayment);
+                }
+              } else if (this.currentStatus == "C") {
+                this.generateBurglaryPDF();
               }
             } else {
               if (this.payerid) {
@@ -1683,6 +1449,10 @@ export class FrgrenewalComponent implements OnInit {
                 });
               }
             }
+          } else {
+            this.loading = false;
+            this.ridrectToPay = false;
+            alert("There is some server issue please try again.");
           }
         },
         (err) => {
@@ -1695,17 +1465,64 @@ export class FrgrenewalComponent implements OnInit {
     this.checkCalc = true;
     $(".coverForm input").prop("disabled", false);
     this.disableSelect = false;
+    this.disableValue = true;
     $(".fw > mat-checkbox, .one > mat-checkbox").removeClass("disable");
     this.quoteGeneraion.get("polTenure").enable();
-    this.issueQuoteFlag = false;
+    //this.issueQuoteFlag = false;
     if (this.makePaymentFlag) {
-      this.makePaymentFlagModify = true;
       this.makePaymentFlag = false;
     }
   }
+  BOENQ() {
+    let year = new Date(this.quoteGeneraion.value.policyDate).getFullYear();
+    // let month = parseInt(("0" + new Date(this.quoteGeneraion.value.policyDate).getMonth()).slice(-2));
+    // let day = parseInt(("0" + new Date(this.quoteGeneraion.value.policyDate).getDate()).slice(-2));
+    var month = String(
+      new Date(this.quoteGeneraion.value.policyDate).getMonth() + 1
+    );
+    month = month.length == 2 ? "0" + month : month;
+    var day = String(new Date(this.quoteGeneraion.value.policyDate).getDate());
+    day = day.length == 2 ? "0" + day : day;
+
+    let startDt = year.toString() + (month + 1) + day;
+
+    var c = new Date(year + 1, Number(month), Number(day) - 1);
+    var endDt = c.getFullYear().toString() + (c.getMonth() + 1) + c.getDate();
+    let sumIns =
+      Number(this.quoteGeneraion.value.fireBuilding) +
+      Number(this.quoteGeneraion.value.fireContent) +
+      Number(this.quoteGeneraion.value.plinthFound) +
+      Number(this.quoteGeneraion.value.plantMac) +
+      Number(this.quoteGeneraion.value.furnFixFit) +
+      Number(this.quoteGeneraion.value.stock) +
+      Number(this.quoteGeneraion.value.consultingFees) +
+      Number(this.quoteGeneraion.value.removalDebris);
+    //+ this.quoteGeneraion.value.otherStock
+    // +  Number(this.quoteGeneraion.value.impactDamage)
+    //  +  Number(this.quoteGeneraion.value.fireTerrSum)
+    //    +  Number(this.quoteGeneraion.value.escalationSum)
+    //     +  Number(this.quoteGeneraion.value.ommissionSum)
+    let obj = {
+      agentCode: this.userName,
+      clientCode: "40246539",
+      startDate: startDt,
+      endDate: endDt,
+      pincode: this.quoteGeneraion.value.pincode,
+      stateCode: this.stateCode,
+      sumInsured: sumIns,
+    };
+    this.api.BOENQ(obj).subscribe((sus) => {
+      console.log(sus);
+      if (sus.ResponseFlag == 1) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+  }
   generatePDF(ucoPayment) {
 
-    
+   
 
 
 
@@ -1894,6 +1711,7 @@ export class FrgrenewalComponent implements OnInit {
       obj.clientCode = this.quoteGeneraion.value.clientno; //'40246539';
       obj.policyNo = this.quoteGeneraion.value.nwpolicyno;
       obj.startDate = startDt;
+      obj.stateCode = this.stateCode;
       obj.endDate = endDt;
       obj.receiptNo = this.fgReceiptNo;
       obj.quoteNo = this.quoteNo;
@@ -1903,13 +1721,13 @@ export class FrgrenewalComponent implements OnInit {
       obj.bancaSegement = this.quoteGeneraion.value.bancaSegement;
       obj.payerID = this.payerid;
       obj.receiptvendorname = this.receiptvendorname;
-      obj.agentCode = this.agentCode;
-      obj.zone= this.quoteGeneraion.value.zoneNo;
        obj.sumInsured = sumIns;
+       obj.agentCode= this.agentCode;
+       obj.zone= this.quoteGeneraion.value.zoneNo;
       console.log(obj);
       obj.startDate =startDt;
     obj.endDate = endDt;
-    this.api.generateFireLongPDFRNWL(obj).subscribe((sus) => {
+    this.api.generate_FBG_PDF(obj).subscribe((sus) => {
       console.log(sus);
       this.loading = false;
       if (sus.ResponseFlag == 1) {
@@ -1995,6 +1813,104 @@ export class FrgrenewalComponent implements OnInit {
     }
 
   }
+  generateBurglaryPDF() {
+    this.loading = true;
+    var date = new Date(this.quoteGeneraion.value.riskDate);
+    var month = String(date.getMonth() + 1);
+    month = month.length == 1 ? "0" + month : month;
+    var day = String(date.getDate());
+    day = day.length == 1 ? "0" + day : day;
+    var year = date.getFullYear();
+    var startDt = String(year) + month + day;
+    var endDt = this.quoteGeneraion.value.riskEndDate.split("/");
+    endDt = endDt[2] + endDt[0] + endDt[1];
+    var insDate = new Date(this.quoteGeneraion.value.insDate);
+    var monthi = String(insDate.getMonth() + 1);
+    monthi = monthi.length == 1 ? "0" + monthi : monthi;
+    var dayi = String(insDate.getDate());
+    dayi = dayi.length == 1 ? "0" + dayi : dayi;
+    var yeari = insDate.getFullYear();
+    let insDate1 = String(yeari) + monthi + dayi;
+    var spouseDate = new Date(this.quoteGeneraion.value.spouseDate);
+    monthi = String(spouseDate.getMonth() + 1);
+    monthi = monthi.length == 1 ? "0" + monthi : monthi;
+    dayi = String(spouseDate.getDate());
+    dayi = dayi.length == 1 ? "0" + dayi : dayi;
+    yeari = spouseDate.getFullYear();
+    let spouseDate1 = String(yeari) + monthi + dayi;
+    let sumIns =
+      (this.quoteGeneraion.value.fireBuilding
+        ? this.quoteGeneraion.value.fireBuilding
+        : 0) +
+      (this.quoteGeneraion.value.fireContent
+        ? this.quoteGeneraion.value.fireContent
+        : 0) +
+      (this.quoteGeneraion.value.plinthFound
+        ? this.quoteGeneraion.value.plinthFound
+        : 0) +
+      (this.quoteGeneraion.value.plantMac
+        ? this.quoteGeneraion.value.plantMac
+        : 0) +
+      (this.quoteGeneraion.value.furnFixFit
+        ? this.quoteGeneraion.value.furnFixFit
+        : 0) +
+      (this.quoteGeneraion.value.stock ? this.quoteGeneraion.value.stock : 0) +
+      (this.quoteGeneraion.value.consultingFees
+        ? this.quoteGeneraion.value.consultingFees
+        : 0) +
+      (this.quoteGeneraion.value.removalDebris
+        ? this.quoteGeneraion.value.removalDebris
+        : 0);
+    let obj = this.quoteGeneraion.value;
+    obj.clientCode = this.fgClientId; //'40246539';
+    obj.startDate = startDt;
+    obj.endDate = endDt;
+    obj.stateCode = this.stateCode;
+    obj.sumInsured = this.checkBurglaryAmt;
+    obj.agentCode = this.agentCode;
+    let tran: any = this.activeR.snapshot.paramMap.get("transData");
+    console.log(tran);
+    if (tran != null && tran != "") {
+      tran = tran.split("|");
+      obj.receiptNo = tran[2];
+    } else {
+      obj.receiptNo = this.multipleReceipt[0];
+    }
+    obj.quoteNo = this.quoteNo;
+    obj.bankBranch = this.fgiBRCode;
+    obj.bankBranchCode = this.fgBrachCode;
+    obj.insDate = insDate1;
+    obj.spouseDate = spouseDate1;
+    obj.zone = "0" + this.currentZoneNo;
+    obj.ageOfBuildingCode = this.ageOfBuildingCode;
+    obj.fireProtectionCode = this.fireProtectionCode;
+    obj.constructDetailsCode = this.constructDetailsCode;
+    obj.payerID = this.payerid;
+    obj.receiptvendorname = this.receiptvendorname;
+    obj.policyNo = this.policyNo;
+    if (this.loadingDisc < 0) {
+      obj.sign = "+";
+      obj.discount = this.loadingDisc.toString().substring(1);
+    } else {
+      obj.sign = "-";
+      obj.discount = this.loadingDisc;
+    }
+    this.api.generateBuglaryPDF(obj).subscribe((sus) => {
+      console.log(sus);
+      this.loading = false;
+      //this.router.navigate(['quote']);
+      if (sus.ResponseFlag == 1) {
+        this.policyText = "Policy No - ";
+        this.policyNo = this.policyNo;
+        this.policyNo1 = sus.ResponseMessage;
+        return true;
+      } else {
+        alert(sus.ResponseMessage);
+        console.log(sus.ResponseMessage);
+        return false;
+      }
+    });
+  }
   updateUcoPolicy(ucoPayment) {
     this.loading = true;
     this.api.ucoPayment(ucoPayment, "U").subscribe((response) => {
@@ -2014,9 +1930,6 @@ export class FrgrenewalComponent implements OnInit {
     //console.log(ucoPayment);
   }
 
-
-
-  //Abinash
     // fetch renewal api
     getPolicy(val) {
       this.loading = true;
@@ -2036,7 +1949,7 @@ export class FrgrenewalComponent implements OnInit {
   
   
       // fetching policy details from BO
-      this.api.get_FRG_PolicyDel(obj).subscribe((sus) => {
+      this.api.get_FUS_PolicyDel(obj).subscribe((sus) => {
         this.loading = true;
         console.log(JSON.parse(sus.ResponseMessage));
         let res = JSON.parse(sus.ResponseMessage).Table[0];
@@ -2047,9 +1960,10 @@ export class FrgrenewalComponent implements OnInit {
         if (sus.ResponseFlag == "1") {
           {
             if (res.policystatus == "AR" || res.policystatus == "MR") {
-              // if (res.contracttype == "FSR" || res.contracttype == "FRG" || res.contracttype == "FUS" || res.contracttype == "FBG") {
-              if (res.contracttype == "FRG" ) {
-  
+              //if (res.contracttype == "FSR" || res.contracttype == "FRG" || res.contracttype == "FUS" || res.contracttype == "FBG")
+              if (res.contracttype == "FBG" ) 
+              {
+
                 const tables = Object.keys(JSON.parse(sus.ResponseMessage)).filter(key => key.startsWith('Table'));
               
       if (tables.length > 0) {
@@ -2077,21 +1991,7 @@ export class FrgrenewalComponent implements OnInit {
           comcountry: this.addresses[1].Country,
           comPincode: this.addresses[1].postcode,
         })
-
-
-
-       let count = 0;
-    for (let item of this.insuranceData) {
-      if (item.CVRCDE1 === 'VALC') {
-        if (count === 0) {
-          
-        } else if (count === 1) {
-          
-          break; // Exit loop after finding the second 'VALC' value
-        }
-        count++;
-      }
-    }
+       
   
   
         this.insuranceData.forEach(data => {
@@ -2104,45 +2004,65 @@ export class FrgrenewalComponent implements OnInit {
           console.log(this.parsePremiumValue(data.PREMIUM1));
           console.log(this.parsePremiumValue(data.CVRSI1));
             // if(data.CVRCDE1=='1A**' || data.CVRCDE1=='1B**'){
-              // this.quoteGeneraion.patchValue({
-              //   fireAlliedPerils:true
-              // })
-              if(data.CVRCDE1=='0001'){
+              this.quoteGeneraion.patchValue({
+                fireAlliedPerils:true
+              })
+              if(data.CVRCDE1.trim()=='002'){
                 this.quoteGeneraion.patchValue({
                   buildMain:true,
-                  fireBuildingPre:this.parsePremiumValue(data.PREMIUM1),
-                  fireBuilding:this.parsePremiumValue(data.CVRSI1)
+                  fireBuilding:this.parsePremiumValue(data.CVRSI1),
+                  fireBuildingPre:this.parsePremiumValue(data.PREMIUM1)
                 })
-                this.buildIngPre(this.parsePremiumValue(data.CVRSI1) , '1A**');
-                this.setTotalFirSum();
                 
               } 
-              else if(data.CVRCDE1=='0002'){
+              else if(data.CVRCDE1.trim()=='001'){
+                this.quoteGeneraion.patchValue({
+                  plinthFoundMain:true,
+                  plinthFoundP:this.parsePremiumValue(data.PREMIUM1),
+                  plinthFound:this.parsePremiumValue(data.CVRSI1)
+                })
+                
+              } 
+              else if(data.CVRCDE1.trim()=='005'){
+                this.quoteGeneraion.patchValue({
+                  plantMacMain:true,
+                  plantMacP:this.parsePremiumValue(data.PREMIUM1),
+                  plantMac:this.parsePremiumValue(data.CVRSI1)
+                })
+                
+              } 
+              else if(data.CVRCDE1.trim()=='006'){
+                this.quoteGeneraion.patchValue({
+                  furnFixFitMain:true,
+                  furnFixFitP:this.parsePremiumValue(data.PREMIUM1),
+                  furnFixFit:this.parsePremiumValue(data.CVRSI1)
+                })
+                
+              } 
+              else if(data.CVRCDE1.trim()=='016'){
+                this.quoteGeneraion.patchValue({
+                  stockMain:true,
+                  stockP:this.parsePremiumValue(data.PREMIUM1),
+                  stock:this.parsePremiumValue(data.CVRSI1)
+                })
+                
+              } 
+              else if(data.CVRCDE1.trim()=='008'){
                 this.quoteGeneraion.patchValue({
                   fireContentsMain:true,
                   fireContentP:this.parsePremiumValue(data.PREMIUM1),
                   fireContent:this.parsePremiumValue(data.CVRSI1)
                 })
-                this.fireContentPre(this.parsePremiumValue(data.CVRSI1))
-                this.setTotalFirSum();
                 
-              }
-              else if(data.CVRCDE1=='VALC'){
-                this.quoteGeneraion.patchValue({
-                  coverContent:true,
-                  coverContentPre:this.parsePremiumValue(data.PREMIUM1),
-                  coverContentSum:this.parsePremiumValue(data.CVRSI1)
-                })
-                
-              }
+              } 
               
-            
+            // } 
             else if(data.CVRCDE1=='2A**'){
               this.quoteGeneraion.patchValue({
                 burglaryMain:true
-              })              
+              })
+              
             }
-
             else if(data.CVRCDE1=='7C**'){
               this.quoteGeneraion.patchValue({
                 legalLiabiity:true,
@@ -2296,7 +2216,7 @@ export class FrgrenewalComponent implements OnInit {
       });
    
   
-      console.log(this.quoteGeneraion.value);
+            console.log(this.quoteGeneraion.value);
   
                 //alert(res.TotalSI);
                 this.coverType = res.contracttype;
@@ -2348,14 +2268,19 @@ export class FrgrenewalComponent implements OnInit {
                   state: this.state,
                   pincode: this.pincode,
                   fgbranchName: this.fgbranchName,
-                  OccupancyCode: this.coverType == "FSR" ? this.OccupancyCode : this.OccupancyCode + this.OccupancyName[0],
-                  OccupancyName: this.coverType == "FSR" ? this.OccupancyName : this.OccupancyName.slice(1),
+                  OccupancyCode: this.coverType == "FRG" ? this.OccupancyCode : this.OccupancyCode + this.OccupancyName[0],
+                  OccupancyName: this.coverType == "FRG" ? this.OccupancyName : this.OccupancyName.slice(1),
                   sumInsured:this.TotalSI,
                   businessType:res.OccupancyCode
+                  
                 });
                 console.log(this.quoteGeneraion);
                 this.getDetails(res.pincode);
-                
+                this.setRateAsPerOccupation(res.OccupancyCode);
+
+                this.setTerrPre();
+  
+  
                 this.loading = false;
               } else {
                 this.loading = false;
@@ -2452,57 +2377,37 @@ export class FrgrenewalComponent implements OnInit {
         }
       });
     }
-  
-  
-    // Abinash
-    parsePremiumValue(value: string): number {
-      // Ensure the input premiumValue is a string and has exactly 13 characters
-      if (typeof value !== 'string' || (value.length !== 12 && value.length !== 13)) {
-        throw new Error('Invalid field value format');
-      }
-  
-      // Check if the value has 13 digits (premium with decimals)
-      if (value.length === 13) {
-        const wholeNumberPart = value.slice(0, 11);
-        const decimalPart = value.slice(11, 13);
-        const premiumAmount = Number(`${wholeNumberPart}.${decimalPart}`);
-        return premiumAmount;
-      }
-  
-      // Check if the value has 12 digits (sum insured - whole number)
-      if (value.length === 12) {
-        // Remove leading zeros before parsing as a whole number
-        const sumInsuredAmount = Number(value);
-        return sumInsuredAmount;
-      }
-  
+  clearForm() {
+    throw new Error("Method not implemented.");
+  }
+
+     // Abinash
+  parsePremiumValue(value: string): number {
+    // Ensure the input premiumValue is a string and has exactly 13 characters
+    if (typeof value !== 'string' || (value.length !== 12 && value.length !== 13)) {
       throw new Error('Invalid field value format');
     }
 
-
-    clearForm() {
-      let obj = this.quoteGeneraion.controls["policyNo"].setValue("");
-      this.quoteGeneraion.controls["clientno"].setValue("");
-      this.quoteGeneraion.controls["customerName"].setValue("");
-      this.quoteGeneraion.controls["agentcode"].setValue("");
-      this.quoteGeneraion.controls["fgBrachCode1"].setValue("");
-      this.quoteGeneraion.controls["coverType"].setValue("");
-      this.quoteGeneraion.controls["riskDate"].setValue("");
-      this.quoteGeneraion.controls["fireBuilding"].setValue("");
-      this.quoteGeneraion.controls["buildMain"].setValue("");
-      this.quoteGeneraion.controls["fireBuildingPre"].setValue("");
-      this.quoteGeneraion.controls["fireContentsMain"].setValue("");
-      this.quoteGeneraion.controls["fireContent"].setValue("");
-      this.quoteGeneraion.controls["fireContentP"].setValue("");
-      this.quoteGeneraion.controls["longTermTerrSum"].setValue("");
-      this.quoteGeneraion.controls["longTermTerrPre"].setValue("");
-  
+    // Check if the value has 13 digits (premium with decimals)
+    if (value.length === 13) {
+      const wholeNumberPart = value.slice(0, 11);
+      const decimalPart = value.slice(11, 13);
+      const premiumAmount = Number(`${wholeNumberPart}.${decimalPart}`);
+      return premiumAmount;
     }
 
+    // Check if the value has 12 digits (sum insured - whole number)
+    if (value.length === 12) {
+      // Remove leading zeros before parsing as a whole number
+      const sumInsuredAmount = Number(value);
+      return sumInsuredAmount;
+    }
 
-
+    throw new Error('Invalid field value format');
+  }
 
   setAddress(evt) {
+    console.log(evt);
     if (evt.checked) {
       this.quoteGeneraion.patchValue({
         comadd1: this.quoteGeneraion.value.add1,
@@ -2526,43 +2431,7 @@ export class FrgrenewalComponent implements OnInit {
     }
   }
   validateAdd() {
-    // for ckyc
-    this.quoteGeneraion.removeControl("fullname");
-    this.quoteGeneraion.addControl(
-      "fullname",
-      new FormControl("", Validators.required)
-    );
-    // this.quoteGeneraion.removeControl("idnum");
-    // this.quoteGeneraion.addControl(
-    //   "idnum",
-    //   new FormControl("", Validators.required)
-    // ),
-    this.quoteGeneraion.removeControl("dobDate");
-    this.quoteGeneraion.addControl(
-      "dobDate",
-      new FormControl("", Validators.required)
-    ),
-      this.quoteGeneraion.removeControl("idtype");
-    this.quoteGeneraion.addControl(
-      "idtype",
-      new FormControl("", Validators.required)
-    ),
-    this.quoteGeneraion.removeControl("idnum");
-    this.quoteGeneraion.addControl(
-      "idnum",
-      new FormControl("", Validators.required)
-    ),
-      // this.quoteGeneraion.removeControl("proposal");
-      // this.quoteGeneraion.addControl(
-      //   "proposal",
-      //   new FormControl("", Validators.required)
-      // ),
-      this.quoteGeneraion.removeControl("gender");
-    this.quoteGeneraion.addControl(
-      "gender",
-      new FormControl("", Validators.required)
-    ),
-      this.quoteGeneraion.removeControl("add1");
+    this.quoteGeneraion.removeControl("add1");
     this.quoteGeneraion.addControl(
       "add1",
       new FormControl("", Validators.required)
@@ -2695,6 +2564,7 @@ export class FrgrenewalComponent implements OnInit {
   setAnnexureWithValue(name, val) {
     if (val) {
       this.annexureWithValue.push({ name: name, value: val });
+      console.log(this.annexureWithValue);
     }
   }
   addAnnexureForm() {
@@ -2706,19 +2576,19 @@ export class FrgrenewalComponent implements OnInit {
     control.removeAt(index);
   }
   compareSumIn(i) {
-    if (this.annexureForm.value.detailSections[i].aneCoverType != "") {
+    if (this.annexureForm.value.detailSections[i].coverType != "") {
       let total = 0;
       let currentValue = this.annexureForm.value.detailSections[i].sumins;
       for (let annexure of this.annexureForm.value.detailSections) {
         if (
-          annexure.aneCoverType ==
-          this.annexureForm.value.detailSections[i].aneCoverType
+          annexure.coverType ==
+          this.annexureForm.value.detailSections[i].coverType
         ) {
           total = total + annexure.sumins;
         }
       }
       if (
-        this.annexureForm.value.detailSections[i].aneCoverType ==
+        this.annexureForm.value.detailSections[i].coverType ==
         "Fire & Allied Perils"
       ) {
         if (currentValue > this.totalFirSum || total > this.totalFirSum) {
@@ -2728,7 +2598,7 @@ export class FrgrenewalComponent implements OnInit {
       } else {
         let annexuredata = this.annexureWithValue.filter((data) => {
           return (
-            data.name == this.annexureForm.value.detailSections[i].aneCoverType
+            data.name == this.annexureForm.value.detailSections[i].coverType
           );
         });
         if (annexuredata.length > 0) {
@@ -2743,7 +2613,7 @@ export class FrgrenewalComponent implements OnInit {
         }
       }
       console.log(
-        this.annexureForm.value.detailSections[i].aneCoverType,
+        this.annexureForm.value.detailSections[i].coverType,
         this.totalFirSum
       );
     } else {
@@ -2762,32 +2632,15 @@ export class FrgrenewalComponent implements OnInit {
       sumins: 0,
     });
   }
-
-  setZone(v) {
-    this.currentZoneNo = v;
-    if (v == "1") {
-      this.currentZone = this.zone1;
-    } else if (v == "2") {
-      this.currentZone = this.zone2;
-    } else if (v == "3") {
-      this.currentZone = this.zone3;
-    } else {
-      this.currentZone = this.zone4;
-    }
-    //this.setRiskRate("NH");
-  }
-
   getDetails(val) {
     this.loading = true;
     let obj = { pincode: val };
-
     this.api.getStateCode(obj).subscribe(
       (sus) => {
         if (sus.ResponseFlag == 1) {
           let res = JSON.parse(sus["ResponseMessage"]).Table;
           if (res.length) {
             this.stateName = res[0].StateName.replace("&", "And");
-             console.log(this.stateName);
             this.country = res[0].CountryCode;
             this.stateCode = res[0].StateCode;
             this.landmarkName = res[0].LandmarkName;
@@ -2799,16 +2652,20 @@ export class FrgrenewalComponent implements OnInit {
                   let res = JSON.parse(sus["ResponseMessage"]).Table;
                   if (res.length) {
                     this.currentZoneNo = res[0].Zone;
-                    this.quoteGeneraion.patchValue({
-                      zoneNo:res[0].Zone,
-                    });
-                    this.setEQandZone(this.currentZoneNo, this.industrialType);
+                    this.quoteGeneraion.controls["zoneNo"].setValue(
+                      this.currentZoneNo
+                    );
+                    this.setBasicOccupationRate(this.currentZoneNo);
+                  } else {
+                    alert("Zone not fetched please select mannualy!!");
+                    this.quoteGeneraion.controls["zoneNo"].setValue("");
                   }
                 }
               });
           } else {
             this.quoteGeneraion.controls["pincode"].setValue("");
             alert("Invalid Pin code, Please check!");
+            this.loading = false;
           }
         } else {
           alert(sus.ResponseMessage);
@@ -2820,6 +2677,129 @@ export class FrgrenewalComponent implements OnInit {
         console.log(err);
       }
     );
+  }
+
+  validateMaxMin(e, min, max) {
+    let formControlName = e.target.getAttribute("formControlName");
+    let selectForm = "";
+    let formControlName1 = "";
+    if ($(e.target).parent().next().find("select").length > 0) {
+      selectForm = $(e.target)
+        .parent()
+        .next()
+        .find("select")
+        .attr("formControlName");
+      formControlName1 = $(e.target)
+        .parent()
+        .next()
+        .next()
+        .find("input")
+        .attr("formControlName");
+    } else {
+      formControlName1 = $(e.target)
+        .parent()
+        .next()
+        .find("input")
+        .attr("formControlName");
+    }
+
+    let value = Number(e.target.value);
+    if (value < min || value > max) {
+      this.quoteGeneraion.controls[formControlName].setValue("");
+      this.quoteGeneraion.controls[formControlName1].setValue("");
+      if (selectForm != "") {
+        this.quoteGeneraion.controls[selectForm].setValue("0");
+      }
+      alert(`Value Should be between ${min} and ${max}`);
+      return false;
+    } else {
+      if (
+        formControlName == "fireBuilding" ||
+        formControlName == "fireContent"
+      ) {
+        if (this.totalFirSum > 50000000) {
+          this.quoteGeneraion.controls[formControlName].setValue("");
+          this.quoteGeneraion.controls[formControlName1].setValue("");
+          alert("sum of Building and Content Sum insured max 500000000");
+          return false;
+        }
+      }
+      if (this.totalFirSum > this.sumInsuredLimit) {
+        this.quoteGeneraion.controls[formControlName].setValue("");
+        this.quoteGeneraion.controls[formControlName1].setValue("");
+        this.quoteGeneraion.patchValue({
+          fireTerrSum: 0,
+          fireTerrPre: 0,
+        });
+        alert("Sum Insured is beyond the limit, Refer to UW");
+        return false;
+      }
+      return true;
+    }
+  }
+  policyDownload(i) {
+    console.log(i);
+    //let id = this.api.ency(i);
+    this.router.navigate(["policyCopy", i]);
+  }
+
+  setRateAsPerOccupation(val) {
+    // if (this.quoteGeneraion.value.riskDate == '')
+    // {
+    //  alert('Please select risk start date first!!');
+    //  console.log(this.quoteGeneraion.value.businessType);
+    //  this.quoteGeneraion.patchValue({
+    //   businessType: '--Select--'
+    // });
+
+    // }
+
+    console.log(val);
+
+    // let date = this.quoteGeneraion.value.riskDate;
+    // console.log(date);
+    // if(date){
+    //   let year = date.getFullYear();
+    //   console.log(year);
+    //   let month = date.getMonth();
+    //   let day = date.getDate();
+    //   //polTenure
+    //   var c = new Date(year + Number(this.quoteGeneraion.value.polTenure), Number(month), Number(day) - 1);
+    //   var endDt = c.getFullYear().toString() + "-" + (c.getMonth() + 1) + "-" + c.getDate();
+    //   console.log(endDt);
+    //   endDt = this.api.getFormattedDate(endDt, "mm/dd/yyyy");
+    //   this.quoteGeneraion.patchValue({
+    //     riskEndDate: endDt
+    //   });
+    //   console.log(endDt);
+    //     if (endDt < '06/30/2023'){
+    //   var o = this.occupationList['default'].find(function(item, i){
+    //     if(item.Risk_Code === val){
+    //       return item;
+    //     }
+    //   });
+    // }else{
+    var o = this.occupationList1["default"].find(function (item, i) {
+      if (item.Risk_Code === val) {
+        return item;
+      }
+    });
+
+    if (o) {
+      this.sumInsuredLimit = o.Sum_insured_limit;
+      this.terrorisRate = o.Terrorism_Rate;
+      this.industrialType = o.Industrial_Type;
+      this.decline = o.Decline;
+      this.basicOoccupationRateTemp = o.Zone[Number(this.currentZoneNo) - 1];
+      console.log(this.basicOoccupationRateTemp);
+      this.occupationObj = o;
+    }
+    this.setDiscount();
+  }
+  setBasicOccupationRate(z) {
+    this.basicOoccupationRateTemp = this.occupationObj.Zone[z - 1];
+    console.log(this.basicOoccupationRateTemp);
+    this.setDiscount();
   }
 
   setRiskRate(v) {
@@ -2893,122 +2873,239 @@ export class FrgrenewalComponent implements OnInit {
     console.log(this.riskRate);
     this.setLodDis();
   }
-  setLodDis(){
-    
+
+  setLodDis(){}
+
+  resetloading() {
+    if (this.quoteGeneraion.value.constructDetails !== 0) {
+      this.quoteGeneraion.patchValue({
+        constructDetails: 0,
+      });
+    }
   }
 
+  verifyckyc() {
+    this.loading = true;
+    // this.updateQuote();
+    let obj = {};
+    this.api.getCkyctoken(obj).subscribe(
+      (sus) => {
+        this.quoteGeneraion.patchValue({
+          proposal: sus.ProposalNo,
+        });
+        console.log(sus);
+        console.log(sus[0].Token);
+        var cto = sus[0].Token;
+        let dt = new Date(sus.dobDate);
+        var pid = sus[0].ProposalNo;
+        console.log(dt);
+        if (sus.token != "") {
+          let obj = this.quoteGeneraion.value;
+          obj.req_id = this.quoteNo;
+          obj.proposal_id = pid;
+          obj.full_name = this.quoteGeneraion.value.fullname;
+          obj.customer_type = this.quoteGeneraion.value.customerType;
+          obj.gender = this.quoteGeneraion.value.gender;
+          var ds = new Date(
+            this.quoteGeneraion.value.dobDate
+          ).toLocaleDateString("en-CA");
+          var ds1 = new Date(ds)
+            .toLocaleDateString("pt-br")
+            .split("/")
+            .join("-");
+          obj.dob = ds1;
+          obj.id_type = this.quoteGeneraion.value.idtype;
+          obj.id_num = this.quoteGeneraion.value.idnum;
+          // var pid=sus.ProposalNo;
+          console.log(pid);
+          this.api.createCKYC(obj).subscribe(
+            (sus) => {
+              console.log(sus);
+              if (sus.ckyc_remarks == "OK") {
+                console.log(sus.result.ckyc_number);
+                this.ckycref = true;
+                this.ckycflag = true;
+                this.quoteGeneraion.patchValue({
+                  ckycno: sus.result.ckyc_number,
+                  fullname: sus.result.customer_name,
+                  dobdate: sus.result.dob,
+                  // idtype: sus.result.id_type,
+                  firstName:
+                    this.quoteGeneraion.value.customerType == "Organization"
+                      ? sus.result.customer_name
+                      : sus.result.first_name +
+                        " " +
+                        (sus.result.middle_name == null
+                          ? ""
+                          : sus.result.middle_name),
+                  lastName:
+                    this.quoteGeneraion.value.customerType == "Organization"
+                      ? ""
+                      : sus.result.last_name,
+                  idnum: sus.result.id_num,
+                  proposal: "",
+                });
+                this.loading = false;
+                alert("CKYC Status : verified!");
+                this.verfyilagf = true;
+                this.disableckyc = true;
 
-  validateMaxMin(e, min, max) {
-    let formControlName = e.target.getAttribute("formControlName");
-    let selectForm = "";
-    let formControlName1 = "";
-    if ($(e.target).parent().next().find("select").length > 0) {
-      selectForm = $(e.target)
-        .parent()
-        .next()
-        .find("select")
-        .attr("formControlName");
-      formControlName1 = $(e.target)
-        .parent()
-        .next()
-        .next()
-        .find("input")
-        .attr("formControlName");
-    } else {
-      formControlName1 = $(e.target)
-        .parent()
-        .next()
-        .find("input")
-        .attr("formControlName");
-    }
-    let value = Number(e.target.value);
-    if (value < min || value > max) {
-      this.quoteGeneraion.controls[formControlName].setValue("");
-      this.quoteGeneraion.controls[formControlName1].setValue("");
-      if (selectForm != "") {
-        this.quoteGeneraion.controls[selectForm].setValue("0");
-      }
-      alert(`Value Should be between ${min} and ${max}`);
-      return false;
-    } else {
-      if (
-        formControlName == "fireBuilding" ||
-        formControlName == "fireContent"
-      ) {
-        if (this.totalFirSum > 50000000) {
-          this.quoteGeneraion.controls[formControlName].setValue("");
-          this.quoteGeneraion.controls[formControlName1].setValue("");
-          alert("sum of Building and Content Sum insured max 500000000");
-          return false;
+                let text =
+                  "On Click of OK, you are agreeing to issue the policy with CKYC name Please confirm ? \n" +
+                  sus.result.customer_name;
+                if (confirm(text) == true) {
+                  $(".coverForm input").prop("disabled", true);
+                } else {
+                  $(".coverForm input").prop("disabled", false);
+                }
+                // this.updateQuote();
+              } else {
+                this.loading = false;
+                alert("CKYC Status : Verification failed!");
+                this.verfyilagf = true;
+                this.disableckyc = true;
+
+                // var obj = {
+                //   pan: this.quoteGeneraion.value.idnum,
+                //   dob: ds1,
+                // };
+                // console.log(this.quoteNo);
+                // console.log(obj);
+                // AJL.aryafns.initMod(cto, pid, obj, (data) => {
+                //   console.log(data);
+                //   if (
+                //     data.verified == "Success"
+                //   ) {
+                //     alert("CKYC Status: Document Upload Verified!");
+                //     this.ckycref = false;
+                //     this.ckycflag = false;
+                //     this.quoteGeneraion.patchValue({
+                //       ckycno: "",
+                //       // fullname: data.api_result.registered_name,
+                //       proposal: data.proposal_id,
+                //       // idnum: "",
+                //     });
+                //     this.verfyilagf = true;
+                //     this.disableckyc = true;
+
+                //     this.updateQuote();
+                //   } else {
+                //     this.loading = false;
+                //     alert("CKYC Status: Verified failed!");
+                //     this.quoteGeneraion.patchValue({
+                //       ckycno: "",
+                //       fullname: data.api_result.registered_name,
+                //       proposal: "",
+                //       idnum: "",
+                //     });
+                //   }
+                // });
+              }
+            },
+            (err) => {
+              console.log(err);
+            }
+          );
+        } else {
+          alert("token not found!");
         }
+      },
+      (err) => {
+        console.log("token creation failed");
       }
-      return true;
-    }
+    );
   }
-  policyDownload(i) {
-    console.log(i);
-    //let id = this.api.ency(i);
-    this.router.navigate(["policyCopy", i]);
-  }
-  setEQandZone(z, i) {
-    if (z == "1") {
-      this.currentZone =
-        i == "Industrial" ? this.industirlzone1 : this.nonIndustirlzone1;
-    } else if (z == "2") {
-      this.currentZone =
-        i == "Industrial" ? this.industirlzone2 : this.nonIndustirlzone2;
-    } else if (z == "3") {
-      this.currentZone =
-        i == "Industrial" ? this.industirlzone3 : this.nonIndustirlzone3;
-    } else {
-      this.currentZone =
-        i == "Industrial" ? this.industirlzone4 : this.nonIndustirlzone4;
-    }
-    if (this.decline == "No") {
-      this.sfspSetEQ = this.currentZone * 0.5;
-    } else {
-    }
-  }
+
   setDiscount() {
-    let ageBuild = this.quoteGeneraion.value.buildingAge;
+    // let ageBuild = this.quoteGeneraion.value.buildingAge;
     let fireProtet = this.quoteGeneraion.value.fireProtection;
-    let roundClock = this.quoteGeneraion.value.roundTheClock;
-    let t = this.quoteGeneraion.value.polTenure;
-    let tenoreVal = t == 1 ? 0 : t == 2 ? 1.5 : t == 3 ? 2.5 : t == 9 ? 9.5 : t;
-    if (
-      this.bankName == "BOI" ||
-      this.bankName == "GBC" ||
-      this.bankName == "BOM" ||
-      this.bankName == "SHGB" ||
-      this.bankName == "HPG" ||
-      this.bankName == "PGB" ||
-      this.bankName == "TPUC" ||
-      this.bankName == "PBGB" ||
-      this.bankName == "HPSCB"
-    ) {
-      this.loadingDisc = 30;
-    } else {
-      this.loadingDisc =
-        Number(ageBuild) 
-        + Number(fireProtet) 
-        + Number(roundClock);
+    let constructDetails = this.quoteGeneraion.value.constructDetails;
+    let distancebrigad = this.quoteGeneraion.value.distancebrigade;
+    let basementst = this.quoteGeneraion.value.basementstoa;
+    let goodhouse = this.quoteGeneraion.value.goodhousek;
+    let electInswir = this.quoteGeneraion.value.electInswiring;
+    // this.ageOfBuildingCode = ageBuild == "5" ? "0005" : ageBuild == "0" ? "0000" : "0000";
+    // this.fireProtectionCode = fireProtet == '2.5' ? "PREX" : fireProtet == "5" ? "HYRD" : fireProtet == "10" ? "FOAM" :fireProtet == "-10" ? "NFEA" : "00";
+    // console.log(constructDetails);
+    // this.ageOfBuildingCode= ageBuild;
+    this.fireProtectionCode =
+      fireProtet == "-5" ? "HYRD" : fireProtet == "0" ? "NFEA" : "NOTA";
+    this.constructDetailsCode =
+      constructDetails == "0"
+        ? "PUKA"
+        : constructDetails == "5"
+        ? "KUCH"
+        : "NOTA";
+    this.distancebrigad =
+      distancebrigad == "0"
+        ? "0016"
+        : distancebrigad == "-5"
+        ? "0015"
+        : distancebrigad == "-10"
+        ? "0010"
+        : "NOTA";
+    this.basementst = basementst == "5" ? "YESS" : "NOTA";
+    this.goodhouse = goodhouse == "5" ? "NONO" : "NOTA";
+    this.electInswir = electInswir == "5" ? "LWEI" : "NOTA";
+
+    this.loadingDisc =
+      Number(constructDetails) +
+      Number(fireProtet) +
+      Number(distancebrigad) +
+      Number(basementst) +
+      Number(goodhouse) +
+      Number(electInswir);
+    console.log(this.loadingDisc);
+    this.quoteGeneraion.patchValue({
+      loadingDisc: this.loadingDisc,
+    });
+    if (this.loadingDisc > 0) {
+      let parameterDisc =
+        (this.basicOoccupationRateTemp * this.loadingDisc) / 100;
+      this.basicOoccupationRate = this.basicOoccupationRateTemp + parameterDisc;
+      var m = Number(
+        (Math.abs(this.basicOoccupationRate) * 10000).toPrecision(15)
+      );
+      this.basicOoccupationRate =
+        (Math.round(m) / 10000) * Math.sign(this.basicOoccupationRate);
+      console.log(this.basicOoccupationRate);
+    } else if (this.loadingDisc < 0) {
+      let parameterDisc =
+        (this.basicOoccupationRateTemp * this.loadingDisc) / 100;
+      this.basicOoccupationRate = this.basicOoccupationRateTemp + parameterDisc;
+      var m = Number(
+        (Math.abs(this.basicOoccupationRate) * 10000).toPrecision(15)
+      );
+      this.basicOoccupationRate =
+        (Math.round(m) / 10000) * Math.sign(this.basicOoccupationRate);
+    } else if (this.loadingDisc == 0) {
+      let parameterDisc =
+        (this.basicOoccupationRateTemp * this.loadingDisc) / 100;
+      this.basicOoccupationRate = this.basicOoccupationRateTemp - parameterDisc;
+      var m = Number(
+        (Math.abs(this.basicOoccupationRate) * 10000).toPrecision(15)
+      );
+      this.basicOoccupationRate =
+        (Math.round(m) / 10000) * Math.sign(this.basicOoccupationRate);
     }
-    this.yrDiscount = (100 - tenoreVal) / 100;
-    this.buildDisc = (100 - this.loadingDisc) / 100;
-    if (this.quoteGeneraion.value.fireBuilding > 1) {
+
+    if (this.quoteGeneraion.value.fireBuilding > 0) {
       this.buildIngPre(this.quoteGeneraion.value.fireBuilding, "1A**");
     }
-    if (this.quoteGeneraion.value.fireContent > 1) {
+    if (this.quoteGeneraion.value.fireContent > 0) {
       this.fireContentPre(this.quoteGeneraion.value.fireContent);
     }
-    if (this.quoteGeneraion.value.coverContentSum > 1) {
-      this.coverContentCalc();
+    if (this.quoteGeneraion.value.plinthFound > 0) {
+      this.plinthFoundPre(this.quoteGeneraion.value.plinthFound);
     }
-    if (this.quoteGeneraion.value.PASelfSum > 1) {
-      this.PASelfCalc();
+    if (this.quoteGeneraion.value.plantMac > 0) {
+      this.plantMacPre(this.quoteGeneraion.value.plantMac);
     }
-    if (this.quoteGeneraion.value.PASpouseSum > 1) {
-      this.PASpouseCalc();
+    if (this.quoteGeneraion.value.furnFixFit > 0) {
+      this.furnFixFitPre(this.quoteGeneraion.value.furnFixFit);
+    }
+    if (this.quoteGeneraion.value.stock > 0) {
+      this.stockPre(this.quoteGeneraion.value.stock);
     }
   }
   setTerrPreDwelling() {
@@ -3026,13 +3123,9 @@ export class FrgrenewalComponent implements OnInit {
   showTerrorism(e) {
     console.log(e);
     if (!e.checked) {
-      let amount =
-      ((this.totalFirSum * 0.08) / 1000) *
-      this.quoteGeneraion.value.polTenure;
       this.quoteGeneraion.patchValue({
-        terrorismMain:true,
-        longTermTerrSum: this.totalFirSum,
-        longTermTerrPre: amount.toFixed(2),
+        longTermTerrSum: 0,
+        longTermTerrPre: 0,
       });
     }
   }
@@ -3082,6 +3175,7 @@ export class FrgrenewalComponent implements OnInit {
     let amount =
       ((this.quoteGeneraion.value.PASpouseSum * 0.06) / 1000) *
       this.quoteGeneraion.value.polTenure;
+    console.log(amount);
     this.quoteGeneraion.patchValue({
       PASpousePre: amount.toFixed(2),
     });
@@ -3097,7 +3191,7 @@ export class FrgrenewalComponent implements OnInit {
       }
     } else {
       if (e.target.value > 100) {
-        alert("Disocunt Cannot be greater then 100%");
+        alert("Loading Cannot be greater then 100%");
         this.setFormVal("loading", 0);
         return;
       } else this.setFormVal("discount", 0);
@@ -3120,6 +3214,7 @@ export class FrgrenewalComponent implements OnInit {
     this.agentCode = o.AgentCode;
     this.fgiBRCode = o.FGI_BR_CODE;
     this.spCode = o.SPCode;
+    //alert(this.agentCode);
     this.quoteGeneraion.patchValue({
       branchName: this.branchCode
         ? this.branchCode + " - " + this.branchName
@@ -3176,11 +3271,16 @@ export class FrgrenewalComponent implements OnInit {
   }
   bookWithReceiptNo() {
     if (this.totalRA > 0) {
-      if (this.totalRA < this.totalPre) {
-        this.checkReceiptAmt = true;
-      } else {
+      if (this.checkBurgalaryPolicy) {
         this.checkReceiptAmt = false;
         this.showReceipt = false;
+      } else {
+        if (this.totalRA < this.totalPre) {
+          this.checkReceiptAmt = true;
+        } else {
+          this.checkReceiptAmt = false;
+          this.showReceipt = false;
+        }
       }
     } else {
       alert("Please select once Receipt No.");
@@ -3244,15 +3344,18 @@ export class FrgrenewalComponent implements OnInit {
       this.duplicateNameFalg = false;
     }
   }
-  onSelectedFile(evt) {
-    let fn = evt.target.files[0].name
-      .split(".")
-      [evt.target.files[0].name.split(".").length - 1].toLowerCase();
-    if (fn == "pdf" || fn == "png" || fn == "jpg") {
-      $(evt.currentTarget).parent().find("p").text(evt.target.files[0].name);
+  setZone(v) {
+    this.currentZoneNo = v;
+    if (v == "1") {
+      this.currentZone = this.zone1;
+    } else if (v == "2") {
+      this.currentZone = this.zone2;
+    } else if (v == "3") {
+      this.currentZone = this.zone3;
     } else {
-      $(evt.currentTarget).val("");
-      alert("Not a valid file format");
+      this.currentZone = this.zone4;
     }
+    this.setBasicOccupationRate(v);
   }
 }
+

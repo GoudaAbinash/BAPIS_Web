@@ -114,7 +114,7 @@
     </mat-form-field>
     <mat-form-field class="col4">
       <mat-label>Loan AC No.</mat-label>
-      <input matInput formControlName="loanAcNo" />
+      <input matInput maxlength="60"  formControlName="loanAcNo" />
     </mat-form-field>
     <mat-form-field class="col4">
       <mat-label>IMD General Comments</mat-label>
@@ -231,40 +231,40 @@
     <legend>Risk Address</legend>
     <mat-form-field class="col4">
       <mat-label>Address 1*</mat-label>
-      <input matInput formControlName="add1" type="text" maxlength="30" (keypress)="omit_special_char($event)" />
+      <input readonly matInput formControlName="add1" type="text" maxlength="30" (keypress)="omit_special_char($event)" />
     </mat-form-field>
     <mat-form-field class="col4">
       <mat-label>Address 2</mat-label>
-      <input matInput formControlName="add2" type="text" maxlength="30" (keypress)="omit_special_char($event)" />
+      <input readonly matInput formControlName="add2" type="text" maxlength="30" (keypress)="omit_special_char($event)" />
     </mat-form-field>
     <mat-form-field class="col4">
       <mat-label>Address 3</mat-label>
-      <input matInput formControlName="add3" type="text" maxlength="30" (keypress)="omit_special_char($event)" />
+      <input readonly matInput formControlName="add3" type="text" maxlength="30" (keypress)="omit_special_char($event)" />
     </mat-form-field>
 
     <mat-form-field class="col4">
       <mat-label>Land Mark *</mat-label>
-      <input matInput formControlName="landmark" type="text" maxlength="30" />
+      <input readonly matInput formControlName="landmark" type="text" maxlength="30" />
     </mat-form-field>
 
     <mat-form-field class="col4">
       <mat-label>City/District*</mat-label>
-      <input matInput formControlName="city" type="text" maxlength="20" />
+      <input readonly matInput formControlName="city" type="text" maxlength="20" />
     </mat-form-field>
 
     <mat-form-field class="col4">
       <mat-label>State *</mat-label>
-      <input matInput formControlName="state" type="text" maxlength="40" />
+      <input readonly matInput formControlName="state" type="text" maxlength="40" />
     </mat-form-field>
 
     <mat-form-field class="col4">
       <mat-label>Pincode *</mat-label>
-      <input matInput type="text" formControlName="shopPincode" maxlength="6" />
+      <input readonly matInput type="text" formControlName="shopPincode" maxlength="6" />
     </mat-form-field>
 
     <mat-form-field class="col4">
       <mat-label>Country *</mat-label>
-      <input matInput formControlName="country" type="text" />
+      <input readonly matInput formControlName="country" type="text" />
     </mat-form-field>
   </fieldset>
 
@@ -1215,7 +1215,7 @@
     <p>
       FG Transaction ID - <b>{{ trnID }}</b>
     </p>
-    <p *ngIf="policyNo">
+    <p *ngIf="policyIssuedFlag">
       {{ policyText }}<b>{{ policyNo }}</b>&nbsp;&nbsp;<a rel="noopener noreferrer"
         (click)="policyDownload(policyNo)">Download</a>
     </p>

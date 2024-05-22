@@ -13,6 +13,7 @@ export class HeaderComponent implements OnInit {
   loginFlag;
   isAdmin: boolean = false;
   externalWindow:any;
+  showModal: boolean = false;
   constructor(private api: CommonService) { }
 
   ngOnInit() {
@@ -43,5 +44,13 @@ export class HeaderComponent implements OnInit {
         this.externalWindow = window.open(url+'web/#/banca-bulk-uploader', 'banca-bulk-uploader', 'width=600,height=400,left=200,top=200');
        
     }
+  }
+  
+  openModal() {
+    this.showModal = true;
+  }
+
+  closeModal() {
+    this.showModal = false;
   }
 }

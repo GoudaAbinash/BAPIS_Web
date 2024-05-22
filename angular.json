@@ -17,6 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            
             "outputPath": "dist/UCO",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -32,6 +33,7 @@
               "src/styles.scss"
             ],
             "scripts": [ "./node_modules/jquery/dist/jquery.min.js"]
+            
           },
           "configurations": {
             "production": {

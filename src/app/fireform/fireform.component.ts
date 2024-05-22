@@ -101,7 +101,6 @@ export class FireFormComponent implements OnInit {
       value: "Mrs",
     },
   ];
-  
   employeeForm: any;
   detailExpData = [];
   quoteNo = "";
@@ -373,6 +372,8 @@ export class FireFormComponent implements OnInit {
   PGB = true;
   HPSCB = true;
   PBGB=true;
+  PUPGB=true;
+  VKGB=true;
   HPG = true;
   TPUC = true;
   verfyilagf = false;
@@ -404,6 +405,8 @@ export class FireFormComponent implements OnInit {
       lastName: new FormControl("", Validators.required),
       contactNo: new FormControl("", Validators.required),
       email: new FormControl("", Validators.required),
+      AltcontactNo: new FormControl("", null),
+      Altemail: new FormControl("", null),
       bankStaffID: new FormControl("", null),
       bankCustID: new FormControl("", null),
       FGStafID: new FormControl("", Validators.required),
@@ -525,6 +528,8 @@ export class FireFormComponent implements OnInit {
       this.TPUC = false;
       this.HPSCB = false;
       this.PBGB=false;
+      this.PUPGB=false;
+      this.VKGB=false;
     }
     if (this.loginFlag == "2" || this.loginFlag == "3") {
       this.branchList = sessionData;
@@ -604,6 +609,8 @@ export class FireFormComponent implements OnInit {
               this.bankName == "PGB" ||
               this.bankName == "TPUC" ||
               this.bankName == "PBGB" ||
+              this.bankName == "PUPGB"||
+              this.bankName == "VKGB"||
               this.bankName == "HPSCB"
             ) {
               this.loadingDisc = 30;
@@ -899,6 +906,8 @@ export class FireFormComponent implements OnInit {
       
     }else if (val == "GLL") {
       this.router.navigate(["gll"]);
+    } else if (val == "FGL") {
+      this.router.navigate(["fgl"]);
     }
     if (val == "SFSP") {
       this.router.navigate(["sfsp"]);
@@ -2131,6 +2140,8 @@ export class FireFormComponent implements OnInit {
       this.bankName == "PGB" ||
       this.bankName == "TPUC" ||
       this.bankName == "PBGB" ||
+      this.bankName == "PUPGB" ||
+      this.branchCode=="VKGB" ||
       this.bankName == "HPSCB"
     ) {
       this.loadingDisc = 30;

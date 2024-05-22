@@ -57,10 +57,11 @@ import { FSLComponent } from './fsl/fsl.component';
 import { GLLComponent } from './gll/gll.component';
 import { BulkUploadComponent } from './bulk-upload/bulk-upload.component';
 import { CUSTOM_ELEMENTS_SCHEMA, ErrorHandler, Injector } from '@angular/core';
+import { FGLComponent } from './fgl/fgl.component';
 import { FSRrenewalComponent } from './fsrrenewal/fsrrenewal.component';
 import { FusrenewalComponent } from './fusrenewal/fusrenewal.component';
 import { FrgrenewalComponent } from './frgrenewal/frgrenewal.component';
-
+import { FbgrenewalComponent } from './fbgrenewal/fbgrenewal.component';
 
 
 
@@ -103,9 +104,12 @@ import { FrgrenewalComponent } from './frgrenewal/frgrenewal.component';
     FSLComponent,
     GLLComponent,
     BulkUploadComponent,
+    FGLComponent,
+    BulkUploadComponent,
     FSRrenewalComponent,
     FusrenewalComponent,
     FrgrenewalComponent,
+    FbgrenewalComponent,
   ],
   imports: [
     BrowserModule,

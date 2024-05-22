@@ -50,13 +50,13 @@ export class MyQuoteComponent implements OnInit {
     console.log(id);
     currentStatus = currentStatus ==null ? '' : currentStatus;
     let transData=(currentStatus) ? transactionNo +"|" + transactionDate +  "|" + receiptNo + "|" + clientId  : '';
-    this.router.navigate([(quoteType =='SK' ? 'fgForm' :quoteType =='GL' ? 'gll' :quoteType =='SL' ? 'fsl' : quoteType =='FS' ? 'sfsp' :'fireForm'), id, currentStatus, transData]);
+    this.router.navigate([(quoteType =='SK' ? 'fgForm' :quoteType =='GL' ? 'gll':quoteType =='FG' ? 'fgl' :quoteType =='SL' ? 'fsl' : quoteType =='FS' ? 'sfsp' :'fireForm'), id, currentStatus, transData]);
   }
   view(i,currentStatus,transactionNo,transactionDate,receiptNo,quoteType,clientId,policyNo){
     let id = this.api.ency(i.toString());
     currentStatus = currentStatus ==null ? '' : currentStatus;
     let transData=(currentStatus) ? transactionNo +"|" + transactionDate +  "|" + receiptNo + "|" + clientId  : '';
-    this.router.navigate([(quoteType =='SK' ? 'fgForm' :quoteType =='GL' ? 'gll' :quoteType =='SL' ? 'fsl' : quoteType =='FS' ? 'sfsp' :'fireForm'), id, currentStatus, transData]);
+    this.router.navigate([(quoteType =='SK' ? 'fgForm' :quoteType =='GL' ? 'gll' :quoteType =='FG' ? 'fgl' :quoteType =='SL' ? 'fsl' : quoteType =='FS' ? 'sfsp' :'fireForm'), id, currentStatus, transData]);
   }
   getPolicy(p){
     if(p != ''){

@@ -1,5 +1,5 @@
 <app-header quoteNo="{{ quoteNo }}"></app-header>
-<h4 style="text-align: center">Sookshma Udyam SURAKSHA</h4>
+<h4 style="text-align: center" matTooltip="FUS-Sookshma Udyam/FBG-Burglary">FUS-Sookshma Udyam</h4>
 <!-- <pre>{{quoteGeneraion.value | json}}</pre> -->
 <form [formGroup]="quoteGeneraion" autocomplete="off" [hidden]="ridrectToPay">
     <fieldset class="coverForm">
@@ -14,6 +14,7 @@
                 <mat-option value="SK">FSR-Shop Suraksha</mat-option>
                 <mat-option value="SFSP">FUS-Sookshma Udyam</mat-option>
                 <mat-option value="GLL">GLL-Griha Lite</mat-option>
+                <mat-option value="FGL">FGL-Griha Lite(1Y)</mat-option>
             </mat-select>
             <mat-error *ngIf="CD.coverType.invalid">Please select Cover Type</mat-error>
         </mat-form-field>
@@ -83,6 +84,14 @@
             <mat-label>Email *</mat-label>
             <input matInput formControlName="email" placeholder="Ex. pat@example.com" />
         </mat-form-field>
+        <mat-form-field class="col4" *ngIf="CD.contactNo.value">
+            <mat-label>Alternative Contact</mat-label>
+            <input matInput formControlName="AltcontactNo"  maxlength="10" numbersOnly />
+          </mat-form-field>
+          <mat-form-field class="col4" *ngIf="CD.email.value">
+            <mat-label>Alternative Email</mat-label>
+            <input matInput formControlName="Altemail" placeholder="Ex. altpat@example.com" />
+          </mat-form-field>
         <mat-form-field class="col4">
             <mat-label>Bank Name*</mat-label>
             <input disabled readonly matInput formControlName="bankName" />
@@ -104,10 +113,13 @@
             <mat-label>Name of the Financer</mat-label>
             <input matInput formControlName="financInterest" />
         </mat-form-field>
-        <mat-form-field class="col4">
+        <mat-form-field class="col4" *ngIf="quoteGeneraion.get('financInterest').value !== ''">
             <mat-label>Loan AC No.</mat-label>
-            <input matInput formControlName="loanAcNo" />
-        </mat-form-field>
+            <input matInput maxlength="60"  formControlName="loanAcNo" required />
+            <mat-error *ngIf="quoteGeneraion.get('loanAcNo').invalid && (quoteGeneraion.get('loanAcNo').dirty || quoteGeneraion.get('loanAcNo').touched)">
+              Loan AC No. is required.
+            </mat-error>
+          </mat-form-field>
         <mat-form-field class="col4">
             <mat-label>Comments/Remarks</mat-label>
             <input matInput formControlName="imdGeneral" type="text" />

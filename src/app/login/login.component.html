@@ -1,4 +1,4 @@
-<div class="bg"></div>
+<div class="bg">
 <mat-card>
   <div class="logoWrap">
     <img src="assets/img/logo1.png" />
@@ -16,6 +16,7 @@
         <mat-label>Select Bank Name</mat-label>
         <mat-select formControlName="bankName" size="1" id="sbank">
           <mat-option>-- Select --</mat-option>
+          <!-- <mat-option value="AAROHAN" matTooltip="AAROHAN POLICY ISSUANCE">AAROHAN</mat-option> -->
           <mat-option value="UCO" matTooltip="UNITED COMMERCIAL BANK">UCO</mat-option>
           <mat-option value="BOI" matTooltip="BANK OF INDIA">BOI</mat-option>
           <mat-option value="GBC" matTooltip="The GREATER BOMBAY CO-OP BANK">GBC</mat-option>
@@ -27,6 +28,8 @@
           <mat-option value="TPUCB" matTooltip="THE PANIPAT URBAN CO-OP BANK LTD.">TPUC</mat-option>
           <mat-option value="BRKGB" matTooltip="BARODA RAJASTHAN KSHETRIYA GRAMIN BANK">BRKGB</mat-option>
           <mat-option value="HPSCB" matTooltip="HIMACHAL PRADESH STATE CO-OP BANK">HPSCB</mat-option>
+          <mat-option value="PUPGB" matTooltip="THE PRATHAMA UP GRAMIN BANK">PUPGB</mat-option>
+          <mat-option value="VKGB" matTooltip="VIDHARBHA KONKAN GRAMIN BANK">VKGB</mat-option>
         </mat-select>
         <mat-error *ngIf="CD.bankName.invalid">Please select Bank Name</mat-error>
       </mat-form-field>
@@ -64,4 +67,5 @@
   </mat-card-content>
 
 </mat-card>
+</div>
 <ngx-loading [show]="loading"></ngx-loading>

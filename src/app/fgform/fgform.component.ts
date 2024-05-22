@@ -224,6 +224,8 @@ export class FGFormComponent implements OnInit {
       lastName: new FormControl("", Validators.required),
       contactNo: new FormControl("", Validators.required),
       email: new FormControl("", Validators.required),
+      AltcontactNo: new FormControl("", null),
+      Altemail: new FormControl("", null),
       policyDate: new FormControl("", Validators.required),
       bankStaffID: new FormControl("", null),
       bankCustID: new FormControl("", null),
@@ -819,6 +821,9 @@ export class FGFormComponent implements OnInit {
     } else if (val == "GLL") {
       this.router.navigate(["gll"]);
     }
+    else if (val == "FGL") {
+      this.router.navigate(["fgl"]);
+    }
   }
   getSections(annexureForm, type = "") {
     if (type == "") return annexureForm.controls.detailSections.controls;
@@ -972,6 +977,7 @@ export class FGFormComponent implements OnInit {
     if (!e.checked) {
       this.setFormVal("fireBuildingPre", 0);
       this.setFormVal("fireBuilding", 0);
+      this.setFormVal("FLOPSum", 0);
       this.resetSTFIandEQ();
     }
   }
@@ -1026,19 +1032,20 @@ export class FGFormComponent implements OnInit {
   setTerrPre() {
     if (this.quoteGeneraion.value.fireContent > 1) {
       //&& this.quoteGeneraion.value.fireBuilding > 1
+
+      console.log(this.quoteGeneraion.value.FLOPSum);
       this.quoteGeneraion.patchValue({
         terrorismMain: true,
         fireTerrSum:
           this.quoteGeneraion.value.fireContent +
-          this.quoteGeneraion.value.fireBuilding,
+          this.quoteGeneraion.value.fireBuilding+this.quoteGeneraion.value.FLOPSum,
         fireTerrPre:
           ((this.quoteGeneraion.value.fireContent +
-            this.quoteGeneraion.value.fireBuilding) *
+            this.quoteGeneraion.value.fireBuilding + this.quoteGeneraion.value.FLOPSum) *
             this.terrorism) /
           1000,
       });
-      this.FLOP =
-        this.buildingRate + this.fireSTFI + this.currentZone + this.terrorism;
+      this.FLOP =0.53;
     } else {
       alert("Please select Content");
       this.quoteGeneraion.patchValue({
@@ -1051,13 +1058,15 @@ export class FGFormComponent implements OnInit {
     if (this.quoteGeneraion.value.fireContent > 1) {
       console.log(this.flopRate);
       this.quoteGeneraion.patchValue({
-        FLOPPre: (val * (this.flopRate + 0.15)) / 1000,
+        FLOPPre: (val * (0.53)) / 1000,
       });
+      this.setTerrPre();
     } else {
       alert("Please select Content");
       this.quoteGeneraion.patchValue({
-        FLOPSum: "",
+        FLOPSum: 0,
       });
+      this.setTerrPre();
     }
     this.setTotalFirSum();
   }
@@ -2873,6 +2882,9 @@ export class FGFormComponent implements OnInit {
       fireContent: "",
       fireContentP: "",
       fireBuilding: "",
+      FLOPSum:"",
+      FLOPPre:""
+
     });
   }
 

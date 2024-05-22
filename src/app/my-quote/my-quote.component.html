@@ -58,7 +58,7 @@
                         <td>{{q.createdDate}}</td>
                         <td>{{q.totalPremium}}</td>
                         <td>{{(q.currentStatus=='C') ? "Done" :"Pending" }}</td>
-                        <td>{{(q.quoteType=='SK') ? "Shop Suraksha" :(q.quoteType=='GL') ? "FG Griha Lite" :
+                        <td>{{(q.quoteType=='SK') ? "Shop Suraksha" :(q.quoteType=='GL') ? "FG Griha Lite" :(q.quoteType=='FG') ? "FG Griha Lite(1Y)" :
                             (q.quoteType=='SL') ? "Sookshma Lite" : (q.quoteType=='FS') ? "Fire - SFSP" : "Bharat Grih
                             Raksha" }}</td>
                         <td [ngClass]="{'policyNo' : (q.quoteType=='FS'|| q.quoteType=='SL') && q.policyNumber}">

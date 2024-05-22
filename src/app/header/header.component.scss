@@ -1,3 +1,61 @@
+// modal
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  position: relative;
+  display: grid;
+  padding: 5%;
+  width: 250px;
+
+}
+.modal-content .close-btn{
+  
+    text-decoration: none;
+  //   width: 100%;
+    padding: 5% 5% 5% 5%;
+    color: #a71c20;
+    font-weight: bold;
+    font-size: xx-large;
+}
+.modal-content p{
+  text-decoration: none;
+  width: 100%;
+  padding: 5% 5% 5% 5%;
+  color: #000000;
+  font-weight: bold;
+}
+.modal-content a{
+  text-decoration: none;
+  width: 100%;
+  padding: 5% 5% 5% 5%;
+  font-weight: bold;
+  color: #a71c20;
+}
+
+.close-btn {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  cursor: pointer;
+}
+
+//end modal
+
 /*
   navigation - 896455
 */

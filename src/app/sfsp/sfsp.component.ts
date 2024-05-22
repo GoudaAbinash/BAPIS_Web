@@ -214,6 +214,8 @@ export class SfspComponent implements OnInit {
       lastName: new FormControl("", Validators.required),
       contactNo: new FormControl("", Validators.required),
       email: new FormControl("", Validators.required),
+      AltcontactNo: new FormControl("", null),
+      Altemail: new FormControl("", null),
       bankStaffID: new FormControl("", null),
       bankCustID: new FormControl("", null),
       FGStafID: new FormControl("", Validators.required),
@@ -341,7 +343,7 @@ export class SfspComponent implements OnInit {
       EQ: new FormControl(null, null),
       winNo: new FormControl("", null),
       applNo: new FormControl("", null),
-      printFlag: new FormControl("", null),
+      printFlag: new FormControl("N", null),
       totalPremium: new FormControl(0, null),
       setBurglaryFlag1: new FormControl(null, null),
       burglaryPercent: new FormControl(null, null),
@@ -813,6 +815,9 @@ export class SfspComponent implements OnInit {
       this.router.navigate(["fsl"]);
     } else if (val == "GLL") {
       this.router.navigate(["gll"]);
+    }
+    else if (val == "FGL") {
+      this.router.navigate(["fgl"]);
     }
     else {
       this.router.navigate(["fireForm"]);

@@ -230,6 +230,8 @@ export class FSLComponent implements OnInit {
       lastName: new FormControl("", Validators.required),
       contactNo: new FormControl("", Validators.required),
       email: new FormControl("", Validators.required),
+      AltcontactNo: new FormControl("", null),
+      Altemail: new FormControl("", null),
       bankStaffID: new FormControl("", null),
       bankCustID: new FormControl("", null),
       FGStafID: new FormControl("", Validators.required),
@@ -862,6 +864,9 @@ export class FSLComponent implements OnInit {
       this.router.navigate(["fsl"]);
     } else if (val == "GLL") {
       this.router.navigate(["gll"]);
+    }
+    else if (val == "FGL") {
+      this.router.navigate(["fgl"]);
     }
     else {
       this.router.navigate(["fireForm"]);
@@ -2368,7 +2373,7 @@ export class FSLComponent implements OnInit {
     this.Stockcompositioncode = Stockcomposition == "0" ? "NONO" : "NOTA";
     this.manufacturingunitcode = manufacturingunit == "0" ? "SLNT" : "NOTA";
     this.FloorsofBuildingcode = FloorsofBuilding == "0" ? "SIFL" : "NOTA";
-    this.Constructioncode = Construction == "0" ? "SUCO" : Construction == "5" ? "'CLS1" : Construction == "10" ? "CLS2" : "NOTA";
+    this.Constructioncode = Construction == "0" ? "SUCO" : Construction == "5" ? "CLS1" : Construction == "10" ? "CLS2" : "NOTA";
     this.electInswiringcode = electInswiring == "5" ? "LWEI" : "NOTA";
     this.Averagequipmentcode = Averagequipment == "0" ? "0010" : Averagequipment == "5" ? "0015" : Averagequipment == "10" ? "0020" : Averagequipment == "15" ? "0025" : Averagequipment == "20" ? "0099" : "NOTA";
 

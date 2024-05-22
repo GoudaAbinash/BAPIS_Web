@@ -114,7 +114,7 @@ Arya AI
         </mat-form-field>
         <mat-form-field class="col4">
           <mat-label>Loan AC No.</mat-label>
-          <input matInput formControlName="loanAcNo" />
+          <input matInput maxlength="60" formControlName="loanAcNo" />
         </mat-form-field>
         <mat-form-field class="col4">
           <mat-label>IMD General Comments</mat-label>
@@ -226,31 +226,31 @@ Arya AI
         <legend>Risk Address</legend>
         <mat-form-field class="col4">
             <mat-label>Address 1*</mat-label>
-            <input matInput formControlName="add1" type="text" maxlength="30" (keypress)="omit_special_char($event)" />
+            <input readonly matInput readonly formControlName="add1" type="text" maxlength="30" (keypress)="omit_special_char($event)" />
         </mat-form-field>
         <mat-form-field class="col4">
             <mat-label>Address 2*</mat-label>
-            <input matInput formControlName="add2" type="text" maxlength="30" (keypress)="omit_special_char($event)" />
+            <input readonly matInput readonly formControlName="add2" type="text" maxlength="30" (keypress)="omit_special_char($event)" />
         </mat-form-field>
         <mat-form-field class="col4">
             <mat-label>Address 3</mat-label>
-            <input matInput formControlName="add3" type="text" maxlength="30" (keypress)="omit_special_char($event)" />
+            <input readonly matInput readonly formControlName="add3" type="text" maxlength="30" (keypress)="omit_special_char($event)" />
         </mat-form-field>
         <mat-form-field class="col4">
-            <mat-label>Land Mark *</mat-label>
-            <input matInput formControlName="landmark" type="text" maxlength="30" />
+            <mat-label>Land readonly Mark *</mat-label>
+            <input readonly matInput formControlName="landmark" type="text" maxlength="30" />
         </mat-form-field>
         <mat-form-field class="col4">
             <mat-label>City/District *</mat-label>
-            <input matInput formControlName="city" type="text" maxlength="30" />
+            <input readonly matInput readonly formControlName="city" type="text" maxlength="30" />
         </mat-form-field>
         <mat-form-field class="col4">
             <mat-label>State *</mat-label>
-            <input matInput alphabetsOnly formControlName="state" type="text" maxlength="40" />
+            <input readonly matInput readonly alphabetsOnly formControlName="state" type="text" maxlength="40" />
         </mat-form-field>
         <mat-form-field class="col4">
             <mat-label>Country *</mat-label>
-            <input matInput formControlName="country" type="text" />
+            <input readonly matInput readonly formControlName="country" type="text" />
         </mat-form-field>
     </fieldset>
     <!-- [hidden]="addressFlag" -->
@@ -782,7 +782,7 @@ Arya AI
         <p>
             FG Transaction ID - <b>{{ trnID }}</b>
         </p>
-        <p *ngIf="policyNo">
+        <p *ngIf="policyIssuedFlag">
             {{ policyText }}<b>{{ policyNo }}</b>&nbsp;&nbsp;<a rel="noopener noreferrer"
                 (click)="policyDownload(policyNo)">Download</a>
         </p>

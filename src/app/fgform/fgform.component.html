@@ -1,20 +1,21 @@
 <app-header quoteNo="{{ quoteNo }}"></app-header>
 <!-- <pre>{{ quoteGeneraion.value | json }}</pre> -->
 <div class="overlay"></div>
-<h4 style="text-align: center">Shop Suraksha</h4>
+<h4 style="text-align: center">FSR-Shop Suraksha</h4>
 
 <form [formGroup]="quoteGeneraion" autocomplete="off" [hidden]="ridrectToPay">
   <fieldset>
     <legend>Customer Detailes</legend>
     <mat-form-field class="col4">
       <mat-label>Cover Type</mat-label>
-      <mat-select (selectionChange)="changeCoverType($event)" formControlName="coverType">
+      <mat-select (selectionChange)="changeCoverType($event)" formControame="coverType">
         <mat-option>-- Select --</mat-option>
         <mat-option value="LTD">FRG-Grih Raksha</mat-option>
         <mat-option value="FSL">FSL-Sookshma Lite</mat-option>
         <mat-option value="SK">FSR-Shop Suraksha</mat-option>
         <mat-option value="SFSP">FUS-Sookshma Udyam</mat-option>
         <mat-option value="GLL">GLL-Griha Lite</mat-option>
+        <mat-option value="FGL">FGL-Griha Lite(1Y)</mat-option>
       </mat-select>
       <mat-error *ngIf="CD.coverType.invalid">Please select Cover Type</mat-error>
     </mat-form-field>
@@ -83,6 +84,14 @@
       <mat-label>Email *</mat-label>
       <input matInput formControlName="email" placeholder="Ex. pat@example.com" />
     </mat-form-field>
+    <mat-form-field class="col4" *ngIf="CD.contactNo.value">
+      <mat-label>Alternative Contact</mat-label>
+      <input matInput formControlName="AltcontactNo"  maxlength="10" numbersOnly />
+    </mat-form-field>
+    <mat-form-field class="col4" *ngIf="CD.email.value">
+      <mat-label>Alternative Email</mat-label>
+      <input matInput formControlName="Altemail" placeholder="Ex. altpat@example.com" />
+    </mat-form-field>
     <mat-form-field class="col4">
       <mat-label>Policy Start Date</mat-label>
       <input matInput formControlName="policyDate" [matDatepicker]="picker" [min]="maximumRiskD"
@@ -110,9 +119,12 @@
       <mat-label>Name of the Financer </mat-label>
       <input matInput formControlName="financInterest" max="99" />
     </mat-form-field>
-    <mat-form-field class="col4">
+    <mat-form-field class="col4" *ngIf="quoteGeneraion.get('financInterest').value !== '' ">
       <mat-label>Loan AC No.</mat-label>
-      <input matInput formControlName="loanAcNo" />
+      <input matInput maxlength="60" formControlName="loanAcNo" required />
+      <mat-error *ngIf="quoteGeneraion.get('loanAcNo').invalid && (quoteGeneraion.get('loanAcNo').dirty || quoteGeneraion.get('loanAcNo').touched)">
+        Loan AC No. is required.
+      </mat-error>
     </mat-form-field>
     <mat-form-field class="col4">
       <mat-label>IMD General Comments</mat-label>
@@ -252,6 +264,29 @@
           </div>
         </div>
         <div class="one child-covers">
+          <mat-checkbox class="subchk" (change)="setFLOP($event);setTerr($event)" formControlName="fireLossMain" matTooltip='Fire Loss Of Profit'>Business Interruption
+            (FLOP)</mat-checkbox>
+          <div class="SI_Premium_Child_Cover" *ngIf="CD.fireLossMain.value">
+            <div class="select-field">
+              <select formControlName="FLOPMonth">
+                <option value="0">-- Select Month --</option>
+                <option value="3">3 Month</option>
+                <option value="6">6 Month</option>
+                <option value="9">9 Month</option>
+                <option value="12">12 Month</option>
+              </select>
+              <span *ngIf="onSubmit && CD.FLOPMonth.invalid">Please select Month</span>
+            </div>
+            <div class="input-Field">
+              <input type="number" placeholder="Sum Insured" formControlName="FLOPSum"
+                (focusout)="validateMaxMin($event, 0, 30000000)" (change)="setFLOPPre(CD.FLOPSum.value)" />
+            </div>
+            <div class="input-Field">
+              <input type="number" placeholder="Sum Insured" formControlName="FLOPPre" readonly />
+            </div>
+          </div>
+        </div>
+        <div class="one child-covers">
           <mat-checkbox (change)="setSTFI($event)" formControlName="stfiMain" id="stfiCheck" disabled>STFI
           </mat-checkbox>
           <div class="SI_Premium_Child_Cover" *ngIf="CD.stfiMain.value">
@@ -287,29 +322,7 @@
             </div>
           </div>
         </div>
-        <div class="one child-covers">
-          <mat-checkbox class="subchk" (change)="setFLOP($event)" formControlName="fireLossMain">Business Interruption
-            (FLOP)</mat-checkbox>
-          <div class="SI_Premium_Child_Cover" *ngIf="CD.fireLossMain.value">
-            <div class="select-field">
-              <select formControlName="FLOPMonth">
-                <option value="0">-- Select Month --</option>
-                <option value="3">3 Month</option>
-                <option value="6">6 Month</option>
-                <option value="9">9 Month</option>
-                <option value="12">12 Month</option>
-              </select>LOPPre
-              <span *ngIf="onSubmit && CD.FLOPMonth.invalid">Please select Month</span>
-            </div>
-            <div class="input-Field">
-              <input type="number" placeholder="Sum Insured" formControlName="FLOPSum"
-                (focusout)="validateMaxMin($event, 0, 30000000)" (change)="setFLOPPre(CD.FLOPSum.value)" />
-            </div>
-            <div class="input-Field">
-              <input type="number" placeholder="Sum Insured" formControlName="FLOPPre" readonly />
-            </div>
-          </div>
-        </div>
+        
         <!-- <div hidden class="one child-covers">
                     <mat-checkbox class="subchk" formControlName="tenantLiabiityMain">Tenant Liability</mat-checkbox>
                     <div class="SI_Premium_Child_Cover" *ngIf="CD.tenantLiabiityMain.value">

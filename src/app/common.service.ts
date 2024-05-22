@@ -164,6 +164,15 @@ export class CommonService {
   createRnwlPDF(obj): Observable<any> {
     return this.http.post(this.api + "api/Rnwl/generatePDF", obj);
   }
+  generate_FUS_PDF(obj): Observable<any> {
+    return this.http.post(this.api + "api/Rnwl/generate_FUS_PDF", obj);
+  }
+  generate_FBG_PDF(obj): Observable<any> {
+    return this.http.post(this.api + "api/Rnwl/generate_FBG_PDF", obj);
+  }
+  generateFireLongPDFRNWL(obj): Observable<any> {
+    return this.http.post(this.api + "api/Rnwl/generateFireLongPDF", obj);
+  }
 
 
   getRnwDash(obj): Observable<any> {
@@ -215,6 +224,12 @@ export class CommonService {
   saveRNWData(obj): Observable<any> {
     const headers = { "content-type": "application/json" };
     return this.http.post(this.api + "api/Renewal/saveRNWData", obj, {
+      headers: headers,
+    });
+  }
+  saveRNWData1(obj): Observable<any> {
+    const headers = { "content-type": "application/json" };
+    return this.http.post(this.api + "api/Rnwl/saveRNWData", obj, {
       headers: headers,
     });
   }
@@ -611,4 +626,10 @@ export class CommonService {
       return null;
     }
   }
+
+  generateFGLPolicy(obj): Observable<any> {
+    return this.http.post(this.api + "api/common/generateFGLPolicy", obj);
+  }
+  
 }
+

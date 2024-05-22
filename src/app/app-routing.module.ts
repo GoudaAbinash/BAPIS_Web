@@ -28,17 +28,16 @@ import { PrkitComponent } from "./prkit/prkit.component";
 import { FSLComponent } from "./fsl/fsl.component";
 import { GLLComponent } from "./gll/gll.component";
 import { BulkUploadComponent } from "./bulk-upload/bulk-upload.component";
+import { FGLComponent } from "./fgl/fgl.component";
+import { FrgrenewalComponent } from "./frgrenewal/frgrenewal.component";
 import { FSRrenewalComponent } from "./fsrrenewal/fsrrenewal.component";
 import { FusrenewalComponent } from "./fusrenewal/fusrenewal.component";
-import { FrgrenewalComponent } from "./frgrenewal/frgrenewal.component";
+import { FbgrenewalComponent } from "./fbgrenewal/fbgrenewal.component";
 
 const routes: Routes = [
   { path: "", component: LoginComponent },
   { path: "login", component: LoginComponent },
   { path: "about", component: AboutComponent },
-
-
-  // renewals
 
   {
     path: "renewal",
@@ -57,8 +56,8 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     resolve: { tokenGuest: TokenResolverService },
   },
-  
-  // fsr renewals Abinash 
+
+    // fsr renewals Abinash 
   {
     path: "fsrrenewal",
     component: FSRrenewalComponent,
@@ -113,10 +112,31 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     resolve: { tokenGuest: TokenResolverService },
   },
+
+  {
+    path: "fbgrenewal",
+    component: FbgrenewalComponent,
+    canActivate: [AuthGuard],
+    resolve: { tokenGuest: TokenResolverService },
+  },
+  {
+    path: "fbgrenewal/:id/:status/:transData",
+    component: FbgrenewalComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: "fbgrenewal/:id",
+    component: FbgrenewalComponent,
+    canActivate: [AuthGuard],
+    resolve: { tokenGuest: TokenResolverService },
+  },
   
 
 
   ////end renewal abinash
+
+
+
 
   {
     path: "fgForm/:id/:status/:transData",
@@ -168,6 +188,23 @@ const routes: Routes = [
   {
     path: "fireForm/:id",
     component: GLLComponent,
+    canActivate: [AuthGuard],
+    resolve: { tokenGuest: TokenResolverService },
+  },
+  {
+    path: "fgl",
+    component: FGLComponent,
+    canActivate: [AuthGuard],
+    resolve: { tokenGuest: TokenResolverService },
+  },
+  {
+    path: "fgl/:id/:status/:transData",
+    component: FGLComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: "fgl/:id",
+    component: FGLComponent,
     canActivate: [AuthGuard],
     resolve: { tokenGuest: TokenResolverService },
   },

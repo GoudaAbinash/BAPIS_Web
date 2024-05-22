@@ -242,6 +242,8 @@ export class FSRrenewalComponent implements OnInit {
   policyrnwNo: any;
   PolicyNo: any;
   addressflag: boolean;
+  policyIssuedFlag: boolean=false;
+  ckycno: any;
 
 
   constructor(
@@ -257,6 +259,7 @@ export class FSRrenewalComponent implements OnInit {
       this.currentID = this.api.decy(this.activeR.snapshot.paramMap.get("id"));
     }
     this.currentStatus = this.activeR.snapshot.paramMap.get("status");
+    // alert(this.currentStatus);
     this.maxPolicyDate = new Date(
       this.maxPolicyDate.setDate(this.maxPolicyDate.getDate() + 29)
     );
@@ -503,7 +506,7 @@ export class FSRrenewalComponent implements OnInit {
       this.spCode = sessionData[0].SPCode;
       this.bankName = sessionData[0].bankname;
     }
-    
+    // alert(this.agentCode);
     this.tenureList = this.range(1, 10);
     this.quoteGeneraion.patchValue({
       polTenure: 1
@@ -531,339 +534,113 @@ export class FSRrenewalComponent implements OnInit {
       let id = decodeURIComponent(this.currentID);
       this.loading = true;
       let o = { id: id };
-      this.api.getQuoteDetails(o).subscribe(
-        (sus) => {
-          if (sus.ResponseFlag == 1) {
-            let res = JSON.parse(sus.ResponseMessage)["Table"];
-            let allData = JSON.parse(res[0].allData);
-            let annexData = JSON.parse(res[0].annexureData);
-            let empData = JSON.parse(res[0].empData);
-            this.payerid = res[0].payerID == null ? "" : res[0].payerID;
-            this.addressFlag = false;
-            // if (allData.ckycno != null || allData.ckycref != null) {
-            //   this.verfyilagf = true;
-            //   this.disableckyc = true;
-            //   this.ckycref = false;
-            //   this.ckycflag = false;
-            // } else {
-            //   this.verfyilagf = false;
-            //   this.disableckyc = false;
-            //   this.ckycref = true;
-            //   this.ckycflag = true;
-            // }
-            this.quoteGeneraion.patchValue(res[0]);
-            this.quoteGeneraion.patchValue(allData);
-            if (this.loginFlag == "2" || this.loginFlag == "3") {
-              var isPresent = sessionData.find(function (el) {
-                return el.SOL_ID === allData.branchName.split(" - ")[0];
-              });
+      this.api.getRnwDashDetails(o).subscribe((sus) => {
+        if (sus.ResponseFlag == 1) {
+          let res = JSON.parse(sus.ResponseMessage)['Table'];
+          let allData = JSON.parse(res[0].allData);
+          this.payerid = res[0].payerID;
+          this.TotalPerimum = res[0].totalPremium;
+          this.TotalSI = res[0].SumInsured;
+          this.addressFlag = false;
+          this.addressflag = false;
+
+          this.quoteGeneraion.patchValue(res[0]);
+          if (this.loginFlag == '2' || this.loginFlag == '3') {
+            
+           
+            var isPresent = sessionData.find(function (el) { return el.SOL_ID === allData.branchName.split(" - ")[0] });
+            if (isPresent) {
               this.setSpCode(isPresent);
             }
-            if (allData.customerType == "C") {
-              this.isCompany = true;
-              this.quoteGeneraion.get("lastName").setValidators(null);
-              this.quoteGeneraion.get("lastName").setErrors(null);
-            }
-
-            setTimeout(() => {
-              this.quoteGeneraion.patchValue(allData);
-              // this.quoteGeneraion.patchValue({
-              //   add1: allData.add1,
-              //   add2: allData.add2,
-              //   add3: allData.add3,
-              //   city: allData.city,
-              //   district: allData.district,
-              //   state: allData.state,
-              //   country: allData.country,
-              //   comadd1: allData.comadd1,
-              //   comadd2: allData.comadd2,
-              //   comadd3: allData.comadd3,
-              //   comcity: allData.comcity,
-              //   comdistrict: allData.comdistrict,
-              //   comstate: allData.comstate,
-              //   comcountry: allData.comcountry,
-              //   panNo: allData.panNo,
-              //   GSTNo: allData.GSTNo
-              // });
-            }, 100);
-            let o = { value: allData.customerType };
-            console.log(o);
-            this.changeCustomerType(o);
-            this.quoteNo = res[0].quoteNo;
-            this.trnID = res[0].trnID;
-            this.burglaryTotal =
-              allData.burglaryContentSum + allData.burglaryPercentSum;
-
-            this.totalFirSum =
-              allData.fireBuilding +
-              allData.fireContent +
-              allData.fireTerrSum +
-              allData.FLOPSum +
-              allData.ternantSum +
-              allData.alteranteAccSum +
-              allData.escalationSum +
-              allData.ommissionSum;
-
-            allData.fireAlliedPerils
-              ? this.setAnnexureWithValue(
-                  "Fire & Allied Perils",
-                  this.totalFirSum
-                )
-              : "";
-            allData.burglaryMain
-              ? this.setAnnexureWithValue(
-                  "Burglary",
-                  allData.burglaryContentSum
-                )
-              : "";
-            allData.allRisk
-              ? this.setAnnexureWithValue("All Risk", allData.portableComputer)
-              : "";
-            allData.electronicEquip
-              ? this.setAnnexureWithValue(
-                  "Electronic Equipments",
-                  allData.electronicEquiSum
-                )
-              : "";
-            allData.machinaryBreakdown
-              ? this.setAnnexureWithValue(
-                  "Machinery Breakdown",
-                  allData.airCondition +
-                    allData.porGeneration +
-                    allData.equiOther
-                )
-              : "";
-            allData.personalAccidentMain
-              ? this.setAnnexureWithValue(
-                  "Personal Accident",
-                  allData.personalAccident + allData.accidentDeath
-                )
-              : "";
-            allData.legalLiabiity
-              ? this.setAnnexureWithValue(
-                  "Legal Liability",
-                  allData.publicLiability
-                )
-              : "";
-            allData.baggageMain
-              ? this.setAnnexureWithValue("Baggage", allData.baggage)
-              : "";
-            allData.workmenCompensation
-              ? this.setAnnexureWithValue(
-                  "Workmen Compensation",
-                  allData.workCompensationSum
-                )
-              : "";
-            allData.moneyinsurance
-              ? this.setAnnexureWithValue(
-                  "Money Insurance",
-                  allData.cashInTransit +
-                    allData.cashInShafe +
-                    allData.cashInCounter
-                )
-              : "";
-            allData.employeeFidelity
-              ? this.setAnnexureWithValue(
-                  "Employee Fidelity",
-                  allData.fidelityEmp
-                )
-              : "";
-            allData.neonSignGlowSign
-              ? this.setAnnexureWithValue(
-                  "Neon Sign / Glow Sign",
-                  allData.neonSign
-                )
-              : "";
-            allData.pedalCycleMain
-              ? this.setAnnexureWithValue("Pedal Cycle", allData.pedalCycle)
-              : "";
-            allData.plateGlassMain
-              ? this.setAnnexureWithValue("Plate Glass", allData.plateGlass)
-              : "";
-            allData.stfiMain
-              ? this.setAnnexureWithValue("STFI", allData.STFI)
-              : "";
-            allData.earthQuake
-              ? this.setAnnexureWithValue("Earth Quake", allData.EQ)
-              : "";
-            if (annexData) {
-              if (annexData.length > 1) {
-                annexData.forEach((item, key) => {
-                  console.log(item, key);
-                  if (key >= 1) {
-                    const control = <FormArray>(
-                      this.annexureForm.get("detailSections")
-                    );
-                    control.push(this.initForm());
-                  }
-                  const arr = <FormArray>(
-                    this.annexureForm.controls.detailSections
-                  );
-                  arr.controls[key].patchValue(item);
-                });
-              } else {
-                const arr = <FormArray>(
-                  this.annexureForm.controls.detailSections
-                );
-                arr.controls[0].patchValue(annexData[0]);
-              }
-            }
-            if (annexData) {
-              if (empData != null) {
-                if (empData.length) {
-                  if (empData.length > 1) {
-                    empData.forEach((item, key) => {
-                      const control = <FormArray>(
-                        this.employeeForm.get("detailEMPSections")
-                      );
-                      control.push(this.initEmployeeForm());
-                      const arr = <FormArray>(
-                        this.employeeForm.controls.detailEMPSections
-                      );
-                      arr.controls[key].patchValue(item);
-                    });
-                  } else {
-                    const control = <FormArray>(
-                      this.employeeForm.get("detailEMPSections")
-                    );
-                    control.push(this.initEmployeeForm());
-                    const arr = <FormArray>(
-                      this.employeeForm.controls.detailEMPSections
-                    );
-                    arr.controls[0].patchValue(empData[0]);
-                  }
-                }
-              } else {
-                empData == "";
-              }
-            }
-            this.disableSelect = true;
-            setTimeout(() => {
-              $(".coverForm input").prop("disabled", true);
-              $(".fw > mat-checkbox, .one > mat-checkbox").addClass("disable");
-            }, 500);
-            this.issueQuoteFlag = false;
-            if (this.userName == res[0].createdBy) {
-              if (this.loginFlag == "2" || this.loginFlag == "3") {
-                this.makePaymentFlag = true;
-                if (this.currentStatus != "C") {
-                  this.paymentOptReq = true;
-                }
-              } else {
-                this.updateQuoteFlag = true;
-              }
-            } else {
-              this.updateQuoteFlag = false;
-              if (this.currentStatus != "C") {
-                this.makePaymentFlag = true;
-              }
-              if (this.currentStatus != "C") {
-                this.paymentOptReq = true;
-              } else {
-                this.paymentOptReq = false;
-                this.quoteGeneraion.disable();
-                this.annexureForm.disable();
-                this.employeeForm.disable();
-              }
-              if (this.loginFlag == "2" || this.loginFlag == "3") {
-                this.quoteGeneraion.disable();
-                this.annexureForm.disable();
-                this.employeeForm.disable();
-              } else {
-                this.annexureForm.disable();
-                this.employeeForm.disable();
-              }
-              setTimeout(() => {
-                $(".communicationAdd mat-checkbox").addClass("disable");
-                $(".hrefWrap,.removeFile").hide();
-              }, 500);
-              var d = new Date();
-              d.setFullYear(d.getFullYear() - 1, d.getMonth());
-              this.maximumDOB = d;
-            }
-            this.checkCalc = false;
-            this.showQuote = true;
-            this.validateAdd();
-            this.netPremium = Number(res[0].totalPremium);
-            let disLoad = 0;
-            let netLocal = this.netPremium;
-            if (allData.discount > 0) {
-              disLoad = (this.netPremium * allData.discount) / 100;
-            } else {
-              disLoad = (netLocal * allData.loading) / 100;
-            }
-            this.discountLoad =
-              (allData.discount > 0 ? "-" : "+") + String(disLoad);
-            this.discountLoad = Number(this.discountLoad).toFixed(2);
-            let obj = { pincode: res[0].pincode };
-            this.api.getStateCode(obj).subscribe(
-              (sus) => {
-                if (sus.ResponseFlag == 1) {
-                  let res = JSON.parse(sus["ResponseMessage"]).Table;
-                  if (res.length) {
-                    this.stateCode = res[0].StateCode;
-                    console.log(this.stateCode);
-                    console.log(this.stateName);
-                    this.stateName = res[0].StateName;
-                    this.country = res[0].CountryCode;
-                    if (this.stateCode == "KR") {
-                      this.gst = Math.ceil((netLocal * 18) / 100);
-                      this.GSTNo = 18;
-                    } else {
-                      this.gst = Math.ceil((netLocal * 18) / 100);
-                      this.GSTNo = 18;
-                    }
-                    this.totalPre = netLocal + this.gst;
-                    this.totalPre = Math.ceil(this.totalPre);
-                    this.loading = true;
-                    this.api
-                      .getEQZone(res[0].DistrictName, res[0].StateName)
-                      .subscribe((sus) => {
-                        this.loading = false;
-                        if (sus.ResponseFlag == 1) {
-                          let res = JSON.parse(sus["ResponseMessage"]).Table;
-                          if (res.length) {
-                            let zone = res[0].Zone;
-                            this.currentZoneNo = zone;
-                            if (zone == "1") {
-                              this.currentZone = this.zone1;
-                            } else if (zone == "2") {
-                              this.currentZone = this.zone2;
-                            } else if (zone == "3") {
-                              this.currentZone = this.zone3;
-                            } else {
-                              this.currentZone = this.zone4;
-                            }
-                            this.FLOP =
-                              this.buildingRate +
-                              this.fireSTFI +
-                              this.currentZone;
-                            this.setRiskRate("NH");
-                          }
-                        }
-                      });
-                  } else {
-                    this.quoteGeneraion.controls["pincode"].setValue("");
-                    alert("Invalid Pin code, Please check!");
-                  }
-                } else {
-                  alert(sus.ResponseMessage);
-                }
-                this.loading = false;
-              },
-              (err) => {
-                this.loading = false;
-                console.log(err);
-              }
-            );
           }
-          this.loading = false;
-        },
-        (err) => {
-          console.log(err);
-          this.loading = false;
+          setTimeout(() => {
+            this.quoteGeneraion.patchValue(allData);
+          }, 100);
+          if (this.bankName == "BOI" || this.bankName == "GBC" || this.bankName == "BOM") {
+            this.loadingDisc = 30;
+          } else {
+            this.loadingDisc = Number(allData.buildingAge) + Number(allData.fireProtection) + Number(allData.roundTheClock);
+          }
+          this.quoteNo = res[0].quoteNo;
+          this.trnID = res[0].trnID;
+          console.log(res[0].policyNumber);
+          this.nwpolicyno = res[0].policyNumber;
+          this.ckycno=res[0].ckycno;
+          this.ckycflag=true;
+          this.verfyilagf=true;
+          this.totalFirSum = allData.fireBuilding + allData.fireContent;
+          allData.coverContent ? this.setAnnexureWithValue('Cover for Valuable Contents', allData.coverContentSum) : '';
+          // if (annexData) {
+          //   if (annexData.length > 1) {
+          //     annexData.forEach((item, key) => {
+          //       if (key >= 1) {
+          //         const control = <FormArray>this.annexureForm.get('detailSections');
+          //         control.push(this.initForm());
+          //       }
+          //       const arr = <FormArray>this.annexureForm.controls.detailSections;
+          //       arr.controls[key].patchValue(item);
+          //     });
+          //   } else {
+          //     const arr = <FormArray>this.annexureForm.controls.detailSections;
+          //     arr.controls[0].patchValue(annexData[0]);
+          //   }
+          // }
+          this.disableSelect = true;
+          setTimeout(() => {
+            $('.coverForm input').prop('disabled', true);
+            $('.fw > mat-checkbox, .one > mat-checkbox').addClass('disable');
+          }, 500);
+          this.issueQuoteFlag = false;
+          if (this.userName == res[0].createdBy) {
+            if (this.loginFlag == "2" || this.loginFlag == '3') {
+              this.makePaymentFlag = true;
+              this.paymentOptReq = true;
+            } else {
+              this.updateQuoteFlag = true;
+            }
+          } else {
+            this.updateQuoteFlag = false;
+            if (this.currentStatus != "C") {
+              this.makePaymentFlag = true;
+            }
+            this.paymentOptReq = true;
+            this.quoteGeneraion.disable();
+            this.annexureForm.disable();
+            setTimeout(() => {
+              $('.communicationAdd mat-checkbox').addClass('disable');
+              $('.hrefWrap,.removeFile').hide();
+            }, 500);
+            var d = new Date();
+            d.setFullYear(d.getFullYear() - 1, d.getMonth());
+            console.log(d);
+            this.maximumDOB = d;
+            this.maximumRiskD = d;
+          }
+          this.checkCalc = false;
+          this.showQuote = true;
+          // this.validateAdd();
+          this.netPremium = parseFloat(res[0].totalPremium);
+          let disLoad = 0;
+          let netLocal = this.netPremium;
+          if (allData.discount > 0) {
+            disLoad = (this.netPremium * allData.discount / 100);
+          } else {
+            disLoad = (netLocal * allData.loading / 100);
+          }
+          this.discountLoad = ((allData.discount > 0) ? "-" : "+") + String(disLoad)
+          // this.gst = parseFloat((this.netPremium * 18 / 100).toFixed(2));
+          // this.totalPre = this.netPremium + this.gst;
+          // this.totalPre = parseFloat(this.totalPre.toFixed(2));
+          this.gst = parseFloat((netLocal * 18 / 100).toFixed(2));
+          this.totalPre = netLocal + this.gst;
+          this.totalPre = Math.round(this.totalPre);
+          this.getDetails(res[0].pincode);
         }
-      );
+        this.loading = false;
+      }, err => {
+        console.log(err);
+        this.loading = false;
+      })
     }
   }
 
@@ -1911,14 +1688,14 @@ export class FSRrenewalComponent implements OnInit {
     if (this.quoteGeneraion.status == "VALID") {
       this.loading = true;
       let obj = this.quoteGeneraion.value;
-      if (this.quoteGeneraion.value.covertype == "FRG") {
+      if (this.quoteGeneraion.value.coverType == "FRG") {
         obj.quoteType = "FR";
-      } else if (this.quoteGeneraion.value.covertype == "FSR") {
+      } else if (this.quoteGeneraion.value.coverType == "FSR") {
         obj.quoteType = "FS";
 
-      } else if (this.quoteGeneraion.value.covertype == "FUS") {
+      } else if (this.quoteGeneraion.value.coverType == "FUS") {
         obj.quoteType = "FU";
-      } else if (this.quoteGeneraion.value.covertype == "FBG") {
+      } else if (this.quoteGeneraion.value.coverType == "FBG") {
         obj.quoteType = "FB";
       } else {
         obj.quoteType = "SK";
@@ -1933,7 +1710,7 @@ export class FSRrenewalComponent implements OnInit {
       obj.customerName = this.customerName;
       obj.policyDate= this.startdate;
       console.log(obj);
-      this.api.saveRNWData(obj).subscribe((sus) => {
+      this.api.saveRNWData1(obj).subscribe((sus) => {
         console.log(sus.ResponseMessage);
         console.log(JSON.parse(sus.ResponseMessage));
         if (sus.ResponseFlag == 1) {
@@ -2463,225 +2240,6 @@ export class FSRrenewalComponent implements OnInit {
   }
   generatePDF(ucoPayment) {
 
-    // this.loading = true;
-    // console.log(this.quoteGeneraion.value);
-    // var date = new Date(this.quoteGeneraion.value.policyDate);
-    // var month = String(date.getMonth() + 1);
-    // month = month.length == 1 ? "0" + month : month;
-    // var day = String(date.getDate());
-    // day = day.length == 1 ? "0" + day : day;
-    // var year = date.getFullYear();
-    // var startDt = String(year) + month + day;
-    // // var c = new Date(year + 1, new Date(this.quoteGeneraion.value.policyDate).getMonth(), Number(day));
-    // // var emonth = String(c.getMonth() + 1);
-    // // emonth = (emonth.length == 1 ? "0" + emonth : emonth);
-    // // var todayDate=new Date();
-    // // var eday = String(new Date(todayDate.setDate(todayDate.getDate() -1)).getDate());  // String(c.getDate() - 1);
-    // // eday = (eday.length == 1 ? "0" + eday : eday);
-    // // var endDt = String(c.getFullYear()) + emonth + eday;
-    // let dt: any = new Date(date);
-    // dt.setYear(dt.getFullYear() + 1);
-    // dt = new Date(dt);
-    // dt = dt.setDate(dt.getDate() - 1);
-    // var endDt = this.api.getFormattedDate(dt, "yyyymmdd");
-    // let sumIns =
-    //   Number(
-    //     this.quoteGeneraion.value.fireBuilding
-    //       ? this.quoteGeneraion.value.fireBuilding
-    //       : 0
-    //   ) +
-    //   Number(
-    //     this.quoteGeneraion.value.fireContent
-    //       ? this.quoteGeneraion.value.fireContent
-    //       : 0
-    //   ) +
-    //   Number(
-    //     this.quoteGeneraion.value.fireTerrSum
-    //       ? this.quoteGeneraion.value.fireTerrSum
-    //       : 0
-    //   ) +
-    //   Number(
-    //     this.quoteGeneraion.value.FLOPSum
-    //       ? this.quoteGeneraion.value.FLOPSum
-    //       : 0
-    //   ) +
-    //   Number(
-    //     this.quoteGeneraion.value.ternantSum
-    //       ? this.quoteGeneraion.value.ternantSum
-    //       : 0
-    //   ) +
-    //   Number(
-    //     this.quoteGeneraion.value.alteranteAccSum
-    //       ? this.quoteGeneraion.value.alteranteAccSum
-    //       : 0
-    //   ) +
-    //   Number(
-    //     this.quoteGeneraion.value.escalationSum
-    //       ? this.quoteGeneraion.value.escalationSum
-    //       : 0
-    //   ) +
-    //   Number(
-    //     this.quoteGeneraion.value.ommissionSum
-    //       ? this.quoteGeneraion.value.ommissionSum
-    //       : 0
-    //   ) +
-    //   Number(
-    //     this.quoteGeneraion.value.burglaryContentSum
-    //       ? this.quoteGeneraion.value.burglaryContentSum
-    //       : 0
-    //   ) +
-    //   Number(
-    //     this.quoteGeneraion.value.burglaryPercentSum
-    //       ? this.quoteGeneraion.value.burglaryPercentSum
-    //       : 0
-    //   ) +
-    //   Number(
-    //     this.quoteGeneraion.value.portableComputer
-    //       ? this.quoteGeneraion.value.portableComputer
-    //       : 0
-    //   ) +
-    //   Number(
-    //     this.quoteGeneraion.value.electronicEquiSum
-    //       ? this.quoteGeneraion.value.electronicEquiSum
-    //       : 0
-    //   ) +
-    //   Number(
-    //     this.quoteGeneraion.value.airCondition
-    //       ? this.quoteGeneraion.value.airCondition
-    //       : 0
-    //   ) +
-    //   Number(
-    //     this.quoteGeneraion.value.porGeneration
-    //       ? this.quoteGeneraion.value.porGeneration
-    //       : 0
-    //   ) +
-    //   Number(
-    //     this.quoteGeneraion.value.equiOther
-    //       ? this.quoteGeneraion.value.equiOther
-    //       : 0
-    //   ) +
-    //   Number(
-    //     this.quoteGeneraion.value.personalAccident
-    //       ? this.quoteGeneraion.value.personalAccident
-    //       : 0
-    //   ) +
-    //   Number(
-    //     this.quoteGeneraion.value.accidentDeath
-    //       ? this.quoteGeneraion.value.accidentDeath
-    //       : 0
-    //   ) +
-    //   Number(
-    //     this.quoteGeneraion.value.publicLiability
-    //       ? this.quoteGeneraion.value.publicLiability
-    //       : 0
-    //   ) +
-    //   Number(
-    //     this.quoteGeneraion.value.baggage
-    //       ? this.quoteGeneraion.value.baggage
-    //       : 0
-    //   ) +
-    //   Number(
-    //     this.quoteGeneraion.value.workCompensationSum
-    //       ? this.quoteGeneraion.value.workCompensationSum
-    //       : 0
-    //   ) +
-    //   Number(
-    //     this.quoteGeneraion.value.cashInTransit
-    //       ? this.quoteGeneraion.value.cashInTransit
-    //       : 0
-    //   ) +
-    //   Number(
-    //     this.quoteGeneraion.value.cashInShafe
-    //       ? this.quoteGeneraion.value.cashInShafe
-    //       : 0
-    //   ) +
-    //   Number(
-    //     this.quoteGeneraion.value.cashInCounter
-    //       ? this.quoteGeneraion.value.cashInCounter
-    //       : 0
-    //   ) +
-    //   Number(
-    //     this.quoteGeneraion.value.fidelitySum
-    //       ? this.quoteGeneraion.value.fidelitySum
-    //       : 0
-    //   ) +
-    //   Number(
-    //     this.quoteGeneraion.value.neonSign
-    //       ? this.quoteGeneraion.value.neonSign
-    //       : 0
-    //   ) +
-    //   Number(
-    //     this.quoteGeneraion.value.pedalCycle
-    //       ? this.quoteGeneraion.value.pedalCycle
-    //       : 0
-    //   ) +
-    //   Number(
-    //     this.quoteGeneraion.value.plateGlass
-    //       ? this.quoteGeneraion.value.plateGlass
-    //       : 0
-    //   );
-    // let obj = this.quoteGeneraion.value;
-    // obj.clientCode = this.fgClientId;
-    // obj.startDate = startDt;
-    // obj.endDate = endDt;
-    // obj.stateCode = this.stateCode;
-    // obj.sumInsured = sumIns;
-    // obj.ratePortableComputer = this.portableComRate;
-    // obj.rateElectronicEquipemnts = this.eleEquiOther;
-    // obj.rateAirConditioner = this.airConditionRate;
-    // obj.ratePorGenerationPre = this.portableGenRate;
-    // obj.rateEquiOtherPre = this.eleEquiOther;
-    // obj.agentCode = this.agentCode;
-    // obj.receiptNo = this.fgReceiptNo;
-    // obj.quoteNo = this.quoteNo;
-    // obj.zone = this.currentZoneNo;
-    // obj.bankBranch = this.fgiBRCode;
-    // obj.bankBranchCode = this.fgBrachCode;
-    // obj.payerID = this.payerid;
-    // obj.receiptvendorname = this.receiptvendorname;
-
-    // var date = new Date(this.quoteGeneraion.value.riskDate);
-    // var month = String(date.getMonth() + 1);
-    // month = (month.length == 1 ? "0" + month : month);
-    // var day = String(date.getDate());
-    // day = (day.length == 1 ? "0" + day : day);
-    // var year = date.getFullYear();
-    // var startDt = String(year) + month + day;
-
-    // var endDt = this.quoteGeneraion.value.riskEndDate.split("/");
-    // endDt = endDt[2] + endDt[0] + endDt[1];
-    // console.log(startDt +":"+ endDt);
-    
-    // obj.startDate =startDt;
-    // obj.endDate = endDt;
-    // this.api.createRnwlPDF(obj).subscribe((sus) => {
-    //   console.log(sus);
-    //   this.loading = false;
-    //   if (sus.ResponseFlag == 1) {
-    //     let res = JSON.parse(sus["ResponseMessage"]).Table;
-    //     this.policyText = "Policy No - ";
-    //     this.policyNo = res[0]["PolicyNumber"];
-    //     this.policyNo = this.policyNo.trim();
-    //     if (this.policyNo) {
-    //       if (!ucoPayment.policy_ref_no) {
-    //         res[0] = res[0]["PolicyNumber"];
-    //       }
-    //       ucoPayment.policy_name = res[0]["PremiumClass"];
-    //       if (this.quoteGeneraion.value.paymentMethod == "S") {
-    //         this.updateUcoPolicy(ucoPayment);
-    //       }
-    //     } else {
-    //       alert("error while generating Policy!!");
-    //     }
-    //     console.log(res);
-    //     return true;
-    //   } else {
-    //     alert(sus["ResponseMessage"]);
-    //     return false;
-    //   }
-    // });
-
-
 
     if (this.quoteGeneraion.value.nwpolicyno !== "") {
       this.loading = true;
@@ -2890,6 +2448,7 @@ export class FSRrenewalComponent implements OnInit {
         this.policyText = "Policy No - ";
         this.policyNo = res[0]["PolicyNumber"];
         this.policyNo = this.policyNo.trim();
+        this.policyIssuedFlag = true;
         if (this.policyNo) {
           if (!ucoPayment.policy_ref_no) {
             res[0] = res[0]["PolicyNumber"];
@@ -3017,8 +2576,8 @@ export class FSRrenewalComponent implements OnInit {
       if (sus.ResponseFlag == "1") {
         {
           if (res.policystatus == "AR" || res.policystatus == "MR") {
-            if (res.contracttype == "FSR" || res.contracttype == "FRG" || res.contracttype == "FUS" || res.contracttype == "FBG"
-            ) {
+            // if (res.contracttype == "FSR" || res.contracttype == "FRG" || res.contracttype == "FUS" || res.contracttype == "FBG"
+            if (res.contracttype == "FSR" ) {
 
               const tables = Object.keys(JSON.parse(sus.ResponseMessage)).filter(key => key.startsWith('Table'));
             
@@ -3281,7 +2840,7 @@ export class FSRrenewalComponent implements OnInit {
                 clientno: this.clientNo,
                 agentcode: this.agentNo,
                 fgBrachCode1: this.fgBranchCode,
-
+                covertype:res.contracttype,
                 riskDate:new Date( this.startdate),
                 riskEndDate: this.enddate,
                 add1: this.add1,

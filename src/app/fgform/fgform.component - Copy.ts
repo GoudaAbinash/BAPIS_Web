@@ -113,7 +113,7 @@
 //   totalPre = 0; annexureWithValue = [];
 //   showQuote = false;
 //   onSubmit = false;
-//   checkCalc = true; 
+//   checkCalc = true;
 //   addressFlag = true;
 //   issueQuoteFlag = true;
 //   updateQuoteFlag = false;

@@ -189,6 +189,9 @@ export class FusrenewalComponent implements OnInit {
   changerate = "";
   ckycref = false;
   obj1: { userid: string; policyNo: any; };
+
+  nwpolicyno = '';
+
   insuranceData: any;
   addresses: any;
   clienttype: any;
@@ -213,12 +216,15 @@ export class FusrenewalComponent implements OnInit {
   riskRate: number;
   electronicEqRate: number;
   flopRate: number;
+  addressflag: boolean;
+  policyrnwNo: any;
+  policyIssuedFlag: boolean = false;
   constructor(
     private api: CommonService,
     private elementRef: ElementRef,
     private activeR: ActivatedRoute,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.currentID = this.api.decy(this.activeR.snapshot.paramMap.get("id"));
@@ -390,6 +396,8 @@ export class FusrenewalComponent implements OnInit {
       coverContent: new FormControl(false),
       PASelfMain: new FormControl(false),
       PASpouseMain: new FormControl(false),
+      nwpolicyno: new FormControl(''),
+
     });
     let myPastDate = new Date(this.maximumRiskD);
     myPastDate.setDate(myPastDate.getDate() - 30);
@@ -417,6 +425,7 @@ export class FusrenewalComponent implements OnInit {
       this.bankName = sessionData[0].bankname;
       console.log(this.bankName);
     }
+    //  alert(this.agentCode);
 
     this.setFormVal("spCode", this.spCode);
     this.quoteGeneraion.patchValue({
@@ -508,9 +517,9 @@ export class FusrenewalComponent implements OnInit {
 
             allData.coverContent
               ? this.setAnnexureWithValue(
-                  "Cover for Valuable Contents",
-                  allData.coverContentSum
-                )
+                "Cover for Valuable Contents",
+                allData.coverContentSum
+              )
               : "";
             if (annexData) {
               if (annexData.length > 1) {
@@ -904,7 +913,7 @@ export class FusrenewalComponent implements OnInit {
     this.setTotalFirSum("N");
   }
   changRiskStart() {
-    // this.setRateAsPerOccupation(this.changerate);
+     this.setRateAsPerOccupation(this.changerate);
     let date = this.quoteGeneraion.value.riskDate;
     console.log(date);
     if (date) {
@@ -1002,54 +1011,76 @@ export class FusrenewalComponent implements OnInit {
     }, 100);
   }
   quote() {
+
     this.onSubmit = true;
-    this.quoteGeneraion.get("polTenure").enable();
-    if (this.checkCalc) {
-      alert("Please click on calculate button !!");
-      return false;
-    }
-    console.log(this.quoteGeneraion.value);
+
+    // this.quoteGeneraion.get('polTenure').enable();
+    // if (this.checkCalc) {
+    //   alert("Please click on calculate button !!");
+    //   return false;
+    // }
+
+    console.log(this.quoteGeneraion.status);
     if (this.quoteGeneraion.status == "VALID") {
       this.loading = true;
       let obj = this.quoteGeneraion.value;
-      obj.quoteType = "FS";
+      if (this.quoteGeneraion.value.coverType == "FRG") {
+        obj.quoteType = "FR";
+      } else if (this.quoteGeneraion.value.coverType == "FSR") {
+        obj.quoteType = "FS";
+
+      } else if (this.quoteGeneraion.value.coverType == "FUS") {
+        obj.quoteType = "FU";
+      } else if (this.quoteGeneraion.value.coverType == "FBG") {
+        obj.quoteType = "FB";
+      } else {
+        obj.quoteType = "SK";
+      }
+      obj.totalPremium = this.TotalPerimum;
+      obj.TotalSI = this.TotalSI;
+      obj.loanAcNo = this.quoteGeneraion.value.loanAcNo;
+      obj.ckycflag = this.quoteGeneraion.value.verfyilagf;
+      obj.firePolicy = this.quoteGeneraion.value.firePolicy;
+      console.log(this.quoteGeneraion.value.covertype);
       obj.allData = JSON.stringify(this.quoteGeneraion.value);
-      //obj.businessType = this.quoteGeneraion.value.businessType.Risk_Code;
+      obj.customerName = this.customerName;
+      obj.policyDate = this.startdate;
       console.log(obj);
-      this.api.saveData(obj).subscribe(
-        (sus) => {
-          console.log(JSON.parse(sus.ResponseMessage));
-          if (sus.ResponseFlag == 1) {
-            alert("Quote created : "+JSON.parse(sus.ResponseMessage).Table[0].quoteNO+ " successfully!!!");
-            this.quoteNo = JSON.parse(sus.ResponseMessage).Table[0].quoteNO;
-            this.addressFlag = false;
-            this.loading = false;
-            this.issueQuoteFlag = false;
-            if (this.loginFlag == "2" || this.loginFlag == "3") {
-              this.saveAndPayment = true;
-            } else {
-              this.saveQuoteDetailsFlag = true;
-            }
-            this.validateAdd();
-            let _ths = this;
-            setTimeout(() => {
-              _ths.quoteGeneraion.patchValue({
-                state: _ths.stateName,
-                landmark: _ths.landmarkName,
-                country: _ths.country == "IND" ? "India" : "",
-                comstate: _ths.stateName,
-                comlandmark: _ths.landmarkName,
-                comcountry: _ths.country == "IND" ? "India" : "",
-              });
-            }, 100);
-          }
-        },
-        (err) => {
-          console.log(err);
-          alert("There is some issue with server please try again later!");
+      this.api.saveRNWData1(obj).subscribe((sus) => {
+        console.log(sus.ResponseMessage);
+        console.log(JSON.parse(sus.ResponseMessage));
+        if (sus.ResponseFlag == 1) {
+          alert("Quote created : " +
+            JSON.parse(sus.ResponseMessage).Table[0].quoteNO +
+            " successfully!!!");
+          this.quoteNo = JSON.parse(sus.ResponseMessage).Table[0].quoteNO;
+          this.addressFlag = false;
+          this.addressflag = true;
           this.loading = false;
+          this.issueQuoteFlag = false;
+          if (this.loginFlag == '2' || this.loginFlag == '3') {
+            this.saveAndPayment = true;
+          } else {
+            this.saveQuoteDetailsFlag = true;
+          }
+          // this.validateAdd();
+          let _ths = this;
+          setTimeout(() => {
+            _ths.quoteGeneraion.patchValue({
+              state: _ths.stateName,
+              landmark: _ths.landmarkName,
+              country: _ths.country == "IND" ? "India" : "",
+              comstate: _ths.stateName,
+              comlandmark: _ths.landmarkName,
+              comcountry: _ths.country == "IND" ? "India" : ""
+            });
+          }, 100);
         }
-      );
+      }, err => {
+        console.log(err);
+        alert("There is some issue with server please try again later!");
+        this.loading = false;
+      });
     }
   }
   createAnnexueList() {
@@ -1108,7 +1139,7 @@ export class FusrenewalComponent implements OnInit {
             if (crdt < cinsDt) {
               alert(
                 "Please change your risk date as per the instrument date - " +
-                  this.instrumentdate
+                this.instrumentdate
               );
               return false;
             }
@@ -1490,112 +1521,297 @@ export class FusrenewalComponent implements OnInit {
     });
   }
   generatePDF(ucoPayment) {
-    this.loading = true;
-    var date = new Date(this.quoteGeneraion.value.riskDate);
-    var month = String(date.getMonth() + 1);
-    month = month.length == 1 ? "0" + month : month;
-    var day = String(date.getDate());
-    day = day.length == 1 ? "0" + day : day;
-    var year = date.getFullYear();
-    var startDt = String(year) + month + day;
-    var endDt = this.quoteGeneraion.value.riskEndDate.split("/");
-    endDt = endDt[2] + endDt[0] + endDt[1];
-    var insDate = new Date(this.quoteGeneraion.value.insDate);
-    var monthi = String(insDate.getMonth() + 1);
-    monthi = monthi.length == 1 ? "0" + monthi : monthi;
-    var dayi = String(insDate.getDate());
-    dayi = dayi.length == 1 ? "0" + dayi : dayi;
-    var yeari = insDate.getFullYear();
-    let insDate1 = String(yeari) + monthi + dayi;
-    var spouseDate = new Date(this.quoteGeneraion.value.spouseDate);
-    monthi = String(spouseDate.getMonth() + 1);
-    monthi = monthi.length == 1 ? "0" + monthi : monthi;
-    dayi = String(spouseDate.getDate());
-    dayi = dayi.length == 1 ? "0" + dayi : dayi;
-    yeari = spouseDate.getFullYear();
-    let spouseDate1 = String(yeari) + monthi + dayi;
-    let sumIns =
-      (this.quoteGeneraion.value.fireBuilding
-        ? this.quoteGeneraion.value.fireBuilding
-        : 0) +
-      (this.quoteGeneraion.value.fireContent
-        ? this.quoteGeneraion.value.fireContent
-        : 0) +
-      (this.quoteGeneraion.value.plinthFound
-        ? this.quoteGeneraion.value.plinthFound
-        : 0) +
-      (this.quoteGeneraion.value.plantMac
-        ? this.quoteGeneraion.value.plantMac
-        : 0) +
-      (this.quoteGeneraion.value.furnFixFit
-        ? this.quoteGeneraion.value.furnFixFit
-        : 0) +
-      (this.quoteGeneraion.value.stock ? this.quoteGeneraion.value.stock : 0) +
-      (this.quoteGeneraion.value.consultingFees
-        ? this.quoteGeneraion.value.consultingFees
-        : 0) +
-      (this.quoteGeneraion.value.removalDebris
-        ? this.quoteGeneraion.value.removalDebris
-        : 0);
-    let obj = this.quoteGeneraion.value;
-    obj.clientCode = this.fgClientId; //'40246539';
-    obj.startDate = startDt;
-    obj.endDate = endDt;
-    obj.stateCode = this.stateCode;
-    obj.sumInsured = this.checkBurglaryAmt;
-    obj.agentCode = this.agentCode;
-    obj.receiptNo = this.fgReceiptNo;
-    obj.quoteNo = this.quoteNo;
-    obj.bankBranch = this.fgiBRCode;
-    obj.bankBranchCode = this.fgBrachCode;
-    obj.insDate = insDate1;
-    obj.spouseDate = spouseDate1;
-    obj.zone = "0" + this.currentZoneNo;
-    // obj.ageOfBuildingCode = this.ageOfBuildingCode;
-    obj.fireProtectionCode = this.fireProtectionCode;
-    obj.constructDetailsCode = this.constructDetailsCode;
-    obj.distancebrigad = this.distancebrigad;
-    obj.basementst = this.basementst;
-    obj.goodhouse = this.goodhouse;
-    obj.electInswir = this.electInswir;
-    obj.payerID = this.payerid;
-    obj.receiptvendorname = this.receiptvendorname;
-    obj.burgalarypolicyNo = this.burgalarypolicyNo;
-    if (this.loadingDisc < 0) {
-      obj.sign = "+";
-      obj.discount = this.loadingDisc.toString().substring(1);
+
+
+
+
+
+    if (this.quoteGeneraion.value.nwpolicyno !== "") {
+      this.loading = true;
+      var date = new Date(this.quoteGeneraion.value.riskDate);
+      var month = String(date.getMonth() + 1);
+      month = (month.length == 1 ? "0" + month : month);
+      var day = String(date.getDate());
+      day = (day.length == 1 ? "0" + day : day);
+      var year = date.getFullYear();
+      var startDt = String(year) + month + day;
+      console.log(startDt);
+
+      // var endDt = this.quoteGeneraion.value.riskEndDate.split("/");
+      // endDt = endDt[2] + endDt[0] + endDt[1];
+
+
+      var endD = new Date(this.quoteGeneraion.value.riskEndDate);
+      var monthi = String(endD.getMonth() + 1);
+      monthi = (monthi.length == 1 ? "0" + monthi : monthi);
+      var dayi = String(endD.getDate());
+      dayi = (dayi.length == 1 ? "0" + dayi : dayi);
+      var yeari = endD.getFullYear();
+      let endDt = String(yeari) + monthi + dayi;
+      console.log(endDt);
+
+      var insDate = new Date(this.quoteGeneraion.value.insDate);
+      var monthi = String(insDate.getMonth() + 1);
+      monthi = (monthi.length == 1 ? "0" + monthi : monthi);
+      var dayi = String(insDate.getDate());
+      dayi = (dayi.length == 1 ? "0" + dayi : dayi);
+      var yeari = insDate.getFullYear();
+      let insDate1 = String(yeari) + monthi + dayi;
+      var spouseDate = new Date(this.quoteGeneraion.value.spouseDate);
+      monthi = String(spouseDate.getMonth() + 1);
+      monthi = (monthi.length == 1 ? "0" + monthi : monthi);
+      dayi = String(spouseDate.getDate());
+      dayi = (dayi.length == 1 ? "0" + dayi : dayi);
+      yeari = spouseDate.getFullYear();
+      let spouseDate1 = String(yeari) + monthi + dayi;
+      console.log(insDate1, spouseDate1);
+      // let sumIns = (this.quoteGeneraion.value.fireBuilding ? this.quoteGeneraion.value.fireBuilding : 0)
+      //   + (this.quoteGeneraion.value.fireContent ? this.quoteGeneraion.value.fireContent : 0);
+
+
+      // SI
+      let sumIns =
+        Number(
+          this.quoteGeneraion.value.fireBuilding
+            ? this.quoteGeneraion.value.fireBuilding
+            : 0
+        ) +
+        Number(
+          this.quoteGeneraion.value.fireContent
+            ? this.quoteGeneraion.value.fireContent
+            : 0
+        ) +
+        Number(
+          this.quoteGeneraion.value.fireTerrSum
+            ? this.quoteGeneraion.value.fireTerrSum
+            : 0
+        ) +
+        Number(
+          this.quoteGeneraion.value.FLOPSum
+            ? this.quoteGeneraion.value.FLOPSum
+            : 0
+        ) +
+        Number(
+          this.quoteGeneraion.value.ternantSum
+            ? this.quoteGeneraion.value.ternantSum
+            : 0
+        ) +
+        Number(
+          this.quoteGeneraion.value.alteranteAccSum
+            ? this.quoteGeneraion.value.alteranteAccSum
+            : 0
+        ) +
+        Number(
+          this.quoteGeneraion.value.escalationSum
+            ? this.quoteGeneraion.value.escalationSum
+            : 0
+        ) +
+        Number(
+          this.quoteGeneraion.value.ommissionSum
+            ? this.quoteGeneraion.value.ommissionSum
+            : 0
+        ) +
+        Number(
+          this.quoteGeneraion.value.burglaryContentSum
+            ? this.quoteGeneraion.value.burglaryContentSum
+            : 0
+        ) +
+        Number(
+          this.quoteGeneraion.value.burglaryPercentSum
+            ? this.quoteGeneraion.value.burglaryPercentSum
+            : 0
+        ) +
+        Number(
+          this.quoteGeneraion.value.portableComputer
+            ? this.quoteGeneraion.value.portableComputer
+            : 0
+        ) +
+        Number(
+          this.quoteGeneraion.value.electronicEquiSum
+            ? this.quoteGeneraion.value.electronicEquiSum
+            : 0
+        ) +
+        Number(
+          this.quoteGeneraion.value.airCondition
+            ? this.quoteGeneraion.value.airCondition
+            : 0
+        ) +
+        Number(
+          this.quoteGeneraion.value.porGeneration
+            ? this.quoteGeneraion.value.porGeneration
+            : 0
+        ) +
+        Number(
+          this.quoteGeneraion.value.equiOther
+            ? this.quoteGeneraion.value.equiOther
+            : 0
+        ) +
+        Number(
+          this.quoteGeneraion.value.personalAccident
+            ? this.quoteGeneraion.value.personalAccident
+            : 0
+        ) +
+        Number(
+          this.quoteGeneraion.value.accidentDeath
+            ? this.quoteGeneraion.value.accidentDeath
+            : 0
+        ) +
+        Number(
+          this.quoteGeneraion.value.publicLiability
+            ? this.quoteGeneraion.value.publicLiability
+            : 0
+        ) +
+        Number(
+          this.quoteGeneraion.value.baggage
+            ? this.quoteGeneraion.value.baggage
+            : 0
+        ) +
+        Number(
+          this.quoteGeneraion.value.workCompensationSum
+            ? this.quoteGeneraion.value.workCompensationSum
+            : 0
+        ) +
+        Number(
+          this.quoteGeneraion.value.cashInTransit
+            ? this.quoteGeneraion.value.cashInTransit
+            : 0
+        ) +
+        Number(
+          this.quoteGeneraion.value.cashInShafe
+            ? this.quoteGeneraion.value.cashInShafe
+            : 0
+        ) +
+        Number(
+          this.quoteGeneraion.value.cashInCounter
+            ? this.quoteGeneraion.value.cashInCounter
+            : 0
+        ) +
+        Number(
+          this.quoteGeneraion.value.fidelitySum
+            ? this.quoteGeneraion.value.fidelitySum
+            : 0
+        ) +
+        Number(
+          this.quoteGeneraion.value.neonSign
+            ? this.quoteGeneraion.value.neonSign
+            : 0
+        ) +
+        Number(
+          this.quoteGeneraion.value.pedalCycle
+            ? this.quoteGeneraion.value.pedalCycle
+            : 0
+        ) +
+        Number(
+          this.quoteGeneraion.value.plateGlass
+            ? this.quoteGeneraion.value.plateGlass
+            : 0
+        );
+
+      let obj = this.quoteGeneraion.value;
+      obj.clientCode = this.quoteGeneraion.value.clientno; //'40246539';
+      obj.policyNo = this.quoteGeneraion.value.nwpolicyno;
+      obj.startDate = startDt;
+      obj.stateCode = this.stateCode;
+      obj.endDate = endDt;
+      obj.receiptNo = this.fgReceiptNo;
+      obj.quoteNo = this.quoteNo;
+      obj.bankBranch = this.quoteGeneraion.value.bankBranch;
+      obj.bankBranchCode = this.quoteGeneraion.value.fgBrachCode1;
+      obj.FGStafID = this.quoteGeneraion.value.FGStafID;
+      obj.bancaSegement = this.quoteGeneraion.value.bancaSegement;
+      obj.payerID = this.payerid;
+      obj.receiptvendorname = this.receiptvendorname;
+      obj.sumInsured = sumIns;
+      obj.agentCode = this.agentCode;
+      obj.zone = this.quoteGeneraion.value.zoneNo;
+      console.log(obj);
+      obj.startDate = startDt;
+      obj.endDate = endDt;
+      this.api.generate_FUS_PDF(obj).subscribe((sus) => {
+        console.log(sus);
+        this.loading = false;
+        if (sus.ResponseFlag == 1) {
+          let res = JSON.parse(sus["ResponseMessage"]).Table;
+          this.policyText = "Policy No - ";
+          this.policyNo = res[0]["PolicyNumber"];
+          this.policyNo = this.policyNo.trim();
+          this.policyIssuedFlag = true;
+          if (this.policyNo) {
+            if (!ucoPayment.policy_ref_no) {
+              res[0] = res[0]["PolicyNumber"];
+            }
+            ucoPayment.policy_name = res[0]["PremiumClass"];
+            if (this.quoteGeneraion.value.paymentMethod == "S") {
+              this.updateUcoPolicy(ucoPayment);
+            }
+          } else {
+            alert("error while generating Policy!!");
+          }
+          console.log(res);
+          return true;
+        } else {
+          alert(sus["ResponseMessage"]);
+          return false;
+        }
+      });
     } else {
-      obj.sign = "-";
-      obj.discount = this.loadingDisc;
-    }
-    console.log(obj);
-    this.api.generateFirePDF(obj).subscribe((sus) => {
-      console.log(sus);
-      this.loading = false;
-      if (sus.ResponseFlag == 1) {
-        let res = JSON.parse(sus["ResponseMessage"]).Table;
-        this.policyText = "Policy No - ";
-        this.policyNo = res[0]["PolicyNumber"];
-        if (
-          this.quoteGeneraion.value.burglarymMain &&
-          this.burgalarypolicyNo == ""
-        ) {
-          this.generateBurglaryPDF();
-        }
-        if (!ucoPayment.policy_ref_no) {
-          res[0] = res[0]["PolicyNumber"];
-        }
-        ucoPayment.policy_name = res[0]["PremiumClass"];
-        if (this.payerid == "" || this.payerid == null) {
-          this.updateUcoPolicy(ucoPayment);
-        }
-        console.log(res);
-        return true;
-      } else {
-        alert(sus["ResponseMessage"]);
-        return false;
+      // create policy (cloning)
+      let obj1 = { 'policyNo': this.quoteGeneraion.value.policyNo };
+      console.log(obj1);
+      if (this.quoteGeneraion.value.policyNo != '' && this.quoteGeneraion.value.riskEndDate != '') {
+        this.api.getRnwpolicy(obj1).subscribe((sus) => {
+          console.log(sus);
+          this.loading = false;
+          if (sus.ResponseFlag == 1 && JSON.parse(sus['ResponseMessage']).Table.length != 0) {
+            let res = JSON.parse(sus['ResponseMessage']).Table;
+            console.log(JSON.parse(sus['ResponseMessage']).Table[0]['PolicyNumber']);
+            this.policyrnwNo = res[0]['PolicyNumber'];
+            console.log(this.policyrnwNo);
+            this.quoteGeneraion.patchValue({
+              nwpolicyno: this.policyrnwNo
+            });
+            this.generatePDF(ucoPayment);
+            this.loading = false;
+
+
+          } else {
+
+            var date = new Date(this.quoteGeneraion.value.riskDate);
+            var month = String(date.getMonth() + 1);
+            month = (month.length == 1 ? "0" + month : month);
+            var day = String(date.getDate());
+            day = (day.length == 1 ? "0" + day : day);
+            var year = date.getFullYear();
+            var startDt = String(year) + month + day;
+
+            var endDt = this.quoteGeneraion.value.riskEndDate.split("/");
+            endDt = endDt[2] + endDt[0] + endDt[1];
+            let obj = { 'policyNo': this.quoteGeneraion.value.policyNo, 'covertype': this.quoteGeneraion.value.covertype, 'clientCode': this.quoteGeneraion.value.clientno, agentCode: this.quoteGeneraion.value.agentcode, 'startDate': startDt, 'endDate': endDt, fgBrachCode1: this.quoteGeneraion.value.fgBrachCode1, payerID: this.payerid, receiptvendorname: this.receiptvendorname, bancaSegement: this.quoteGeneraion.value.bancaSegement, bankBranch: this.quoteGeneraion.value.bankBranch, FGStafID: this.quoteGeneraion.value.FGStafID };
+            console.log(obj);
+
+            this.api.createFireRnwPDF(obj).subscribe((sus) => {
+              console.log(sus);
+              this.loading = false;
+              if (sus.ResponseFlag == 1) {
+                let res = JSON.parse(sus['ResponseMessage']).Table;
+                this.policyNo = res[0]['PolicyNumber'];
+                console.log(this.policyNo);
+                this.quoteGeneraion.patchValue({
+                  nwpolicyno: this.policyNo
+                });
+                this.generatePDF(ucoPayment);
+                this.loading = false;
+                return true;
+              } else {
+                alert(sus['ResponseMessage'])
+                return false;
+              }
+            });
+          }
+        });
       }
-    });
+    }
+
   }
   generateBurglaryPDF() {
     this.loading = true;
@@ -1714,454 +1930,455 @@ export class FusrenewalComponent implements OnInit {
     //console.log(ucoPayment);
   }
 
-    // fetch renewal api
-    getPolicy(val) {
+  // fetch renewal api
+  getPolicy(val) {
+    this.loading = true;
+    // if(window.location.protocol= "http://localhost:61567/")
+    //  if(window.location.protocol == "https://online.futuregenerali.in/")
+    // {
+    let sessionData = this.api.decy(sessionStorage.getItem('userDetails'));
+    this.loginFlag = sessionData[0].loginFlag;
+    this.receiptusername = sessionData[0].receiptusername;
+    this.receiptvendorname = sessionData[0].receiptvendorname;
+    this.obj1 = { 'userid': this.receiptvendorname, 'policyNo': val };
+    // }else{
+    //this.obj1 = { 'userid': 'kkhunt', 'policyNo': val };
+    // }
+    let obj = this.obj1;
+    console.log(obj);
+
+
+    // fetching policy details from BO
+    this.api.get_FUS_PolicyDel(obj).subscribe((sus) => {
       this.loading = true;
-      // if(window.location.protocol= "http://localhost:61567/")
-      //  if(window.location.protocol == "https://online.futuregenerali.in/")
-      // {
-      let sessionData = this.api.decy(sessionStorage.getItem('userDetails'));
-      this.loginFlag = sessionData[0].loginFlag;
-      this.receiptusername = sessionData[0].receiptusername;
-      this.receiptvendorname = sessionData[0].receiptvendorname;
-      this.obj1 = { 'userid': this.receiptvendorname, 'policyNo': val };
-      // }else{
-      //this.obj1 = { 'userid': 'kkhunt', 'policyNo': val };
-      // }
-      let obj = this.obj1;
-      console.log(obj);
-  
-  
-      // fetching policy details from BO
-      this.api.get_FUS_PolicyDel(obj).subscribe((sus) => {
-        this.loading = true;
-        console.log(JSON.parse(sus.ResponseMessage));
-        let res = JSON.parse(sus.ResponseMessage).Table[0];
-        let clientDetails = JSON.parse(sus.ResponseMessage).Table[1];
-        // let res1 = JSON.parse(sus.ResponseMessage).Table2[0];
-  
-  
-        if (sus.ResponseFlag == "1") {
-          {
-            if (res.policystatus == "AR" || res.policystatus == "MR") {
-              if (res.contracttype == "FSR" || res.contracttype == "FRG" || res.contracttype == "FUS" || res.contracttype == "FBG"
-              ) {
-  
-                const tables = Object.keys(JSON.parse(sus.ResponseMessage)).filter(key => key.startsWith('Table'));
-              
-      if (tables.length > 0) {
-        const lastTableKey = tables[tables.length - 1];
-        const lastTable = JSON.parse(sus.ResponseMessage)[lastTableKey];
-        this.insuranceData = lastTable;
-        this.addresses = JSON.parse(sus.ResponseMessage)[tables[tables.length - 3]];
-  
-      }
-  
-                //this.insuranceData= JSON.parse(sus.ResponseMessage).Table4;
-                console.log(this.insuranceData);
-                console.log(this.addresses);
-                console.log(this.addresses[0].Adr1);
-                // alert(!(JSON.parse(sus.ResponseMessage).Table5));
-  
-        //patch address 
-        this.quoteGeneraion.patchValue({
-          comadd1: this.addresses[1].Adr1,
-          comadd2: this.addresses[1].adr2,
-          comadd3: this.addresses[1].adr3,
-          comcity: this.addresses[1].city,
-          comlandmark: this.addresses[1].Landmark,
-          comstate: this.addresses[1].state,
-          comcountry: this.addresses[1].Country,
-          comPincode: this.addresses[1].postcode,
-        })
-       
-  
-  
-        this.insuranceData.forEach(data => {
-          const type = data.CVRCDE1; // Remove any leading or trailing whitespace
-          const descriptionKey = `description${type}`;
-          const sumInsuredKey = `sumInsured${type}`;
-          const premiumKey = `premium${type}`;
-          console.log(data);
-          console.log(data.CVRCDE1);
-          console.log(this.parsePremiumValue(data.PREMIUM1));
-          console.log(this.parsePremiumValue(data.CVRSI1));
-            // if(data.CVRCDE1=='1A**' || data.CVRCDE1=='1B**'){
-              this.quoteGeneraion.patchValue({
-                fireAlliedPerils:true
-              })
-              if(data.CVRCDE1.trim()=='002'){
-                this.quoteGeneraion.patchValue({
-                  buildMain:true,
-                  fireBuilding:this.parsePremiumValue(data.CVRSI1),
-                  fireBuildingPre:this.parsePremiumValue(data.PREMIUM1)
-                })
-                
-              } 
-              else if(data.CVRCDE1.trim()=='001'){
-                this.quoteGeneraion.patchValue({
-                  plinthFoundMain:true,
-                  plinthFoundP:this.parsePremiumValue(data.PREMIUM1),
-                  plinthFound:this.parsePremiumValue(data.CVRSI1)
-                })
-                
-              } 
-              else if(data.CVRCDE1.trim()=='005'){
-                this.quoteGeneraion.patchValue({
-                  plantMacMain:true,
-                  plantMacP:this.parsePremiumValue(data.PREMIUM1),
-                  plantMac:this.parsePremiumValue(data.CVRSI1)
-                })
-                
-              } 
-              else if(data.CVRCDE1.trim()=='006'){
-                this.quoteGeneraion.patchValue({
-                  furnFixFitMain:true,
-                  furnFixFitP:this.parsePremiumValue(data.PREMIUM1),
-                  furnFixFit:this.parsePremiumValue(data.CVRSI1)
-                })
-                
-              } 
-              else if(data.CVRCDE1.trim()=='016'){
-                this.quoteGeneraion.patchValue({
-                  stockMain:true,
-                  stockP:this.parsePremiumValue(data.PREMIUM1),
-                  stock:this.parsePremiumValue(data.CVRSI1)
-                })
-                
-              } 
-              else if(data.CVRCDE1.trim()=='008'){
-                this.quoteGeneraion.patchValue({
-                  fireContentsMain:true,
-                  fireContentP:this.parsePremiumValue(data.PREMIUM1),
-                  fireContent:this.parsePremiumValue(data.CVRSI1)
-                })
-                
-              } 
-              
-            // } 
-            else if(data.CVRCDE1=='2A**'){
-              this.quoteGeneraion.patchValue({
-                burglaryMain:true
-              })
-              
-            }
-            else if(data.CVRCDE1=='7C**'){
-              this.quoteGeneraion.patchValue({
-                legalLiabiity:true,
-                publicLiabilityMain:true,
-                publicLiabilityPre:this.parsePremiumValue(data.PREMIUM1),
-                publicLiability:this.parsePremiumValue(data.CVRSI1)
-            }) 
-              
-           } 
-            else if(data.CVRCDE1=='3C**'){
-              this.quoteGeneraion.patchValue({
-                allRisk:true,
-                portableMain:true,
-                portableComputerPre:this.parsePremiumValue(data.PREMIUM1),
-                portableComputer:this.parsePremiumValue(data.CVRSI1)
-            }) 
-              
-           } 
-            else if(data.CVRCDE1=='6A**'){
-              this.quoteGeneraion.patchValue({
-                personalAccidentMain:true,
-                accidentMain:true,
-                personalAccidentPre:this.parsePremiumValue(data.PREMIUM1),
-                personalAccident:this.parsePremiumValue(data.CVRSI1)
-            }) 
-              
-           } 
-            else if(data.CVRCDE1=='GA**'){
-              this.quoteGeneraion.patchValue({
-                pedalCycleMain:true,
-                pedalCycleNonMain:true,
-                pedalCycle:this.parsePremiumValue(data.CVRSI1),
-                pedalCyclePre:this.parsePremiumValue(data.PREMIUM1)
-                
-            }) 
-              
-           } 
-            else if(data.CVRCDE1=='HA**'){
-              this.quoteGeneraion.patchValue({
-                neonSignGlowSign:true,
-                neonSignMain:true,
-                neonSign:this.parsePremiumValue(data.CVRSI1),
-                neonSignPre:this.parsePremiumValue(data.PREMIUM1)
-  
-            }) 
-           } 
-            else if(data.CVRCDE1=='DA**'){
-              this.quoteGeneraion.patchValue({
-                plateGlassMain:true,
-                fixedMain:true,
-                plateGlass:this.parsePremiumValue(data.CVRSI1),
-                plateGlassPre:this.parsePremiumValue(data.PREMIUM1)
-  
-            }) 
-           } 
-            else if(data.CVRCDE1=='FA**'){
-              this.quoteGeneraion.patchValue({
-                employeeFidelity:true,
-                employeeMain:true,
-                fidelitySum:this.parsePremiumValue(data.CVRSI1),
-                fidelityPre:this.parsePremiumValue(data.PREMIUM1)
-  
-            }) 
-           } 
-            else if(data.CVRCDE1=='EA**' || data.CVRCDE1=='EB**' || data.CVRCDE1=='EC**'){
-              this.quoteGeneraion.patchValue({
-                moneyinsurance:true,
-              }) 
-               if(data.CVRCDE1=='EA**'){
-                this.quoteGeneraion.patchValue({
-                  cashInMain:true,
-                  // employeeMain:true,
-                  cashInTransit:this.parsePremiumValue(data.CVRSI1),
-                  cashInTransitPre:this.parsePremiumValue(data.PREMIUM1)
-    
-              }) 
-             } 
-               else if(data.CVRCDE1=='EB**'){
-                this.quoteGeneraion.patchValue({
-                  cashInSafeMain:true,
-                  // employeeMain:true,
-                  cashInShafe:this.parsePremiumValue(data.CVRSI1),
-                  cashInShafePre:this.parsePremiumValue(data.PREMIUM1)
-    
-              }) 
-             } 
-               else if(data.CVRCDE1=='EC**'){
-                this.quoteGeneraion.patchValue({
-                  cashInCounterMain:true,
-                  // employeeMain:true,
-                  cashInCounter:this.parsePremiumValue(data.CVRSI1),
-                  cashInCounterPre:this.parsePremiumValue(data.PREMIUM1)
-    
-              }) 
-             } 
-           } 
-  
-           else if(data.CVRCDE1=='4A**'){
-            this.quoteGeneraion.patchValue({
-              electronicEquip:true,
-              electronicMain:true,
-              electronicEquiSum:this.parsePremiumValue(data.CVRSI1),
-              electronicEquiPre:this.parsePremiumValue(data.PREMIUM1)
-              
-          }) 
-            
-         } 
-  
-         else if(data.CVRCDE1=='5B**' || data.CVRCDE1=='5C**' || data.CVRCDE1=='5D**'){
-          this.quoteGeneraion.patchValue({
-            machinaryBreakdown:true,
-          }) 
-           if(data.CVRCDE1=='5B**'){
-            this.quoteGeneraion.patchValue({
-              airConditionMain:true,
-              // employeeMain:true,
-              airCondition:this.parsePremiumValue(data.CVRSI1),
-              airConditionPre:this.parsePremiumValue(data.PREMIUM1)
-  
-          }) 
-         } 
-           else if(data.CVRCDE1=='5C**'){
-            this.quoteGeneraion.patchValue({
-              portableGeneratorMain:true,
-              // employeeMain:true,
-              porGeneration:this.parsePremiumValue(data.CVRSI1),
-              porGenerationPre:this.parsePremiumValue(data.PREMIUM1)
-  
-          }) 
-         } 
-           else if(data.CVRCDE1=='5D**'){
-            this.quoteGeneraion.patchValue({
-              equipmentMain:true,
-              // employeeMain:true,
-              equiOther:this.parsePremiumValue(data.CVRSI1),
-              equiOtherPre:this.parsePremiumValue(data.PREMIUM1)
-  
-          }) 
-         } 
-       } 
-  
-  
-        // this.quoteGeneraion.patchValue({
-  
-          // [`type${type}`]: data.Type.trim(),
-          // [`SubType${type}`]: data.SubType.trim(),
-          // [descriptionKey]: data.Description.trim(), // Trim any leading or trailing whitespace
-          // [sumInsuredKey]: parseFloat(data.SumInsured), // Convert string to number if needed
-          // [premiumKey]: parseFloat(data.PREMIUM1) // Convert string to number if needed
-        // });
-      });
-   
-  
-      console.log(this.quoteGeneraion.value);
-  
-                //alert(res.TotalSI);
-                this.coverType = res.contracttype;
-                this.clienttype = res.clienttype;
-                this.customerName = res.customername;
-                this.clientNo = res.clientno;
-                this.agentNo = res.agentno;
-                this.fgBranchCode = res.servicebranch;
-                this.add1 = res.addr1;
-                this.add2 = res.addr2;
-                this.add3 = res.addr3;
-                this.add4 = res.addr4;
-                this.city = res.city;
-                this.state = res.state;
-                this.pincode = res.pincode;
-                this.TotalPerimum = res.TotalPremium;
-                this.TotalSI = res.TotalSI;
-                this.fgbranchName = res.branchname;
-                this.OccupancyCode = res.OccupancyCode;
-                this.OccupancyName = res.OccupancyDesc;
-                let strdt = res.renewalpolicystartdate.split("/");
-                this.startdate = strdt[1] + "/" + strdt[0] + "/" + strdt[2];
-                //alert(this.startdate);
-                let endt = res.renewalpolicyenddate.split("/");
-                this.enddate = endt[1] + "/" + endt[0] + "/" + endt[2];
-  
-                // let startdate = this.api.getFormattedDate(this.startdate, "mm/dd/yyyy");
-                // this.quoteGeneraion.patchValue({
-                //   riskDate: this.startdate
-                // });
-                this.quoteGeneraion.patchValue({
-                  TotalPerimum: this.TotalPerimum,
-                  TotalSI: this.TotalSI,
-                  coverType: this.coverType,
-                  customerType: this.clienttype == 'Personal' ? 'Individual' : 'Organization',
-                  customerName: this.customerName,
-                  firstName: this.customerName,
-                  clientno: this.clientNo,
-                  agentcode: this.agentNo,
-                  fgBrachCode1: this.fgBranchCode,
-  
-                  riskDate:new Date( this.startdate),
-                  riskEndDate: this.enddate,
-                  add1: this.add1,
-                  add2: this.add2,
-                  add3: this.add3,
-                  landmark: this.add4,
-                  city: this.city,
-                  state: this.state,
-                  pincode: this.pincode,
-                  fgbranchName: this.fgbranchName,
-                  OccupancyCode: this.coverType == "FRG" ? this.OccupancyCode : this.OccupancyCode + this.OccupancyName[0],
-                  OccupancyName: this.coverType == "FRG" ? this.OccupancyName : this.OccupancyName.slice(1),
-                  sumInsured:this.TotalSI,
-                  businessType:res.OccupancyCode
-                });
-                console.log(this.quoteGeneraion);
-  
-               
-  
-  
-                this.loading = false;
-              } else {
-                this.loading = false;
-                alert("Invalid contract type!");
-                this.clearForm();
+      console.log(JSON.parse(sus.ResponseMessage));
+      let res = JSON.parse(sus.ResponseMessage).Table[0];
+      let clientDetails = JSON.parse(sus.ResponseMessage).Table[1];
+      // let res1 = JSON.parse(sus.ResponseMessage).Table2[0];
+
+
+      if (sus.ResponseFlag == "1") {
+        {
+          if (res.policystatus == "AR" || res.policystatus == "MR") {
+            //if (res.contracttype == "FSR" || res.contracttype == "FRG" || res.contracttype == "FUS" || res.contracttype == "FBG")
+            if (res.contracttype == "FUS") {
+
+              const tables = Object.keys(JSON.parse(sus.ResponseMessage)).filter(key => key.startsWith('Table'));
+
+              if (tables.length > 0) {
+                const lastTableKey = tables[tables.length - 1];
+                const lastTable = JSON.parse(sus.ResponseMessage)[lastTableKey];
+                this.insuranceData = lastTable;
+                this.addresses = JSON.parse(sus.ResponseMessage)[tables[tables.length - 3]];
+
               }
-  
+
+              //this.insuranceData= JSON.parse(sus.ResponseMessage).Table4;
+              console.log(this.insuranceData);
+              console.log(this.addresses);
+              console.log(this.addresses[0].Adr1);
+              // alert(!(JSON.parse(sus.ResponseMessage).Table5));
+
+              //patch address 
+              this.quoteGeneraion.patchValue({
+                comadd1: this.addresses[1].Adr1,
+                comadd2: this.addresses[1].adr2,
+                comadd3: this.addresses[1].adr3,
+                comcity: this.addresses[1].city,
+                comlandmark: this.addresses[1].Landmark,
+                comstate: this.addresses[1].state,
+                comcountry: this.addresses[1].Country,
+                comPincode: this.addresses[1].postcode,
+              })
+
+
+
+              this.insuranceData.forEach(data => {
+                const type = data.CVRCDE1; // Remove any leading or trailing whitespace
+                const descriptionKey = `description${type}`;
+                const sumInsuredKey = `sumInsured${type}`;
+                const premiumKey = `premium${type}`;
+                console.log(data);
+                console.log(data.CVRCDE1);
+                console.log(this.parsePremiumValue(data.PREMIUM1));
+                console.log(this.parsePremiumValue(data.CVRSI1));
+                // if(data.CVRCDE1=='1A**' || data.CVRCDE1=='1B**'){
+                this.quoteGeneraion.patchValue({
+                  fireAlliedPerils: true
+                })
+                if (data.CVRCDE1.trim() == '002') {
+                  this.quoteGeneraion.patchValue({
+                    buildMain: true,
+                    fireBuilding: this.parsePremiumValue(data.CVRSI1),
+                    fireBuildingPre: this.parsePremiumValue(data.PREMIUM1)
+                  })
+
+                }
+                else if (data.CVRCDE1.trim() == '001') {
+                  this.quoteGeneraion.patchValue({
+                    plinthFoundMain: true,
+                    plinthFoundP: this.parsePremiumValue(data.PREMIUM1),
+                    plinthFound: this.parsePremiumValue(data.CVRSI1)
+                  })
+
+                }
+                else if (data.CVRCDE1.trim() == '005') {
+                  this.quoteGeneraion.patchValue({
+                    plantMacMain: true,
+                    plantMacP: this.parsePremiumValue(data.PREMIUM1),
+                    plantMac: this.parsePremiumValue(data.CVRSI1)
+                  })
+
+                }
+                else if (data.CVRCDE1.trim() == '006') {
+                  this.quoteGeneraion.patchValue({
+                    furnFixFitMain: true,
+                    furnFixFitP: this.parsePremiumValue(data.PREMIUM1),
+                    furnFixFit: this.parsePremiumValue(data.CVRSI1)
+                  })
+
+                }
+                else if (data.CVRCDE1.trim() == '016') {
+                  this.quoteGeneraion.patchValue({
+                    stockMain: true,
+                    stockP: this.parsePremiumValue(data.PREMIUM1),
+                    stock: this.parsePremiumValue(data.CVRSI1)
+                  })
+
+                }
+                else if (data.CVRCDE1.trim() == '008') {
+                  this.quoteGeneraion.patchValue({
+                    fireContentsMain: true,
+                    fireContentP: this.parsePremiumValue(data.PREMIUM1),
+                    fireContent: this.parsePremiumValue(data.CVRSI1)
+                  })
+
+                }
+
+                // } 
+                else if (data.CVRCDE1 == '2A**') {
+                  this.quoteGeneraion.patchValue({
+                    burglaryMain: true
+                  })
+
+                }
+                else if (data.CVRCDE1 == '7C**') {
+                  this.quoteGeneraion.patchValue({
+                    legalLiabiity: true,
+                    publicLiabilityMain: true,
+                    publicLiabilityPre: this.parsePremiumValue(data.PREMIUM1),
+                    publicLiability: this.parsePremiumValue(data.CVRSI1)
+                  })
+
+                }
+                else if (data.CVRCDE1 == '3C**') {
+                  this.quoteGeneraion.patchValue({
+                    allRisk: true,
+                    portableMain: true,
+                    portableComputerPre: this.parsePremiumValue(data.PREMIUM1),
+                    portableComputer: this.parsePremiumValue(data.CVRSI1)
+                  })
+
+                }
+                else if (data.CVRCDE1 == '6A**') {
+                  this.quoteGeneraion.patchValue({
+                    personalAccidentMain: true,
+                    accidentMain: true,
+                    personalAccidentPre: this.parsePremiumValue(data.PREMIUM1),
+                    personalAccident: this.parsePremiumValue(data.CVRSI1)
+                  })
+
+                }
+                else if (data.CVRCDE1 == 'GA**') {
+                  this.quoteGeneraion.patchValue({
+                    pedalCycleMain: true,
+                    pedalCycleNonMain: true,
+                    pedalCycle: this.parsePremiumValue(data.CVRSI1),
+                    pedalCyclePre: this.parsePremiumValue(data.PREMIUM1)
+
+                  })
+
+                }
+                else if (data.CVRCDE1 == 'HA**') {
+                  this.quoteGeneraion.patchValue({
+                    neonSignGlowSign: true,
+                    neonSignMain: true,
+                    neonSign: this.parsePremiumValue(data.CVRSI1),
+                    neonSignPre: this.parsePremiumValue(data.PREMIUM1)
+
+                  })
+                }
+                else if (data.CVRCDE1 == 'DA**') {
+                  this.quoteGeneraion.patchValue({
+                    plateGlassMain: true,
+                    fixedMain: true,
+                    plateGlass: this.parsePremiumValue(data.CVRSI1),
+                    plateGlassPre: this.parsePremiumValue(data.PREMIUM1)
+
+                  })
+                }
+                else if (data.CVRCDE1 == 'FA**') {
+                  this.quoteGeneraion.patchValue({
+                    employeeFidelity: true,
+                    employeeMain: true,
+                    fidelitySum: this.parsePremiumValue(data.CVRSI1),
+                    fidelityPre: this.parsePremiumValue(data.PREMIUM1)
+
+                  })
+                }
+                else if (data.CVRCDE1 == 'EA**' || data.CVRCDE1 == 'EB**' || data.CVRCDE1 == 'EC**') {
+                  this.quoteGeneraion.patchValue({
+                    moneyinsurance: true,
+                  })
+                  if (data.CVRCDE1 == 'EA**') {
+                    this.quoteGeneraion.patchValue({
+                      cashInMain: true,
+                      // employeeMain:true,
+                      cashInTransit: this.parsePremiumValue(data.CVRSI1),
+                      cashInTransitPre: this.parsePremiumValue(data.PREMIUM1)
+
+                    })
+                  }
+                  else if (data.CVRCDE1 == 'EB**') {
+                    this.quoteGeneraion.patchValue({
+                      cashInSafeMain: true,
+                      // employeeMain:true,
+                      cashInShafe: this.parsePremiumValue(data.CVRSI1),
+                      cashInShafePre: this.parsePremiumValue(data.PREMIUM1)
+
+                    })
+                  }
+                  else if (data.CVRCDE1 == 'EC**') {
+                    this.quoteGeneraion.patchValue({
+                      cashInCounterMain: true,
+                      // employeeMain:true,
+                      cashInCounter: this.parsePremiumValue(data.CVRSI1),
+                      cashInCounterPre: this.parsePremiumValue(data.PREMIUM1)
+
+                    })
+                  }
+                }
+
+                else if (data.CVRCDE1 == '4A**') {
+                  this.quoteGeneraion.patchValue({
+                    electronicEquip: true,
+                    electronicMain: true,
+                    electronicEquiSum: this.parsePremiumValue(data.CVRSI1),
+                    electronicEquiPre: this.parsePremiumValue(data.PREMIUM1)
+
+                  })
+
+                }
+
+                else if (data.CVRCDE1 == '5B**' || data.CVRCDE1 == '5C**' || data.CVRCDE1 == '5D**') {
+                  this.quoteGeneraion.patchValue({
+                    machinaryBreakdown: true,
+                  })
+                  if (data.CVRCDE1 == '5B**') {
+                    this.quoteGeneraion.patchValue({
+                      airConditionMain: true,
+                      // employeeMain:true,
+                      airCondition: this.parsePremiumValue(data.CVRSI1),
+                      airConditionPre: this.parsePremiumValue(data.PREMIUM1)
+
+                    })
+                  }
+                  else if (data.CVRCDE1 == '5C**') {
+                    this.quoteGeneraion.patchValue({
+                      portableGeneratorMain: true,
+                      // employeeMain:true,
+                      porGeneration: this.parsePremiumValue(data.CVRSI1),
+                      porGenerationPre: this.parsePremiumValue(data.PREMIUM1)
+
+                    })
+                  }
+                  else if (data.CVRCDE1 == '5D**') {
+                    this.quoteGeneraion.patchValue({
+                      equipmentMain: true,
+                      // employeeMain:true,
+                      equiOther: this.parsePremiumValue(data.CVRSI1),
+                      equiOtherPre: this.parsePremiumValue(data.PREMIUM1)
+
+                    })
+                  }
+                }
+
+
+                // this.quoteGeneraion.patchValue({
+
+                // [`type${type}`]: data.Type.trim(),
+                // [`SubType${type}`]: data.SubType.trim(),
+                // [descriptionKey]: data.Description.trim(), // Trim any leading or trailing whitespace
+                // [sumInsuredKey]: parseFloat(data.SumInsured), // Convert string to number if needed
+                // [premiumKey]: parseFloat(data.PREMIUM1) // Convert string to number if needed
+                // });
+              });
+
+
+              console.log(this.quoteGeneraion.value);
+
+              //alert(res.TotalSI);
+              this.coverType = res.contracttype;
+              this.clienttype = res.clienttype;
+              this.customerName = res.customername;
+              this.clientNo = res.clientno;
+              this.agentNo = res.agentno;
+              this.fgBranchCode = res.servicebranch;
+              this.add1 = res.addr1;
+              this.add2 = res.addr2;
+              this.add3 = res.addr3;
+              this.add4 = res.addr4;
+              this.city = res.city;
+              this.state = res.state;
+              this.pincode = res.pincode;
+              this.TotalPerimum = res.TotalPremium;
+              this.TotalSI = res.TotalSI;
+              this.fgbranchName = res.branchname;
+              this.OccupancyCode = res.OccupancyCode;
+              this.OccupancyName = res.OccupancyDesc;
+              let strdt = res.renewalpolicystartdate.split("/");
+              this.startdate = strdt[1] + "/" + strdt[0] + "/" + strdt[2];
+              //alert(this.startdate);
+              let endt = res.renewalpolicyenddate.split("/");
+              this.enddate = endt[1] + "/" + endt[0] + "/" + endt[2];
+
+              // let startdate = this.api.getFormattedDate(this.startdate, "mm/dd/yyyy");
+              // this.quoteGeneraion.patchValue({
+              //   riskDate: this.startdate
+              // });
+              this.quoteGeneraion.patchValue({
+                TotalPerimum: this.TotalPerimum,
+                TotalSI: this.TotalSI,
+                coverType: this.coverType,
+                customerType: this.clienttype == 'Personal' ? 'Individual' : 'Organization',
+                customerName: this.customerName,
+                firstName: this.customerName,
+                clientno: this.clientNo,
+                agentcode: this.agentNo,
+                fgBrachCode1: this.fgBranchCode,
+                covertype: res.contracttype,
+                riskDate: new Date(this.startdate),
+                riskEndDate: this.enddate,
+                add1: this.add1,
+                add2: this.add2,
+                add3: this.add3,
+                landmark: this.add4,
+                city: this.city,
+                state: this.state,
+                pincode: this.pincode,
+                fgbranchName: this.fgbranchName,
+                OccupancyCode: this.coverType == "FRG" ? this.OccupancyCode : this.OccupancyCode + this.OccupancyName[0],
+                OccupancyName: this.coverType == "FRG" ? this.OccupancyName : this.OccupancyName.slice(1),
+                sumInsured: this.TotalSI,
+                businessType: res.OccupancyCode
+              });
+              console.log(this.quoteGeneraion);
+              this.getDetails(res.pincode);
+              this.setRateAsPerOccupation(res.OccupancyCode);
+
+              this.setTerrPre();
+              //alert("called");
+              this.loading = false;
             } else {
               this.loading = false;
-              alert("Renewal allow only for AR status!");
+              alert("Invalid contract type!");
               this.clearForm();
             }
-          }
-        } else {
-          this.loading = false;
-          alert('Please enter correct policy number!');
-          this.clearForm();
-        }
-  
-  
-        let Validcont = (JSON.parse(sus.responsemessage)[0].contracttype == "FRG" || JSON.parse(sus.responsemessage)[0].contracttype == "FSR");
-        if (sus.responseflag == "1" && Validcont) {
-          if (JSON.parse(sus.responsemessage)[0].policystatus == "AR") {
-            let res = JSON.parse(sus.responsemessage)[0];
-            this.TotalPerimum = JSON.parse(sus.responsemessage).Table[0].TotalPerimum;
-            console.log(this.TotalPerimum);
-  
+
+          } else {
             this.loading = false;
-            // create policy (cloning)
-            let obj1 = { 'policyNo': this.quoteGeneraion.value.policyNo };
-            console.log(obj1);
-            // if (this.quoteGeneraion.value.policyNo != '' && this.quoteGeneraion.value.riskEndDate !='' ) {
-            // this.api.getRnwpolicy(obj1).subscribe((sus) => {
-            //   console.log(sus);
-            //   this.loading = false;
-            //   if (sus.ResponseFlag == 1 && JSON.parse(sus['ResponseMessage']).Table.length != 0 ) {
-            //     let res = JSON.parse(sus['ResponseMessage']).Table;
-            //     console.log(JSON.parse(sus['ResponseMessage']).Table[0]['PolicyNumber']);
-            //     this.policyrnwNo = res[0]['PolicyNumber'];
-            //     console.log(this.policyNo);
-            //     this.quoteGeneraion.patchValue({
-            //       nwpolicyno: this.policyrnwNo
-            //     });
-            //     this.loading = false;
-  
-            //   }else {
-  
-            //     var date = new Date(this.quoteGeneraion.value.riskDate);
-            //     var month = String(date.getMonth() + 1);
-            //     month = (month.length == 1 ? "0" + month : month);
-            //     var day = String(date.getDate());
-            //     day = (day.length == 1 ? "0" + day : day);
-            //     var year = date.getFullYear();
-            //     var startDt = String(year) + month + day;
-  
-            //     var endDt = this.quoteGeneraion.value.riskEndDate.split("/");
-            //     endDt = endDt[2] + endDt[0] + endDt[1];
-            //     let obj = { 'policyNo': this.quoteGeneraion.value.policyNo, 'covertype': this.coverType, 'clientCode': this.clientNo, 'agentCode': this.agentNo, 'startDate': startDt, 'endDate': endDt, 'fgBrachCode1': this.fgBrachCode };
-            //     console.log(obj);
-            //     this.api.createFireRnwPDF(obj).subscribe((sus) => {
-            //       console.log(sus);
-            //       this.loading = false;
-            //       if (sus.ResponseFlag == 1) {
-            //         let res = JSON.parse(sus['ResponseMessage']).Table;
-            //         this.policyNo = res[0]['PolicyNumber'];
-            //         console.log(this.policyNo);
-            //         this.quoteGeneraion.patchValue({
-            //         nwpolicyno: this.policyNo
-            //         });
-            //         this.loading = false;
-            //         return true;
-            //       } else {
-            //         alert(sus['ResponseMessage'])
-            //         return false;
-            //       }
-            //     });
-            //   }
-            // });
-            // } else {
-            //   alert('Please fill required values!');
-            // }
-  
-  
-          }
-          else {
-            alert('Renewal only allow for AR status');
-            this.loading = false;
+            alert("Renewal allow only for AR status!");
             this.clearForm();
           }
-        } else {
+        }
+      } else {
+        this.loading = false;
+        alert('Please enter correct policy number!');
+        this.clearForm();
+      }
+
+
+      let Validcont = (JSON.parse(sus.responsemessage)[0].contracttype == "FRG" || JSON.parse(sus.responsemessage)[0].contracttype == "FSR");
+      if (sus.responseflag == "1" && Validcont) {
+        if (JSON.parse(sus.responsemessage)[0].policystatus == "AR") {
+          let res = JSON.parse(sus.responsemessage)[0];
+          this.TotalPerimum = JSON.parse(sus.responsemessage).Table[0].TotalPerimum;
+          console.log(this.TotalPerimum);
+
           this.loading = false;
-          alert('Please enter correct policy number!');
+          // create policy (cloning)
+          let obj1 = { 'policyNo': this.quoteGeneraion.value.policyNo };
+          console.log(obj1);
+          // if (this.quoteGeneraion.value.policyNo != '' && this.quoteGeneraion.value.riskEndDate !='' ) {
+          // this.api.getRnwpolicy(obj1).subscribe((sus) => {
+          //   console.log(sus);
+          //   this.loading = false;
+          //   if (sus.ResponseFlag == 1 && JSON.parse(sus['ResponseMessage']).Table.length != 0 ) {
+          //     let res = JSON.parse(sus['ResponseMessage']).Table;
+          //     console.log(JSON.parse(sus['ResponseMessage']).Table[0]['PolicyNumber']);
+          //     this.policyrnwNo = res[0]['PolicyNumber'];
+          //     console.log(this.policyNo);
+          //     this.quoteGeneraion.patchValue({
+          //       nwpolicyno: this.policyrnwNo
+          //     });
+          //     this.loading = false;
+
+          //   }else {
+
+          //     var date = new Date(this.quoteGeneraion.value.riskDate);
+          //     var month = String(date.getMonth() + 1);
+          //     month = (month.length == 1 ? "0" + month : month);
+          //     var day = String(date.getDate());
+          //     day = (day.length == 1 ? "0" + day : day);
+          //     var year = date.getFullYear();
+          //     var startDt = String(year) + month + day;
+
+          //     var endDt = this.quoteGeneraion.value.riskEndDate.split("/");
+          //     endDt = endDt[2] + endDt[0] + endDt[1];
+          //     let obj = { 'policyNo': this.quoteGeneraion.value.policyNo, 'covertype': this.coverType, 'clientCode': this.clientNo, 'agentCode': this.agentNo, 'startDate': startDt, 'endDate': endDt, 'fgBrachCode1': this.fgBrachCode };
+          //     console.log(obj);
+          //     this.api.createFireRnwPDF(obj).subscribe((sus) => {
+          //       console.log(sus);
+          //       this.loading = false;
+          //       if (sus.ResponseFlag == 1) {
+          //         let res = JSON.parse(sus['ResponseMessage']).Table;
+          //         this.policyNo = res[0]['PolicyNumber'];
+          //         console.log(this.policyNo);
+          //         this.quoteGeneraion.patchValue({
+          //         nwpolicyno: this.policyNo
+          //         });
+          //         this.loading = false;
+          //         return true;
+          //       } else {
+          //         alert(sus['ResponseMessage'])
+          //         return false;
+          //       }
+          //     });
+          //   }
+          // });
+          // } else {
+          //   alert('Please fill required values!');
+          // }
+
+
+        }
+        else {
+          alert('Renewal only allow for AR status');
+          this.loading = false;
           this.clearForm();
         }
-      });
-    }
+      } else {
+        this.loading = false;
+        alert('Please enter correct policy number!');
+        this.clearForm();
+      }
+    });
+  }
   clearForm() {
     throw new Error("Method not implemented.");
   }
 
-     // Abinash
+  // Abinash
   parsePremiumValue(value: string): number {
     // Ensure the input premiumValue is a string and has exactly 13 characters
     if (typeof value !== 'string' || (value.length !== 12 && value.length !== 13)) {
@@ -2435,6 +2652,7 @@ export class FusrenewalComponent implements OnInit {
                     this.quoteGeneraion.controls["zoneNo"].setValue(
                       this.currentZoneNo
                     );
+                    // alert(this.currentZoneNo);
                     this.setBasicOccupationRate(this.currentZoneNo);
                   } else {
                     alert("Zone not fetched please select mannualy!!");
@@ -2524,6 +2742,7 @@ export class FusrenewalComponent implements OnInit {
   }
 
   setRateAsPerOccupation(val) {
+    
     // if (this.quoteGeneraion.value.riskDate == '')
     // {
     //  alert('Please select risk start date first!!');
@@ -2564,7 +2783,7 @@ export class FusrenewalComponent implements OnInit {
         return item;
       }
     });
-
+    // alert(o);
     if (o) {
       this.sumInsuredLimit = o.Sum_insured_limit;
       this.terrorisRate = o.Terrorism_Rate;
@@ -2576,7 +2795,9 @@ export class FusrenewalComponent implements OnInit {
     }
     this.setDiscount();
   }
+
   setBasicOccupationRate(z) {
+    // alert("called");
     this.basicOoccupationRateTemp = this.occupationObj.Zone[z - 1];
     console.log(this.basicOoccupationRateTemp);
     this.setDiscount();
@@ -2600,61 +2821,61 @@ export class FusrenewalComponent implements OnInit {
           ? this.currentZoneNo == "1"
             ? 1.111
             : this.currentZoneNo == "2"
-            ? 1.011
-            : this.currentZoneNo == "3"
-            ? 0.97
-            : 0.921
+              ? 1.011
+              : this.currentZoneNo == "3"
+                ? 0.97
+                : 0.921
           : v == "H"
-          ? this.currentZoneNo == "1"
-            ? 0.747
-            : this.currentZoneNo == "2"
-            ? 0.604
-            : this.currentZoneNo == "3"
-            ? 0.533
-            : 0.462
-          : 0;
+            ? this.currentZoneNo == "1"
+              ? 0.747
+              : this.currentZoneNo == "2"
+                ? 0.604
+                : this.currentZoneNo == "3"
+                  ? 0.533
+                  : 0.462
+            : 0;
       // this.riskRate =0.53;
       console.log(this.riskRate);
       this.electronicEqRate =
         this.currentZoneNo == "1"
           ? 0.05
           : this.currentZoneNo == "2"
-          ? 0.025
-          : this.currentZoneNo == "3"
-          ? 0.01
-          : 0.005;
+            ? 0.025
+            : this.currentZoneNo == "3"
+              ? 0.01
+              : 0.005;
       this.flopRate =
         this.currentZoneNo == "1"
           ? 1.177
           : this.currentZoneNo == "2"
-          ? 1.048
-          : this.currentZoneNo == "3"
-          ? 0.983
-          : 0.919;
+            ? 1.048
+            : this.currentZoneNo == "3"
+              ? 0.983
+              : 0.919;
     } else {
       this.riskRate = 0.53;
       this.electronicEqRate =
         this.currentZoneNo == "1"
           ? 0.05
           : this.currentZoneNo == "2"
-          ? 0.025
-          : this.currentZoneNo == "3"
-          ? 0.01
-          : 0.005;
+            ? 0.025
+            : this.currentZoneNo == "3"
+              ? 0.01
+              : 0.005;
       this.flopRate =
         this.currentZoneNo == "1"
           ? 1.177
           : this.currentZoneNo == "2"
-          ? 1.048
-          : this.currentZoneNo == "3"
-          ? 0.983
-          : 0.919;
+            ? 1.048
+            : this.currentZoneNo == "3"
+              ? 0.983
+              : 0.919;
     }
     console.log(this.riskRate);
     this.setLodDis();
   }
 
-  setLodDis(){}
+  setLodDis() { }
 
   resetloading() {
     if (this.quoteGeneraion.value.constructDetails !== 0) {
@@ -2714,10 +2935,10 @@ export class FusrenewalComponent implements OnInit {
                     this.quoteGeneraion.value.customerType == "Organization"
                       ? sus.result.customer_name
                       : sus.result.first_name +
-                        " " +
-                        (sus.result.middle_name == null
-                          ? ""
-                          : sus.result.middle_name),
+                      " " +
+                      (sus.result.middle_name == null
+                        ? ""
+                        : sus.result.middle_name),
                   lastName:
                     this.quoteGeneraion.value.customerType == "Organization"
                       ? ""
@@ -2797,6 +3018,7 @@ export class FusrenewalComponent implements OnInit {
   }
 
   setDiscount() {
+    //alert("called");
     // let ageBuild = this.quoteGeneraion.value.buildingAge;
     let fireProtet = this.quoteGeneraion.value.fireProtection;
     let constructDetails = this.quoteGeneraion.value.constructDetails;
@@ -2814,16 +3036,16 @@ export class FusrenewalComponent implements OnInit {
       constructDetails == "0"
         ? "PUKA"
         : constructDetails == "5"
-        ? "KUCH"
-        : "NOTA";
+          ? "KUCH"
+          : "NOTA";
     this.distancebrigad =
       distancebrigad == "0"
         ? "0016"
         : distancebrigad == "-5"
-        ? "0015"
-        : distancebrigad == "-10"
-        ? "0010"
-        : "NOTA";
+          ? "0015"
+          : distancebrigad == "-10"
+            ? "0010"
+            : "NOTA";
     this.basementst = basementst == "5" ? "YESS" : "NOTA";
     this.goodhouse = goodhouse == "5" ? "NONO" : "NOTA";
     this.electInswir = electInswir == "5" ? "LWEI" : "NOTA";
@@ -2977,7 +3199,7 @@ export class FusrenewalComponent implements OnInit {
       } else this.setFormVal("discount", 0);
     }
   }
-  getAge() {}
+  getAge() { }
   checkConstruction(v) {
     if (v == "K") {
       this.blockProcess = true;
@@ -2994,6 +3216,7 @@ export class FusrenewalComponent implements OnInit {
     this.agentCode = o.AgentCode;
     this.fgiBRCode = o.FGI_BR_CODE;
     this.spCode = o.SPCode;
+    //alert(this.agentCode);
     this.quoteGeneraion.patchValue({
       branchName: this.branchCode
         ? this.branchCode + " - " + this.branchName

@@ -36,9 +36,10 @@
                         <a routerLink="/fireForm" routerLinkActive="active">New Quote</a>
                     </li>
                     <li>
-                        <a routerLink="/renewal" routerLinkActive="active">Renewal</a>
+                        <a (click)="openModal()" routerLinkActive="active">Renewal</a>
                     </li>
-                    <li>
+
+                    <!-- <li>
                         <a routerLink="/fsrrenewal" routerLinkActive="active">FSR Renewal</a>
                     </li>
                     <li>
@@ -46,7 +47,8 @@
                     </li>
                     <li>
                         <a routerLink="/frgrenewal" routerLinkActive="active">FRG Renewal</a>
-                    </li>
+                    </li> -->
+
                     <li>
                         <a routerLink="/dash" routerLinkActive="active">RW Dashboard</a>
                     </li>
@@ -76,3 +78,21 @@
         </nav>
     </div>
 </div>
+
+<div class="modal-overlay" *ngIf="showModal" (click)="closeModal()">
+    <div class="modal-content">
+      <span class="close-btn" (click)="closeModal()">&times;</span>
+        <p><u>select product:</u></p>
+        <a routerLink="/fsrrenewal" routerLinkActive="active">FSR Renewal</a>
+    
+
+        <a routerLink="/fusrenewal" routerLinkActive="active">FUS Renewal</a>
+    
+
+        <a routerLink="/frgrenewal" routerLinkActive="active">FRG Renewal</a>
+        
+        
+        <a routerLink="/fbgrenewal" routerLinkActive="active">FBG Renewal</a>
+    
+    </div>
+  </div>

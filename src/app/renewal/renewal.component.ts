@@ -527,10 +527,7 @@ export class RenewalComponent implements OnInit {
       ckycno: new FormControl("", null),
       dobDate: new FormControl("", Validators.required),
       idtype: new FormControl("", Validators.required),
-      gender: new FormControl("", null),
-      
-      //SI 
-      sumInsured: new FormControl("", null)
+      gender: new FormControl("", null)
       
     });
     let myPastDat = new Date(this.maximumRiskD);
@@ -737,7 +734,6 @@ export class RenewalComponent implements OnInit {
           if (res.policystatus == "AR") {
             if (res.contracttype == "FSR" || res.contracttype == "FRG" || res.contracttype == "FUS" || res.contracttype == "FBG"
             ) {
-              // alert(res.TotalSI);
               this.coverType = res.contracttype;
               this.clienttype = res.clienttype;
               this.customerName = res.customername;
@@ -758,7 +754,6 @@ export class RenewalComponent implements OnInit {
               this.OccupancyName = res.OccupancyDesc;
               let strdt = res.renewalpolicystartdate.split("/");
               this.startdate = strdt[1] + "/" + strdt[0] + "/" + strdt[2];
-              
               let endt = res.renewalpolicyenddate.split("/");
               this.enddate = endt[1] + "/" + endt[0] + "/" + endt[2];
               this.quoteGeneraion.patchValue({
@@ -781,8 +776,7 @@ export class RenewalComponent implements OnInit {
                 pincode: this.pincode,
                 fgbranchName: this.fgbranchName,
                 OccupancyCode: this.coverType == "FSR" ? this.OccupancyCode : this.OccupancyCode + this.OccupancyName[0],
-                OccupancyName: this.coverType == "FSR" ? this.OccupancyName : this.OccupancyName.slice(1),
-                sumInsured:this.TotalSI
+                OccupancyName: this.coverType == "FSR" ? this.OccupancyName : this.OccupancyName.slice(1)
               });
               this.loading = false;
             } else {
@@ -1031,7 +1025,6 @@ export class RenewalComponent implements OnInit {
     if (start === end) return [start];
     return [start, ...this.range(start + 1, end)];
   }
-
   changRiskStart() {
     let date = this.quoteGeneraion.value.riskDate;
     if (date) {
@@ -1083,7 +1076,7 @@ export class RenewalComponent implements OnInit {
             obj.id_type = this.quoteGeneraion.value.idtype;
             obj.id_num = this.quoteGeneraion.value.idnum;
             // var pid=sus.ProposalNo;
-              
+
             console.log(pid);
             this.api.createCKYC(obj).subscribe(
               (sus) => {
@@ -1576,6 +1569,7 @@ export class RenewalComponent implements OnInit {
   }
   generatePDF(ucoPayment) {
     this.loading = true;
+
 
     //  FRG-Policy Insurence
     if (this.quoteGeneraion.value.covertype == "FRG") {

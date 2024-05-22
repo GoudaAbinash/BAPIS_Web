@@ -19,6 +19,7 @@ export class RenewaldashComponent implements OnInit {
   p = 1;
   receiptusername: '';
   receiptvendorname:'';
+  showModal: boolean = false;
   constructor(private api:CommonService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
@@ -49,7 +50,8 @@ export class RenewaldashComponent implements OnInit {
     let id = this.api.ency(i.toString());
     currentStatus = currentStatus ==null ? '' : currentStatus;
     let transData=(currentStatus) ? transactionNo +"|" + transactionDate +  "|" + receiptNo + "|" + clientId  : '';
-    this.router.navigate([(quoteType =='FS' ? 'fsrrenewal' : quoteType =='FR' ? 'fsrrenewal' :'fsrrenewal'), id, currentStatus, transData]);
+    // alert(quoteType);
+    this.router.navigate([(quoteType =='FS' ? 'fsrrenewal' : quoteType =='FR' ? 'frgrenewal' :'fusrenewal'), id, currentStatus, transData]);
   }
   view(i,currentStatus,transactionNo,transactionDate,receiptNo,quoteType,clientId,policyNo){
     let id = this.api.ency(i.toString());
@@ -86,4 +88,14 @@ export class RenewaldashComponent implements OnInit {
       //this.error= "Please enter a valid policy number!";
     }
   }
+
+  openModal() {
+    this.showModal = true;
+  }
+
+  closeModal() {
+    this.showModal = false;
+  }
+  
+
 }
