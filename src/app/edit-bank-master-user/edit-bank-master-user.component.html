@@ -1,0 +1,125 @@
+<p>edit-bank-master-user works!</p>
+<app-header></app-header>
+<div class="container" *ngIf="canModify">
+  <section class="d-flex head-buttons">
+    <button mat-flat-button class="color-light-red" (click)="previous()">
+      <i class="fa fa-arrow-left"></i><span>Previous</span>
+    </button>
+  </section>
+</div>
+
+<div class="container" *ngIf="canModify">
+  <form [formGroup]="userDetailsForm" class="row user-details-form" autocomplete="off"
+    (ngSubmit)="updateMaster(userDetailsForm,$event)">
+    <fieldset>
+      <legend>Bank Details</legend>
+      <div class="form-row">
+        <mat-form-field class="readonly" *ngIf="serialNum">
+          <mat-label>SR NO</mat-label>
+          <input matInput placeholder="Ex. 894458" [(value)]="serialNum"  readonly>
+        </mat-form-field>
+        <mat-form-field class="readonly">
+          <mat-label>User Id</mat-label>
+          <input matInput placeholder="Ex. 894458" formControlName="userId" [readonly]="editMode">
+        </mat-form-field>
+        <mat-form-field class="readonly">
+          <mat-label>Bank Branch Code (Sol Id)</mat-label>
+          <input matInput placeholder="Ex. 1998" [readonly]="editMode" formControlName="solId">
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field class="col3">
+          <mat-label>Zone</mat-label>
+          <input matInput placeholder="Ex. Mumbai" formControlName="zone">
+        </mat-form-field>
+        <mat-form-field class="col3">
+          <mat-label>FGI Branch Code</mat-label>
+          <input matInput placeholder="Ex. 10" formControlName="fgiBrCode">
+        </mat-form-field>
+        <mat-form-field class="col3">
+          <mat-label>Bank Branch Name</mat-label>
+          <input matInput placeholder="Ex. BOI" formControlName="branchName">
+        </mat-form-field>
+      </div>
+      <div class="form-row">
+        <mat-form-field class="col3">
+          <mat-label>Branch Category</mat-label>
+          <input matInput placeholder="Ex. S" formControlName="branchCategory">
+        </mat-form-field>
+        <mat-form-field class="col3">
+          <mat-label>FGI Zone</mat-label>
+          <input matInput placeholder="Ex. Mumbai Zone" formControlName="fgiZone">
+        </mat-form-field>
+        <mat-form-field class="col3">
+          <mat-label>FGI Office</mat-label>
+          <input matInput placeholder="Ex. Fort" formControlName="fgiOffice">
+        </mat-form-field>
+      </div>
+      <div class="form-row">
+        <mat-form-field class="col3">
+          <mat-label>Branch Scale</mat-label>
+          <input matInput placeholder="Ex. 10" formControlName="branchScale">
+        </mat-form-field>
+        <mat-form-field class="col3">
+          <mat-label>FGI Branch Category</mat-label>
+          <input matInput placeholder="Ex. A" formControlName="fgiBranchCategory">
+        </mat-form-field>
+        <mat-form-field class="col3">
+          <mat-label>FG Branch Code</mat-label>
+          <input matInput placeholder="Ex.10" formControlName="fgBranchCode">
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field class="readonly">
+          <mat-label>Created Date</mat-label>
+          <input matInput readonly formControlName="createdDate" readonly>
+        </mat-form-field>
+        <mat-form-field class="readonly">
+          <mat-label>Updated Date</mat-label>
+          <input matInput readonly formControlName="updatedDate" readonly>
+        </mat-form-field>
+        <mat-form-field class="col3 readonly">
+          <mat-label>Created By</mat-label>
+          <input matInput placeholder="System" formControlName="createdBy" readonly>
+        </mat-form-field>
+      </div>
+      <div class="form-row">
+        <mat-form-field class="col3 readonly">
+          <mat-label>Updated By</mat-label>
+          <input matInput placeholder="Ex. System" formControlName="updatedBy" readonly>
+        </mat-form-field>
+        <mat-form-field class="col3">
+          <mat-label>Agent Code</mat-label>
+          <input matInput placeholder="Ex. 60000272" formControlName="agentCode">
+        </mat-form-field>
+        <mat-form-field class="col3">
+          <mat-label>SP Code</mat-label>
+          <input matInput placeholder="Ex. SP0071315035" formControlName="SpCode">
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field class="col3 readonly">
+          <mat-label>Bank Name</mat-label>
+          <input matInput placeholder="Ex. BOI" formControlName="bankName" readonly>
+        </mat-form-field>
+        <mat-form-field class="col3 readonly">
+          <mat-label>Receipt User Name</mat-label>
+          <input matInput placeholder="Ex. BOIBANK" formControlName="receiptUserName" readonly>
+        </mat-form-field>
+        <mat-form-field class="col3 readonly">
+          <mat-label>Receipt Vendor Name</mat-label>
+          <input matInput placeholder="Ex. BOIBANK" formControlName="receiptVendorName" readonly>
+        </mat-form-field>
+      </div>
+
+      <div class="col1">
+        <button mat-raised-button type="submit" class="btn form-submit color-light-red">Submit</button>
+      </div>
+    </fieldset>
+  </form>
+</div>
+
+<ngx-loading [show]="loading"></ngx-loading>

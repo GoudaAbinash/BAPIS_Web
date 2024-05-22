@@ -1,0 +1,77 @@
+<app-header></app-header>
+<form>
+    <fieldset>
+        <legend>Employee Details</legend>
+        <div class="radioWrap">
+            <mat-slide-toggle>Active</mat-slide-toggle>
+        </div>
+        <mat-form-field class="col3">
+            <mat-label>Bank Employee Name:</mat-label>
+            <input matInput placeholder="Ex. pat@example.com">
+        </mat-form-field>
+        <mat-form-field class="col3">
+            <mat-label>Bank Employee ID:</mat-label>
+            <input matInput placeholder="Ex. pat@example.com">
+        </mat-form-field>
+        <mat-form-field class="col3">
+            <mat-label>Mobile Number:</mat-label>
+            <input matInput placeholder="Ex. pat@example.com">
+        </mat-form-field>
+        <mat-form-field class="col3">
+            <mat-label>Email Address:</mat-label>
+            <input matInput placeholder="Ex. pat@example.com">
+        </mat-form-field>
+        <mat-form-field class="col3">
+            <mat-label>Bank Name:</mat-label>
+            <input matInput placeholder="Ex. pat@example.com">
+        </mat-form-field>
+        <mat-form-field class="col3">
+            <mat-label>Bank Branch Name:</mat-label>
+            <input matInput placeholder="Ex. pat@example.com">
+        </mat-form-field>
+        <mat-form-field class="col3">
+            <mat-label>Bank Email ID:</mat-label>
+            <input matInput placeholder="Ex. pat@example.com">
+        </mat-form-field>
+        <!-- <mat-form-field class="col3">
+            <mat-label>Category:</mat-label>
+            <mat-select placeholder="Categorys" name="Category" class="filter-select" [(ngModel)]="selectedCategory"
+                [compareWith]="equals" multiple #CategorySelect="ngModel">
+                <mat-option disabled="disabled" class="filter-option" >
+                    <button mat-raised-button class="mat-primary space" (click)="selectAll(CategorySelect, Category)">
+                        Check All
+                    </button>
+                    <button mat-raised-button class="mat-accent space" (click)="deselectAll(CategorySelect)">
+                        Uncheck All
+                    </button>
+                </mat-option>
+                <mat-option *ngFor="let Category of Category" [value]="Category">
+                    {{Category.viewValue}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field> -->
+        <mat-form-field class="col3">
+            <mat-label>Agent Code:</mat-label>
+            <input matInput placeholder="Ex. pat@example.com">
+        </mat-form-field>
+        <mat-form-field class="col3">
+            <mat-label>Branch Code:</mat-label>
+            <input matInput placeholder="Ex. pat@example.com">
+        </mat-form-field>
+        <mat-form-field class="col3">
+            <mat-label>Banca Branch Code:</mat-label>
+            <input matInput placeholder="Ex. pat@example.com">
+        </mat-form-field>
+        <mat-form-field class="col3">
+            <mat-label>FG Staff ID:</mat-label>
+            <input matInput placeholder="Ex. pat@example.com">
+        </mat-form-field>
+        <mat-form-field class="col3">
+            <mat-label>Payer ID:</mat-label>
+            <input matInput placeholder="Ex. pat@example.com">
+        </mat-form-field>
+        <div class="col1 alignCenter marginTB10">
+            <button mat-raised-button color="warn" (click)="saveData();">Submit</button>
+        </div>
+    </fieldset>
+</form>

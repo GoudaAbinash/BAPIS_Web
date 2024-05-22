@@ -1,0 +1,226 @@
+// modal
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  position: relative;
+  display: grid;
+  padding: 5%;
+  width: 250px;
+
+}
+.modal-content .close-btn{
+  
+    text-decoration: none;
+  //   width: 100%;
+    padding: 5% 5% 5% 5%;
+    color: #a71c20;
+    font-weight: bold;
+    font-size: xx-large;
+}
+.modal-content p{
+  text-decoration: none;
+  width: 100%;
+  padding: 5% 5% 5% 5%;
+  color: #000000;
+  font-weight: bold;
+}
+.modal-content a{
+  text-decoration: none;
+  width: 100%;
+  padding: 5% 5% 5% 5%;
+  font-weight: bold;
+  color: #a71c20;
+}
+
+.close-btn {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  cursor: pointer;
+}
+
+//end modal
+
+/*
+  navigation - 896455
+*/
+
+.hold {
+  height: 80px;
+}
+.logout{
+  color: #232323 !important;
+}
+.navigation {
+  width: 100%;
+  transition: line-height 0.2s linear, box-shadow 0.2s linear;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  background: #c62929;
+  color:white;
+  box-shadow: 0px 0px 8px 0px #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+// hr{
+//   border: none;
+//     border-left: 1px solid #ded0d0;
+//     width: 1px;
+//     height: 9vh;
+//     margin-right: 10px;
+// }
+
+h2{
+  color: #f8f5f5;
+}
+
+.navigation.small {
+  line-height: 50px;
+  box-shadow: 0px 1px 3px 0px rgba(50, 50, 50, 0.8);
+}
+nav{
+  width: 40px;
+}
+
+.navigation.small > .container > .logo {
+  top: 20%;
+  height: 40px;
+  width: 170px;
+}
+
+.logo{
+  padding: 0 1%;
+  img{
+    max-width: 150px;
+    margin-left: -5px;
+  }
+}
+a {
+  text-decoration: none;
+  color: #232323;
+  transition: color 0.3s ease;
+  -o-transition: color 0.3s ease;
+  -moz-transition: color 0.3s ease;
+  cursor: pointer;
+}
+
+a:hover, a.active {
+  color: #bd0505;
+}
+
+#menuToggle {
+  position: absolute;
+  top: 19px;
+  right: 1%;
+  z-index: 1;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+#menuToggle input {
+  /* display: block; */
+  width: 40px;
+  height: 32px;
+  position: absolute;
+  top: -7px;
+  left: -5px;
+  cursor: pointer;
+  opacity: 0; /* hide this */
+  z-index: 2; /* and place it over the hamburger */
+  -webkit-touch-callout: none;
+ 
+}
+
+#menuToggle span {
+  display: block;
+  width: 33px;
+  height: 4px;
+  margin-bottom: 5px;
+  position: relative;
+  background: #ece9e9;
+  border-radius: 3px;
+  z-index: 1;
+  transform-origin: 4px 0px;
+  transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1),
+    background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1), opacity 0.55s ease;
+}
+
+#menuToggle span:first-child {
+  transform-origin: 0% 0%;
+}
+
+#menuToggle span:nth-last-child(2) {
+  transform-origin: 0% 100%;
+}
+
+#menuToggle input:checked ~ span {
+  opacity: 1;
+  transform: rotate(45deg) translate(-2px, -1px);
+  background: #9e0404;
+}
+
+#menuToggle input:checked ~ span:nth-last-child(3) {
+  opacity: 0;
+  transform: rotate(0deg) scale(0.2, 0.2);
+}
+
+#menuToggle input:checked ~ span:nth-last-child(2) {
+  opacity: 1;
+  transform: rotate(-45deg) translate(0, -1px);
+}
+#menu {
+  position: absolute;
+  width: 300px;
+  margin: -100px 0 0 0;
+  padding-left: 20px;
+  padding-top: 100px;
+  right: -100px;
+  background: white;
+  list-style-type: none;
+  -webkit-font-smoothing: antialiased;
+  box-shadow: inset;
+  box-shadow: 0px 1px 3px 0px rgba(50, 50, 50, 0.8);
+  border-radius: 2%;
+  transform-origin: 0% 0%;
+  transform: translate(100%, 0);
+  transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+}
+
+#menu li {
+  font-size: 1.2em;
+  margin: 10px 0;
+}
+
+/*
+    * And let's fade it in from the left
+    */
+#menuToggle input:checked ~ ul {
+  transform: scale(1, 1);
+  opacity: 1;
+}
+@media only screen and (max-width: 767px) {
+    #menuToggle{
+        right: 15px;
+    }
+    .logo{
+        margin-left: 10px;
+    }
+}

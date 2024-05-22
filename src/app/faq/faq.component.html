@@ -1,0 +1,27 @@
+<app-header></app-header>
+<div class="container">
+  <section class="d-flex head-buttons">
+    <button mat-flat-button class="color-light-red" (click)="previous()">
+      <i class="fa fa-arrow-left"></i><span>Previous</span>
+    </button>
+  </section>
+  <fieldset>
+    <legend>WELCOME TO BANCA SUPPORT</legend>
+    <div class="grid-buttons">
+      <button mat-flat-button class="color-light-red"
+        (click)="downloadDocxFileFrmServer('Support_FAQs.docx','Support_FAQs')">
+        <span>FAQ's</span>
+      </button>
+      <button mat-flat-button class="color-light-red"
+        (click)="downloadDocxFileFrmServer('WELCOME TO FGBANCA PORTAL_User Guide_FGBAPIS.docx','WELCOME TO FGBANCA PORTAL_User Guide_FGBAPIS')">
+        <span>User Manual</span>
+      </button>
+      <button mat-flat-button class="color-light-red" (click)="downloadExcelFormate()">
+        <span>Bank Data Template</span>
+      </button>
+      <a href="http://app1.fggeneral.in/askit/web/#/" target="_blank" class="a-btn">Ask IT</a>
+    </div>
+  </fieldset>
+
+</div>
+<ngx-loading [show]="loading"></ngx-loading>

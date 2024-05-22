@@ -1,0 +1,247 @@
+// 
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    position: relative;
+    display: grid;
+    padding: 5%;
+    width: 250px;
+
+  }
+  .modal-content .close-btn{
+    
+      text-decoration: none;
+    //   width: 100%;
+      padding: 5% 5% 5% 5%;
+      color: #a71c20;
+      font-weight: bold;
+      font-size: xx-large;
+  }
+  .modal-content p{
+    text-decoration: none;
+    width: 100%;
+    padding: 5% 5% 5% 5%;
+    color: #000000;
+    font-weight: bold;
+}
+.modal-content a{
+    text-decoration: none;
+    width: 100%;
+    padding: 5% 5% 5% 5%;
+    font-weight: bold;
+    color: #a71c20;
+  }
+  
+  .close-btn {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    cursor: pointer;
+  }
+// 
+
+.tableGrid {
+    float: left;
+    width: 100%;
+    padding-left: 1%;
+    padding-right: 1%;
+    padding-bottom: 50px;
+
+    .tableWrap {
+        float: left;
+        width: 100%;
+        overflow: auto;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        box-shadow: 0px 0px 5px 1px #c1c1c1;
+
+        thead {
+            tr {
+                background: #a71c20;
+            }
+        }
+
+        tr {
+            color: #fff;
+
+            &:nth-child(odd) {
+                background: #ffffff;
+            }
+
+            &:nth-child(even) {
+                background: #d2d2d2;
+            }
+
+            &.noRecord {
+                color: #a71c20;
+                font-size: 1.2em;
+                font-weight: bold;
+            }
+        }
+
+        td {
+            text-align: center;
+            padding: 10px;
+            border: 1px solid #ccc;
+            color: #333333;
+            font-size: 1.3rem;
+
+            .remarks {
+                max-width: 400px;
+                display: inline-block;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
+
+            a {
+                font-weight: bold;
+                color: #a71c20;
+                border-bottom: 1px solid;
+            }
+        }
+
+        th {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ccc;
+            font-size: 1.3rem;
+        }
+    }
+
+    .filter {
+        .searchInput {
+            margin-left: 0;
+        }
+    }
+}
+
+.filter {
+    float: left;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-items: center;
+    margin: 10px 0;
+
+    .searchInput {
+        position: relative;
+        margin-left: 15px;
+        max-width: 330px;
+        width: 100%;
+
+        input {
+            padding: 5px;
+            background-color: transparent;
+            border: none;
+            border-bottom: 1px solid #9e9e9e;
+            border-radius: 0;
+            outline: 0;
+            height: 3rem;
+            width: 100%;
+            font-size: 1.4rem;
+            padding: 0;
+            box-shadow: none;
+            -webkit-transition: .3s;
+            transition: all .3s;
+            color: #4d4d4d;
+        }
+
+        i {
+            position: absolute;
+            font-size: 1.4em;
+            color: #969696;
+            right: 5px;
+            top: 7px;
+        }
+    }
+
+    .linkSendWrap {
+        margin-left: auto;
+
+        a {
+            text-decoration: none;
+            background: #0ea9a9;
+            color: #fff;
+            padding: 10px;
+            float: right;
+            font-size: 1.3em;
+
+            i {
+                margin-right: 3px;
+            }
+        }
+    }
+
+    select {
+        padding: 5px;
+        margin-left: auto;
+    }
+}
+
+.paginationWrap {
+    margin-top: 20px;
+    float: left;
+    width: 100%;
+    text-align: center;
+
+    .ngx-pagination {
+        margin-bottom: 0;
+
+        .current {
+            background: #a71c20;
+        }
+    }
+}
+
+.linkSendWrap {
+    float: left;
+    width: 100%;
+
+    a {
+        text-decoration: none;
+        background: #0ea9a9;
+        color: #fff;
+        padding: 8px 10px 10px;
+        float: right;
+        margin-right: 10px;
+        font-size: 1.3em;
+        line-height: 1;
+        border-radius: 5px;
+
+        i {
+            margin-right: 3px;
+        }
+    }
+}
+
+.policyNo {
+    display: grid;
+    line-height: 2.5;
+
+    span {
+        &:last-child {
+            border-top: 1px solid #0042a4;
+            width: 75px;
+            margin: 0 auto;
+        }
+    }
+}

@@ -1,0 +1,44 @@
+<app-header></app-header>
+<div class="container">
+  <section class="d-flex head-buttons">
+    <button mat-flat-button class="color-light-red" (click)="previous()">
+      <i class="fa fa-arrow-left"></i><span>Previous</span>
+    </button>
+  </section>
+</div>
+<div class="container">
+  <h3 class="title">Application Logs</h3>
+  <section class="logs-compare-sec">
+    <form class="log-compare-form" (ngSubmit)="compareLogs()">
+      <div class="formGroup" [formGroup]="logCompareForm">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>JSON String</mat-label>
+          <textarea matInput rows="10" formControlName="json1"
+            placeholder='{"userId":"200006","zone":"WEST ZONE","solId":"0138","fgiBrCode":"46348361","branchName":"PATHARDI","branchCategory":"10","fgiZone":"WEST ZONE","fgiOffice":"AHMEDNAGAR","branchScale":"10","fgiBranchCategory":"C","createdDate":null,"updatedDate":null,"createdBy":null,"updatedBy":null,"fgBranchCode":"98","pin":null,"agentCode":"60051037","spCode":"SP0068111449","loginFlag":null,"receiptVendorName":null,"receiptUserName":null,"bankName":"BOM","status":"","srNo":null,"remark":""}'></textarea>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>JSON String</mat-label>
+          <textarea matInput rows="10" formControlName="json2"
+            placeholder='{"userId":"200006","zone":"WEST ZONE","solId":"0138","fgiBrCode":"46348361","branchName":"PATHARDI","branchCategory":"10","fgiZone":"WEST ZONE","fgiOffice":"AHMEDNAGAR","branchScale":"10","fgiBranchCategory":"C","createdDate":null,"updatedDate":null,"createdBy":null,"updatedBy":null,"fgBranchCode":"98","pin":null,"agentCode":"60051037","spCode":"SP0068111449","loginFlag":null,"receiptVendorName":null,"receiptUserName":null,"bankName":"BOM","status":"","srNo":null,"remark":""}'></textarea>
+        </mat-form-field>
+      </div>
+      <button mat-raised-button type="submit" [disabled]="!logCompareForm.valid">Compare</button>
+    </form>
+
+    <div class="result-div" *ngIf="this.isFormSubmitted">
+      <div>
+        <p>Chnages Detected : {{chnageDetect.length > 0 ? 'Yes':'No'}}</p>
+        <p>Chnages : {{chnageDetect | json}}</p>
+      </div>
+      <div>
+        <h3>JSON 1</h3>
+        <pre>{{jsonStr1 | json}}</pre>
+      </div>
+      <div>
+        <h3>JSON 2</h3>
+        <pre>{{jsonStr2 | json}}</pre>
+      </div>
+    </div>
+  </section>
+</div>

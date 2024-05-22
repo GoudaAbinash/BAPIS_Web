@@ -1,0 +1,98 @@
+<app-header quoteNo="{{quoteNo}}"></app-header>
+<section>
+    <div class="tableGrid">
+        <div class="linkSendWrap">
+
+            <a routerLink="/fireForm"><i class="fa fa-plus-circle"></i> New quote</a>
+        </div>
+        <div class="filter">
+            <div class="searchInput">
+                <input type="text" placeholder="Search By Quote No" [(ngModel)]="filterTicket">
+                <i class="fa fa-search"></i>
+            </div>
+            <!-- <div class="advanceSearch">
+                <a href="javascript:;" (click)='ASF=!ASF'>Advance Search <i class="fa fa-plus"></i></a>
+                <div class="searchWrap" *ngIf="ASF">
+                  <input type="text" placeholder="Enter a quote no">
+                  <input type="button" value="Search">
+                </div>
+              </div> -->
+            <select [(ngModel)]="pageEnd">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+        </div>
+        <div class="tableWrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Customer Name</th>
+                        <th>User Name</th>
+                        <th>Branch Name</th>
+                        <!-- <th>tran Type</th> -->
+                        <th>Quote No</th>
+                        <th>CustomerType</th>
+                        <th>Created Date</th>
+                        <th>Premium</th>
+                        <th>Status</th>
+                        <th>Policy Type</th>
+                        <th>Policy Number</th>
+                        <th>Action</th>
+                        <!-- <th>Donload</th>     -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr
+                        *ngFor="let q of quoteList | myfilter:filterTicket | paginate:{ itemsPerPage: pageEnd, currentPage: p }">
+                        <td>{{q.id}}</td>
+                        <td>{{q.firstname}} {{q.lastName}}</td>
+                        <td>{{q.createdBy}}</td>
+                        <td>{{q.branchName}}</td>
+                        <!-- <td>{{q.tranType}}</td> -->
+                        <td>{{q.quoteNo}}</td>
+                        <td>{{(q.customerType == "C" || q.customerType == "Organization") ? "Organization" :
+                            "Individual"}}</td>
+                        <td>{{q.createdDate}}</td>
+                        <td>{{q.totalPremium}}</td>
+                        <td>{{(q.currentStatus=='C') ? "Done" :"Pending" }}</td>
+                        <td>{{(q.quoteType=='SK') ? "Shop Suraksha" :(q.quoteType=='GL') ? "FG Griha Lite" :(q.quoteType=='FG') ? "FG Griha Lite(1Y)" :
+                            (q.quoteType=='SL') ? "Sookshma Lite" : (q.quoteType=='FS') ? "Fire - SFSP" : "Bharat Grih
+                            Raksha" }}</td>
+                        <td [ngClass]="{'policyNo' : (q.quoteType=='FS'|| q.quoteType=='SL') && q.policyNumber}">
+                            <span><a href="javascript:;"
+                                    (click)="getPolicy(q.policyNumber);">{{q.policyNumber}}</a></span>
+                            <span *ngIf="q.policyNumber_burglary && q.policyNumber_burglary !='NA' "><a
+                                    href="javascript:;"
+                                    (click)="getPolicy(q.policyNumber_burglary);">{{q.policyNumber_burglary}}</a></span>
+                            <span *ngIf="q.policyNumber_burglary =='NA' ">{{q.policyNumber_burglary}}</span>
+                            <span *ngIf="(q.quoteType=='FS'|| q.quoteType=='SL') && q.policyNumber_burglary==''"><a
+                                    href="javascript:;"
+                                    (click)="edit(q.id,q.currentStatus
+                            ,q.transactionNo,q.transactionDate,q.receiptNo,q.quoteType,q.clientId,q.policyNumber_burglary);">Generate
+                                    Burglary PDF</a></span>
+                        </td>
+                        <td>
+                            <a *ngIf="!q.policyNumber" href="javascript:;" (click)="edit(q.id,q.currentStatus
+                        ,q.transactionNo,q.transactionDate,q.receiptNo,q.quoteType,q.clientId,q.policyNumber)">
+                                Edit
+                            </a>
+                            <a *ngIf="q.policyNumber" href="javascript:;" (click)="view(q.id,q.currentStatus
+                            ,q.transactionNo,q.transactionDate,q.receiptNo,q.quoteType,q.clientId,q.policyNumber)">View
+                            </a>
+                        </td>
+                    </tr>
+                    <tr *ngIf="!quoteList || quoteList.length==0" class="noRecord">
+                        <td colspan="15">No record found!</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="paginationWrap">
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
+    </div>
+</section>
+<ngx-loading [show]="loading"></ngx-loading>

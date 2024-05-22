@@ -1,0 +1,461 @@
+D:\projects\UCOBank\api\Banca\Banca\bin\Banca.dll.config
+D:\projects\UCOBank\api\Banca\Banca\bin\Banca.dll
+D:\projects\UCOBank\api\Banca\Banca\bin\Banca.pdb
+D:\projects\UCOBank\api\Banca\Banca\bin\roslyn\csc.exe
+D:\projects\UCOBank\api\Banca\Banca\bin\roslyn\csc.exe.config
+D:\projects\UCOBank\api\Banca\Banca\bin\roslyn\csc.rsp
+D:\projects\UCOBank\api\Banca\Banca\bin\roslyn\csi.exe
+D:\projects\UCOBank\api\Banca\Banca\bin\roslyn\csi.exe.config
+D:\projects\UCOBank\api\Banca\Banca\bin\roslyn\csi.rsp
+D:\projects\UCOBank\api\Banca\Banca\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\projects\UCOBank\api\Banca\Banca\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\projects\UCOBank\api\Banca\Banca\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+D:\projects\UCOBank\api\Banca\Banca\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\projects\UCOBank\api\Banca\Banca\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+D:\projects\UCOBank\api\Banca\Banca\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\projects\UCOBank\api\Banca\Banca\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\projects\UCOBank\api\Banca\Banca\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+D:\projects\UCOBank\api\Banca\Banca\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+D:\projects\UCOBank\api\Banca\Banca\bin\roslyn\Microsoft.Managed.Core.targets
+D:\projects\UCOBank\api\Banca\Banca\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\projects\UCOBank\api\Banca\Banca\bin\roslyn\System.AppContext.dll
+D:\projects\UCOBank\api\Banca\Banca\bin\roslyn\System.Collections.Immutable.dll
+D:\projects\UCOBank\api\Banca\Banca\bin\roslyn\System.Console.dll
+D:\projects\UCOBank\api\Banca\Banca\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+D:\projects\UCOBank\api\Banca\Banca\bin\roslyn\System.Diagnostics.StackTrace.dll
+D:\projects\UCOBank\api\Banca\Banca\bin\roslyn\System.IO.Compression.dll
+D:\projects\UCOBank\api\Banca\Banca\bin\roslyn\System.IO.FileSystem.dll
+D:\projects\UCOBank\api\Banca\Banca\bin\roslyn\System.IO.FileSystem.Primitives.dll
+D:\projects\UCOBank\api\Banca\Banca\bin\roslyn\System.IO.Pipes.AccessControl.dll
+D:\projects\UCOBank\api\Banca\Banca\bin\roslyn\System.IO.Pipes.dll
+D:\projects\UCOBank\api\Banca\Banca\bin\roslyn\System.Reflection.Metadata.dll
+D:\projects\UCOBank\api\Banca\Banca\bin\roslyn\System.Security.AccessControl.dll
+D:\projects\UCOBank\api\Banca\Banca\bin\roslyn\System.Security.Claims.dll
+D:\projects\UCOBank\api\Banca\Banca\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+D:\projects\UCOBank\api\Banca\Banca\bin\roslyn\System.Security.Cryptography.Encoding.dll
+D:\projects\UCOBank\api\Banca\Banca\bin\roslyn\System.Security.Cryptography.Primitives.dll
+D:\projects\UCOBank\api\Banca\Banca\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+D:\projects\UCOBank\api\Banca\Banca\bin\roslyn\System.Security.Principal.Windows.dll
+D:\projects\UCOBank\api\Banca\Banca\bin\roslyn\System.Text.Encoding.CodePages.dll
+D:\projects\UCOBank\api\Banca\Banca\bin\roslyn\System.ValueTuple.dll
+D:\projects\UCOBank\api\Banca\Banca\bin\roslyn\System.Xml.ReaderWriter.dll
+D:\projects\UCOBank\api\Banca\Banca\bin\roslyn\System.Xml.XmlDocument.dll
+D:\projects\UCOBank\api\Banca\Banca\bin\roslyn\System.Xml.XPath.dll
+D:\projects\UCOBank\api\Banca\Banca\bin\roslyn\System.Xml.XPath.XDocument.dll
+D:\projects\UCOBank\api\Banca\Banca\bin\roslyn\vbc.exe
+D:\projects\UCOBank\api\Banca\Banca\bin\roslyn\vbc.exe.config
+D:\projects\UCOBank\api\Banca\Banca\bin\roslyn\vbc.rsp
+D:\projects\UCOBank\api\Banca\Banca\bin\roslyn\VBCSCompiler.exe
+D:\projects\UCOBank\api\Banca\Banca\bin\roslyn\VBCSCompiler.exe.config
+D:\projects\UCOBank\api\Banca\Banca\bin\HtmlAgilityPack.dll
+D:\projects\UCOBank\api\Banca\Banca\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\projects\UCOBank\api\Banca\Banca\bin\Newtonsoft.Json.dll
+D:\projects\UCOBank\api\Banca\Banca\bin\RestSharp.dll
+D:\projects\UCOBank\api\Banca\Banca\bin\System.Net.Http.Formatting.dll
+D:\projects\UCOBank\api\Banca\Banca\bin\System.Web.Http.dll
+D:\projects\UCOBank\api\Banca\Banca\bin\System.Web.Http.WebHost.dll
+D:\projects\UCOBank\api\Banca\Banca\bin\HtmlAgilityPack.pdb
+D:\projects\UCOBank\api\Banca\Banca\bin\HtmlAgilityPack.xml
+D:\projects\UCOBank\api\Banca\Banca\bin\RestSharp.xml
+D:\projects\UCOBank\api\Banca\Banca\bin\System.Net.Http.Formatting.xml
+D:\projects\UCOBank\api\Banca\Banca\bin\System.Web.Http.xml
+D:\projects\UCOBank\api\Banca\Banca\bin\Newtonsoft.Json.xml
+D:\projects\UCOBank\api\Banca\Banca\bin\System.Web.Http.WebHost.xml
+D:\projects\UCOBank\api\Banca\Banca\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\projects\UCOBank\api\Banca\Banca\obj\Debug\Banca.csprojAssemblyReference.cache
+D:\projects\UCOBank\api\Banca\Banca\obj\Debug\Banca.csproj.CoreCompileInputs.cache
+D:\projects\UCOBank\api\Banca\Banca\obj\Debug\Banca.csproj.CopyComplete
+D:\projects\UCOBank\api\Banca\Banca\obj\Debug\Banca.dll
+D:\projects\UCOBank\api\Banca\Banca\obj\Debug\Banca.pdb
+D:\projects\UCOBank\api\Banca\Banca\bin\System.Web.Cors.dll
+D:\projects\UCOBank\api\Banca\Banca\bin\System.Web.Http.Cors.dll
+D:\projects\UCOBank\api\Banca\Banca\bin\System.Web.Http.Cors.xml
+D:\projects\UCOBank\api\Banca\Banca\bin\Microsoft.Owin.dll
+D:\projects\UCOBank\api\Banca\Banca\bin\Owin.dll
+D:\projects\UCOBank\api\Banca\Banca\bin\WebApiThrottle.dll
+D:\projects\UCOBank\api\Banca\Banca\bin\Microsoft.Owin.xml
+D:\projects\UCOBank\api\Banca\Banca\bin\WebApiThrottle.xml
+D:\project\UCOBank\api\Banca\Banca\bin\Banca.dll.config
+D:\project\UCOBank\api\Banca\Banca\bin\Banca.dll
+D:\project\UCOBank\api\Banca\Banca\bin\Banca.pdb
+D:\project\UCOBank\api\Banca\Banca\bin\roslyn\csc.exe
+D:\project\UCOBank\api\Banca\Banca\bin\roslyn\csc.exe.config
+D:\project\UCOBank\api\Banca\Banca\bin\roslyn\csc.rsp
+D:\project\UCOBank\api\Banca\Banca\bin\roslyn\csi.exe
+D:\project\UCOBank\api\Banca\Banca\bin\roslyn\csi.exe.config
+D:\project\UCOBank\api\Banca\Banca\bin\roslyn\csi.rsp
+D:\project\UCOBank\api\Banca\Banca\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\project\UCOBank\api\Banca\Banca\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\project\UCOBank\api\Banca\Banca\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+D:\project\UCOBank\api\Banca\Banca\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\project\UCOBank\api\Banca\Banca\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+D:\project\UCOBank\api\Banca\Banca\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\project\UCOBank\api\Banca\Banca\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\project\UCOBank\api\Banca\Banca\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+D:\project\UCOBank\api\Banca\Banca\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+D:\project\UCOBank\api\Banca\Banca\bin\roslyn\Microsoft.Managed.Core.targets
+D:\project\UCOBank\api\Banca\Banca\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\project\UCOBank\api\Banca\Banca\bin\roslyn\System.AppContext.dll
+D:\project\UCOBank\api\Banca\Banca\bin\roslyn\System.Collections.Immutable.dll
+D:\project\UCOBank\api\Banca\Banca\bin\roslyn\System.Console.dll
+D:\project\UCOBank\api\Banca\Banca\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+D:\project\UCOBank\api\Banca\Banca\bin\roslyn\System.Diagnostics.StackTrace.dll
+D:\project\UCOBank\api\Banca\Banca\bin\roslyn\System.IO.Compression.dll
+D:\project\UCOBank\api\Banca\Banca\bin\roslyn\System.IO.FileSystem.dll
+D:\project\UCOBank\api\Banca\Banca\bin\roslyn\System.IO.FileSystem.Primitives.dll
+D:\project\UCOBank\api\Banca\Banca\bin\roslyn\System.IO.Pipes.AccessControl.dll
+D:\project\UCOBank\api\Banca\Banca\bin\roslyn\System.IO.Pipes.dll
+D:\project\UCOBank\api\Banca\Banca\bin\roslyn\System.Reflection.Metadata.dll
+D:\project\UCOBank\api\Banca\Banca\bin\roslyn\System.Security.AccessControl.dll
+D:\project\UCOBank\api\Banca\Banca\bin\roslyn\System.Security.Claims.dll
+D:\project\UCOBank\api\Banca\Banca\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+D:\project\UCOBank\api\Banca\Banca\bin\roslyn\System.Security.Cryptography.Encoding.dll
+D:\project\UCOBank\api\Banca\Banca\bin\roslyn\System.Security.Cryptography.Primitives.dll
+D:\project\UCOBank\api\Banca\Banca\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+D:\project\UCOBank\api\Banca\Banca\bin\roslyn\System.Security.Principal.Windows.dll
+D:\project\UCOBank\api\Banca\Banca\bin\roslyn\System.Text.Encoding.CodePages.dll
+D:\project\UCOBank\api\Banca\Banca\bin\roslyn\System.ValueTuple.dll
+D:\project\UCOBank\api\Banca\Banca\bin\roslyn\System.Xml.ReaderWriter.dll
+D:\project\UCOBank\api\Banca\Banca\bin\roslyn\System.Xml.XmlDocument.dll
+D:\project\UCOBank\api\Banca\Banca\bin\roslyn\System.Xml.XPath.dll
+D:\project\UCOBank\api\Banca\Banca\bin\roslyn\System.Xml.XPath.XDocument.dll
+D:\project\UCOBank\api\Banca\Banca\bin\roslyn\vbc.exe
+D:\project\UCOBank\api\Banca\Banca\bin\roslyn\vbc.exe.config
+D:\project\UCOBank\api\Banca\Banca\bin\roslyn\vbc.rsp
+D:\project\UCOBank\api\Banca\Banca\bin\roslyn\VBCSCompiler.exe
+D:\project\UCOBank\api\Banca\Banca\bin\roslyn\VBCSCompiler.exe.config
+D:\project\UCOBank\api\Banca\Banca\bin\HtmlAgilityPack.dll
+D:\project\UCOBank\api\Banca\Banca\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\project\UCOBank\api\Banca\Banca\bin\Microsoft.Owin.dll
+D:\project\UCOBank\api\Banca\Banca\bin\Newtonsoft.Json.dll
+D:\project\UCOBank\api\Banca\Banca\bin\Owin.dll
+D:\project\UCOBank\api\Banca\Banca\bin\RestSharp.dll
+D:\project\UCOBank\api\Banca\Banca\bin\System.Net.Http.Formatting.dll
+D:\project\UCOBank\api\Banca\Banca\bin\System.Web.Cors.dll
+D:\project\UCOBank\api\Banca\Banca\bin\System.Web.Http.Cors.dll
+D:\project\UCOBank\api\Banca\Banca\bin\System.Web.Http.dll
+D:\project\UCOBank\api\Banca\Banca\bin\System.Web.Http.WebHost.dll
+D:\project\UCOBank\api\Banca\Banca\bin\WebApiThrottle.dll
+D:\project\UCOBank\api\Banca\Banca\bin\HtmlAgilityPack.pdb
+D:\project\UCOBank\api\Banca\Banca\bin\HtmlAgilityPack.xml
+D:\project\UCOBank\api\Banca\Banca\bin\Microsoft.Owin.xml
+D:\project\UCOBank\api\Banca\Banca\bin\RestSharp.xml
+D:\project\UCOBank\api\Banca\Banca\bin\System.Net.Http.Formatting.xml
+D:\project\UCOBank\api\Banca\Banca\bin\System.Web.Http.xml
+D:\project\UCOBank\api\Banca\Banca\bin\System.Web.Http.Cors.xml
+D:\project\UCOBank\api\Banca\Banca\bin\WebApiThrottle.xml
+D:\project\UCOBank\api\Banca\Banca\bin\Newtonsoft.Json.xml
+D:\project\UCOBank\api\Banca\Banca\bin\System.Web.Http.WebHost.xml
+D:\project\UCOBank\api\Banca\Banca\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\project\UCOBank\api\Banca\Banca\obj\Debug\Banca.csprojAssemblyReference.cache
+D:\project\UCOBank\api\Banca\Banca\obj\Debug\Banca.csproj.CoreCompileInputs.cache
+D:\project\UCOBank\api\Banca\Banca\obj\Debug\Banca.csproj.CopyComplete
+D:\project\UCOBank\api\Banca\Banca\obj\Debug\Banca.dll
+D:\project\UCOBank\api\Banca\Banca\obj\Debug\Banca.pdb
+D:\project\UCOBank\api_uat\Banca\Banca\bin\Banca.dll.config
+D:\project\UCOBank\api_uat\Banca\Banca\bin\Banca.dll
+D:\project\UCOBank\api_uat\Banca\Banca\bin\Banca.pdb
+D:\project\UCOBank\api_uat\Banca\Banca\bin\roslyn\csc.exe
+D:\project\UCOBank\api_uat\Banca\Banca\bin\roslyn\csc.exe.config
+D:\project\UCOBank\api_uat\Banca\Banca\bin\roslyn\csc.rsp
+D:\project\UCOBank\api_uat\Banca\Banca\bin\roslyn\csi.exe
+D:\project\UCOBank\api_uat\Banca\Banca\bin\roslyn\csi.exe.config
+D:\project\UCOBank\api_uat\Banca\Banca\bin\roslyn\csi.rsp
+D:\project\UCOBank\api_uat\Banca\Banca\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\project\UCOBank\api_uat\Banca\Banca\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\project\UCOBank\api_uat\Banca\Banca\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+D:\project\UCOBank\api_uat\Banca\Banca\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\project\UCOBank\api_uat\Banca\Banca\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+D:\project\UCOBank\api_uat\Banca\Banca\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\project\UCOBank\api_uat\Banca\Banca\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\project\UCOBank\api_uat\Banca\Banca\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+D:\project\UCOBank\api_uat\Banca\Banca\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+D:\project\UCOBank\api_uat\Banca\Banca\bin\roslyn\Microsoft.Managed.Core.targets
+D:\project\UCOBank\api_uat\Banca\Banca\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\project\UCOBank\api_uat\Banca\Banca\bin\roslyn\System.AppContext.dll
+D:\project\UCOBank\api_uat\Banca\Banca\bin\roslyn\System.Collections.Immutable.dll
+D:\project\UCOBank\api_uat\Banca\Banca\bin\roslyn\System.Console.dll
+D:\project\UCOBank\api_uat\Banca\Banca\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+D:\project\UCOBank\api_uat\Banca\Banca\bin\roslyn\System.Diagnostics.StackTrace.dll
+D:\project\UCOBank\api_uat\Banca\Banca\bin\roslyn\System.IO.Compression.dll
+D:\project\UCOBank\api_uat\Banca\Banca\bin\roslyn\System.IO.FileSystem.dll
+D:\project\UCOBank\api_uat\Banca\Banca\bin\roslyn\System.IO.FileSystem.Primitives.dll
+D:\project\UCOBank\api_uat\Banca\Banca\bin\roslyn\System.IO.Pipes.AccessControl.dll
+D:\project\UCOBank\api_uat\Banca\Banca\bin\roslyn\System.IO.Pipes.dll
+D:\project\UCOBank\api_uat\Banca\Banca\bin\roslyn\System.Reflection.Metadata.dll
+D:\project\UCOBank\api_uat\Banca\Banca\bin\roslyn\System.Security.AccessControl.dll
+D:\project\UCOBank\api_uat\Banca\Banca\bin\roslyn\System.Security.Claims.dll
+D:\project\UCOBank\api_uat\Banca\Banca\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+D:\project\UCOBank\api_uat\Banca\Banca\bin\roslyn\System.Security.Cryptography.Encoding.dll
+D:\project\UCOBank\api_uat\Banca\Banca\bin\roslyn\System.Security.Cryptography.Primitives.dll
+D:\project\UCOBank\api_uat\Banca\Banca\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+D:\project\UCOBank\api_uat\Banca\Banca\bin\roslyn\System.Security.Principal.Windows.dll
+D:\project\UCOBank\api_uat\Banca\Banca\bin\roslyn\System.Text.Encoding.CodePages.dll
+D:\project\UCOBank\api_uat\Banca\Banca\bin\roslyn\System.ValueTuple.dll
+D:\project\UCOBank\api_uat\Banca\Banca\bin\roslyn\System.Xml.ReaderWriter.dll
+D:\project\UCOBank\api_uat\Banca\Banca\bin\roslyn\System.Xml.XmlDocument.dll
+D:\project\UCOBank\api_uat\Banca\Banca\bin\roslyn\System.Xml.XPath.dll
+D:\project\UCOBank\api_uat\Banca\Banca\bin\roslyn\System.Xml.XPath.XDocument.dll
+D:\project\UCOBank\api_uat\Banca\Banca\bin\roslyn\vbc.exe
+D:\project\UCOBank\api_uat\Banca\Banca\bin\roslyn\vbc.exe.config
+D:\project\UCOBank\api_uat\Banca\Banca\bin\roslyn\vbc.rsp
+D:\project\UCOBank\api_uat\Banca\Banca\bin\roslyn\VBCSCompiler.exe
+D:\project\UCOBank\api_uat\Banca\Banca\bin\roslyn\VBCSCompiler.exe.config
+D:\project\UCOBank\api_uat\Banca\Banca\bin\HtmlAgilityPack.dll
+D:\project\UCOBank\api_uat\Banca\Banca\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\project\UCOBank\api_uat\Banca\Banca\bin\Microsoft.Owin.dll
+D:\project\UCOBank\api_uat\Banca\Banca\bin\Newtonsoft.Json.dll
+D:\project\UCOBank\api_uat\Banca\Banca\bin\Owin.dll
+D:\project\UCOBank\api_uat\Banca\Banca\bin\RestSharp.dll
+D:\project\UCOBank\api_uat\Banca\Banca\bin\System.Net.Http.Formatting.dll
+D:\project\UCOBank\api_uat\Banca\Banca\bin\System.Web.Cors.dll
+D:\project\UCOBank\api_uat\Banca\Banca\bin\System.Web.Http.Cors.dll
+D:\project\UCOBank\api_uat\Banca\Banca\bin\System.Web.Http.dll
+D:\project\UCOBank\api_uat\Banca\Banca\bin\System.Web.Http.WebHost.dll
+D:\project\UCOBank\api_uat\Banca\Banca\bin\WebApiThrottle.dll
+D:\project\UCOBank\api_uat\Banca\Banca\bin\HtmlAgilityPack.pdb
+D:\project\UCOBank\api_uat\Banca\Banca\bin\HtmlAgilityPack.xml
+D:\project\UCOBank\api_uat\Banca\Banca\bin\Microsoft.Owin.xml
+D:\project\UCOBank\api_uat\Banca\Banca\bin\RestSharp.xml
+D:\project\UCOBank\api_uat\Banca\Banca\bin\System.Net.Http.Formatting.xml
+D:\project\UCOBank\api_uat\Banca\Banca\bin\System.Web.Http.xml
+D:\project\UCOBank\api_uat\Banca\Banca\bin\System.Web.Http.Cors.xml
+D:\project\UCOBank\api_uat\Banca\Banca\bin\WebApiThrottle.xml
+D:\project\UCOBank\api_uat\Banca\Banca\bin\Newtonsoft.Json.xml
+D:\project\UCOBank\api_uat\Banca\Banca\bin\System.Web.Http.WebHost.xml
+D:\project\UCOBank\api_uat\Banca\Banca\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\project\UCOBank\api_uat\Banca\Banca\obj\Debug\Banca.csproj.CoreCompileInputs.cache
+D:\project\UCOBank\api_uat\Banca\Banca\obj\Debug\Banca.csproj.CopyComplete
+D:\project\UCOBank\api_uat\Banca\Banca\obj\Debug\Banca.dll
+D:\project\UCOBank\api_uat\Banca\Banca\obj\Debug\Banca.pdb
+D:\project\UCOBank\api_uat\Banca\Banca\obj\Debug\Banca.csprojAssemblyReference.cache
+D:\project\UCO\uco\uat\api\Banca\bin\Banca.dll.config
+D:\project\UCO\uco\uat\api\Banca\bin\Banca.dll
+D:\project\UCO\uco\uat\api\Banca\bin\Banca.pdb
+D:\project\UCO\uco\uat\api\Banca\bin\roslyn\csc.exe
+D:\project\UCO\uco\uat\api\Banca\bin\roslyn\csc.exe.config
+D:\project\UCO\uco\uat\api\Banca\bin\roslyn\csc.rsp
+D:\project\UCO\uco\uat\api\Banca\bin\roslyn\csi.exe
+D:\project\UCO\uco\uat\api\Banca\bin\roslyn\csi.exe.config
+D:\project\UCO\uco\uat\api\Banca\bin\roslyn\csi.rsp
+D:\project\UCO\uco\uat\api\Banca\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\project\UCO\uco\uat\api\Banca\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\project\UCO\uco\uat\api\Banca\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+D:\project\UCO\uco\uat\api\Banca\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\project\UCO\uco\uat\api\Banca\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+D:\project\UCO\uco\uat\api\Banca\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\project\UCO\uco\uat\api\Banca\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\project\UCO\uco\uat\api\Banca\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+D:\project\UCO\uco\uat\api\Banca\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+D:\project\UCO\uco\uat\api\Banca\bin\roslyn\Microsoft.Managed.Core.targets
+D:\project\UCO\uco\uat\api\Banca\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\project\UCO\uco\uat\api\Banca\bin\roslyn\System.AppContext.dll
+D:\project\UCO\uco\uat\api\Banca\bin\roslyn\System.Collections.Immutable.dll
+D:\project\UCO\uco\uat\api\Banca\bin\roslyn\System.Console.dll
+D:\project\UCO\uco\uat\api\Banca\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+D:\project\UCO\uco\uat\api\Banca\bin\roslyn\System.Diagnostics.StackTrace.dll
+D:\project\UCO\uco\uat\api\Banca\bin\roslyn\System.IO.Compression.dll
+D:\project\UCO\uco\uat\api\Banca\bin\roslyn\System.IO.FileSystem.dll
+D:\project\UCO\uco\uat\api\Banca\bin\roslyn\System.IO.FileSystem.Primitives.dll
+D:\project\UCO\uco\uat\api\Banca\bin\roslyn\System.IO.Pipes.AccessControl.dll
+D:\project\UCO\uco\uat\api\Banca\bin\roslyn\System.IO.Pipes.dll
+D:\project\UCO\uco\uat\api\Banca\bin\roslyn\System.Reflection.Metadata.dll
+D:\project\UCO\uco\uat\api\Banca\bin\roslyn\System.Security.AccessControl.dll
+D:\project\UCO\uco\uat\api\Banca\bin\roslyn\System.Security.Claims.dll
+D:\project\UCO\uco\uat\api\Banca\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+D:\project\UCO\uco\uat\api\Banca\bin\roslyn\System.Security.Cryptography.Encoding.dll
+D:\project\UCO\uco\uat\api\Banca\bin\roslyn\System.Security.Cryptography.Primitives.dll
+D:\project\UCO\uco\uat\api\Banca\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+D:\project\UCO\uco\uat\api\Banca\bin\roslyn\System.Security.Principal.Windows.dll
+D:\project\UCO\uco\uat\api\Banca\bin\roslyn\System.Text.Encoding.CodePages.dll
+D:\project\UCO\uco\uat\api\Banca\bin\roslyn\System.ValueTuple.dll
+D:\project\UCO\uco\uat\api\Banca\bin\roslyn\System.Xml.ReaderWriter.dll
+D:\project\UCO\uco\uat\api\Banca\bin\roslyn\System.Xml.XmlDocument.dll
+D:\project\UCO\uco\uat\api\Banca\bin\roslyn\System.Xml.XPath.dll
+D:\project\UCO\uco\uat\api\Banca\bin\roslyn\System.Xml.XPath.XDocument.dll
+D:\project\UCO\uco\uat\api\Banca\bin\roslyn\vbc.exe
+D:\project\UCO\uco\uat\api\Banca\bin\roslyn\vbc.exe.config
+D:\project\UCO\uco\uat\api\Banca\bin\roslyn\vbc.rsp
+D:\project\UCO\uco\uat\api\Banca\bin\roslyn\VBCSCompiler.exe
+D:\project\UCO\uco\uat\api\Banca\bin\roslyn\VBCSCompiler.exe.config
+D:\project\UCO\uco\uat\api\Banca\bin\HtmlAgilityPack.dll
+D:\project\UCO\uco\uat\api\Banca\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\project\UCO\uco\uat\api\Banca\bin\Microsoft.Owin.dll
+D:\project\UCO\uco\uat\api\Banca\bin\Newtonsoft.Json.dll
+D:\project\UCO\uco\uat\api\Banca\bin\Owin.dll
+D:\project\UCO\uco\uat\api\Banca\bin\RestSharp.dll
+D:\project\UCO\uco\uat\api\Banca\bin\System.Net.Http.Formatting.dll
+D:\project\UCO\uco\uat\api\Banca\bin\System.Web.Cors.dll
+D:\project\UCO\uco\uat\api\Banca\bin\System.Web.Http.Cors.dll
+D:\project\UCO\uco\uat\api\Banca\bin\System.Web.Http.dll
+D:\project\UCO\uco\uat\api\Banca\bin\System.Web.Http.WebHost.dll
+D:\project\UCO\uco\uat\api\Banca\bin\WebApiThrottle.dll
+D:\project\UCO\uco\uat\api\Banca\bin\HtmlAgilityPack.pdb
+D:\project\UCO\uco\uat\api\Banca\bin\HtmlAgilityPack.xml
+D:\project\UCO\uco\uat\api\Banca\bin\Microsoft.Owin.xml
+D:\project\UCO\uco\uat\api\Banca\bin\RestSharp.xml
+D:\project\UCO\uco\uat\api\Banca\bin\System.Net.Http.Formatting.xml
+D:\project\UCO\uco\uat\api\Banca\bin\System.Web.Http.xml
+D:\project\UCO\uco\uat\api\Banca\bin\System.Web.Http.Cors.xml
+D:\project\UCO\uco\uat\api\Banca\bin\WebApiThrottle.xml
+D:\project\UCO\uco\uat\api\Banca\bin\Newtonsoft.Json.xml
+D:\project\UCO\uco\uat\api\Banca\bin\System.Web.Http.WebHost.xml
+D:\project\UCO\uco\uat\api\Banca\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\project\UCO\uco\uat\api\Banca\obj\Debug\Banca.csproj.CoreCompileInputs.cache
+D:\project\UCO\uco\uat\api\Banca\obj\Debug\Banca.csproj.CopyComplete
+D:\project\UCO\uco\uat\api\Banca\obj\Debug\Banca.dll
+D:\project\UCO\uco\uat\api\Banca\obj\Debug\Banca.pdb
+D:\project\uco\uat\api\Banca\bin\Banca.dll.config
+D:\project\uco\uat\api\Banca\bin\Banca.dll
+D:\project\uco\uat\api\Banca\bin\Banca.pdb
+D:\project\uco\uat\api\Banca\bin\roslyn\csc.exe
+D:\project\uco\uat\api\Banca\bin\roslyn\csc.exe.config
+D:\project\uco\uat\api\Banca\bin\roslyn\csc.rsp
+D:\project\uco\uat\api\Banca\bin\roslyn\csi.exe
+D:\project\uco\uat\api\Banca\bin\roslyn\csi.exe.config
+D:\project\uco\uat\api\Banca\bin\roslyn\csi.rsp
+D:\project\uco\uat\api\Banca\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\project\uco\uat\api\Banca\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\project\uco\uat\api\Banca\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+D:\project\uco\uat\api\Banca\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\project\uco\uat\api\Banca\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+D:\project\uco\uat\api\Banca\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\project\uco\uat\api\Banca\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\project\uco\uat\api\Banca\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+D:\project\uco\uat\api\Banca\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+D:\project\uco\uat\api\Banca\bin\roslyn\Microsoft.Managed.Core.targets
+D:\project\uco\uat\api\Banca\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\project\uco\uat\api\Banca\bin\roslyn\System.AppContext.dll
+D:\project\uco\uat\api\Banca\bin\roslyn\System.Collections.Immutable.dll
+D:\project\uco\uat\api\Banca\bin\roslyn\System.Console.dll
+D:\project\uco\uat\api\Banca\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+D:\project\uco\uat\api\Banca\bin\roslyn\System.Diagnostics.StackTrace.dll
+D:\project\uco\uat\api\Banca\bin\roslyn\System.IO.Compression.dll
+D:\project\uco\uat\api\Banca\bin\roslyn\System.IO.FileSystem.dll
+D:\project\uco\uat\api\Banca\bin\roslyn\System.IO.FileSystem.Primitives.dll
+D:\project\uco\uat\api\Banca\bin\roslyn\System.IO.Pipes.AccessControl.dll
+D:\project\uco\uat\api\Banca\bin\roslyn\System.IO.Pipes.dll
+D:\project\uco\uat\api\Banca\bin\roslyn\System.Reflection.Metadata.dll
+D:\project\uco\uat\api\Banca\bin\roslyn\System.Security.AccessControl.dll
+D:\project\uco\uat\api\Banca\bin\roslyn\System.Security.Claims.dll
+D:\project\uco\uat\api\Banca\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+D:\project\uco\uat\api\Banca\bin\roslyn\System.Security.Cryptography.Encoding.dll
+D:\project\uco\uat\api\Banca\bin\roslyn\System.Security.Cryptography.Primitives.dll
+D:\project\uco\uat\api\Banca\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+D:\project\uco\uat\api\Banca\bin\roslyn\System.Security.Principal.Windows.dll
+D:\project\uco\uat\api\Banca\bin\roslyn\System.Text.Encoding.CodePages.dll
+D:\project\uco\uat\api\Banca\bin\roslyn\System.ValueTuple.dll
+D:\project\uco\uat\api\Banca\bin\roslyn\System.Xml.ReaderWriter.dll
+D:\project\uco\uat\api\Banca\bin\roslyn\System.Xml.XmlDocument.dll
+D:\project\uco\uat\api\Banca\bin\roslyn\System.Xml.XPath.dll
+D:\project\uco\uat\api\Banca\bin\roslyn\System.Xml.XPath.XDocument.dll
+D:\project\uco\uat\api\Banca\bin\roslyn\vbc.exe
+D:\project\uco\uat\api\Banca\bin\roslyn\vbc.exe.config
+D:\project\uco\uat\api\Banca\bin\roslyn\vbc.rsp
+D:\project\uco\uat\api\Banca\bin\roslyn\VBCSCompiler.exe
+D:\project\uco\uat\api\Banca\bin\roslyn\VBCSCompiler.exe.config
+D:\project\uco\uat\api\Banca\bin\HtmlAgilityPack.dll
+D:\project\uco\uat\api\Banca\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\project\uco\uat\api\Banca\bin\Microsoft.Owin.dll
+D:\project\uco\uat\api\Banca\bin\Newtonsoft.Json.dll
+D:\project\uco\uat\api\Banca\bin\Owin.dll
+D:\project\uco\uat\api\Banca\bin\RestSharp.dll
+D:\project\uco\uat\api\Banca\bin\System.Net.Http.Formatting.dll
+D:\project\uco\uat\api\Banca\bin\System.Web.Cors.dll
+D:\project\uco\uat\api\Banca\bin\System.Web.Http.Cors.dll
+D:\project\uco\uat\api\Banca\bin\System.Web.Http.dll
+D:\project\uco\uat\api\Banca\bin\System.Web.Http.WebHost.dll
+D:\project\uco\uat\api\Banca\bin\WebApiThrottle.dll
+D:\project\uco\uat\api\Banca\bin\HtmlAgilityPack.pdb
+D:\project\uco\uat\api\Banca\bin\HtmlAgilityPack.xml
+D:\project\uco\uat\api\Banca\bin\Microsoft.Owin.xml
+D:\project\uco\uat\api\Banca\bin\RestSharp.xml
+D:\project\uco\uat\api\Banca\bin\System.Net.Http.Formatting.xml
+D:\project\uco\uat\api\Banca\bin\System.Web.Http.xml
+D:\project\uco\uat\api\Banca\bin\System.Web.Http.Cors.xml
+D:\project\uco\uat\api\Banca\bin\WebApiThrottle.xml
+D:\project\uco\uat\api\Banca\bin\Newtonsoft.Json.xml
+D:\project\uco\uat\api\Banca\bin\System.Web.Http.WebHost.xml
+D:\project\uco\uat\api\Banca\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\project\uco\uat\api\Banca\obj\Debug\Banca.csprojAssemblyReference.cache
+D:\project\uco\uat\api\Banca\obj\Debug\Banca.csproj.CoreCompileInputs.cache
+D:\project\uco\uat\api\Banca\obj\Debug\Banca.csproj.CopyComplete
+D:\project\uco\uat\api\Banca\obj\Debug\Banca.dll
+D:\project\uco\uat\api\Banca\obj\Debug\Banca.pdb
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\Banca.dll.config
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\Banca.dll
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\Banca.pdb
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\roslyn\csc.exe
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\roslyn\csc.exe.config
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\roslyn\csc.rsp
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\roslyn\csi.exe
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\roslyn\csi.exe.config
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\roslyn\csi.rsp
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\roslyn\Microsoft.Managed.Core.targets
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\roslyn\System.AppContext.dll
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\roslyn\System.Collections.Immutable.dll
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\roslyn\System.Console.dll
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\roslyn\System.Diagnostics.StackTrace.dll
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\roslyn\System.IO.Compression.dll
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\roslyn\System.IO.FileSystem.dll
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\roslyn\System.IO.FileSystem.Primitives.dll
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\roslyn\System.IO.Pipes.AccessControl.dll
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\roslyn\System.IO.Pipes.dll
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\roslyn\System.Reflection.Metadata.dll
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\roslyn\System.Security.AccessControl.dll
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\roslyn\System.Security.Claims.dll
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\roslyn\System.Security.Cryptography.Encoding.dll
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\roslyn\System.Security.Cryptography.Primitives.dll
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\roslyn\System.Security.Principal.Windows.dll
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\roslyn\System.Text.Encoding.CodePages.dll
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\roslyn\System.ValueTuple.dll
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\roslyn\System.Xml.ReaderWriter.dll
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\roslyn\System.Xml.XmlDocument.dll
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\roslyn\System.Xml.XPath.dll
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\roslyn\System.Xml.XPath.XDocument.dll
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\roslyn\vbc.exe
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\roslyn\vbc.exe.config
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\roslyn\vbc.rsp
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\roslyn\VBCSCompiler.exe
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\roslyn\VBCSCompiler.exe.config
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\HtmlAgilityPack.dll
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\Microsoft.Owin.dll
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\Newtonsoft.Json.dll
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\Owin.dll
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\RestSharp.dll
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\System.Net.Http.Formatting.dll
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\System.Web.Cors.dll
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\System.Web.Http.Cors.dll
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\System.Web.Http.dll
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\System.Web.Http.WebHost.dll
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\WebApiThrottle.dll
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\HtmlAgilityPack.pdb
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\HtmlAgilityPack.xml
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\Microsoft.Owin.xml
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\RestSharp.xml
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\System.Net.Http.Formatting.xml
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\System.Web.Http.xml
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\System.Web.Http.Cors.xml
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\WebApiThrottle.xml
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\Newtonsoft.Json.xml
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\System.Web.Http.WebHost.xml
+D:\Anil Patra data backup\project\uco\uat\api\Banca\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\Anil Patra data backup\project\uco\uat\api\Banca\obj\Debug\Banca.csproj.CoreCompileInputs.cache
+D:\Anil Patra data backup\project\uco\uat\api\Banca\obj\Debug\Banca.csproj.CopyComplete
+D:\Anil Patra data backup\project\uco\uat\api\Banca\obj\Debug\Banca.dll
+D:\Anil Patra data backup\project\uco\uat\api\Banca\obj\Debug\Banca.pdb
+D:\Anil Patra data backup\project\uco\uat\api\Banca\obj\Debug\Banca.csprojAssemblyReference.cache

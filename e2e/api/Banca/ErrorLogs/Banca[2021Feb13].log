@@ -1,0 +1,8 @@
+15:19:59 Module Name : UCOPaymentController (EncryptReuest(dynamic jsonData)) Error Source : Banca  Error Message : The system cannot find the path specified.
+ 
+15:24:46 Module Name : UCOPaymentController (paymentAsync(dynamic jsonData)) Error Source : mscorlib  Error Message : Additional non-parsable characters are at the end of the string. 
+15:25:54 Module Name : UCOPaymentController (EncryptReuest(dynamic jsonData)) Error Source : Banca  Error Message : The system cannot find the path specified.
+ 
+15:40:56 Module Name : UCOPaymentController (paymentAsync(dynamic jsonData)) Error Source : mscorlib  Error Message : Additional non-parsable characters are at the end of the string. 
+16:04:54 Module Name : UCOPaymentController (paymentAsync(dynamic jsonData)) Error Source : mscorlib  Error Message : Could not find any recognizable digits. 
+16:06:45 Module Name : UCOPaymentController (paymentAsync(dynamic jsonData)) Error Source : mscorlib  Error Message : Additional non-parsable characters are at the end of the string. 

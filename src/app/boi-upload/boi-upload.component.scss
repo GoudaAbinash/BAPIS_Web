@@ -1,0 +1,336 @@
+.section {
+    width: 100%;
+  }
+  
+  .center-res {
+    display: flex !important;
+    justify-content: center !important;
+    flex-wrap: wrap !important;
+  }
+  
+  .container {
+    position: relative;
+    width: 1170px;
+    margin: 0 auto;
+    color: rgb(214, 213, 213);
+    font-size: 14px;
+    font-weight: 300;
+    font-family: Roboto, "Open Sans", Arial, sans-serif;
+    overflow: hidden;
+  }
+  
+  .section .container {
+    padding: 30px 0 50px 0;
+  }
+  
+  .section.bg {
+    background: #f7f7f7;
+  }
+  /*
+      navigation
+    */
+  
+  .hold {
+    height: 80px;
+  }
+  
+  .navigation {
+    line-height: 80px;
+    height: 80px;
+    width: 100%;
+    transition: line-height 0.2s linear, box-shadow 0.2s linear;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    background: rgba(246, 246, 246, 0.97);
+  }
+  
+  .navigation.small {
+    line-height: 50px;
+    box-shadow: 0px 1px 3px 0px rgba(50, 50, 50, 0.8);
+  }
+  
+  .navigation.small > .container > .logo {
+    top: 20%;
+    height: 40px;
+    width: 170px;
+  }
+  
+  .logo {
+    position: relative;
+    transform: translateY(28%);
+  }
+  a {
+    text-decoration: none;
+    color: #232323;
+    transition: color 0.3s ease;
+  }
+  
+  a:hover {
+    color: red !important;
+  }
+  
+  #menuToggle {
+    display: block;
+    position: absolute;
+    top: 30px;
+    right: 50px;
+    z-index: 1;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  
+  #menuToggle input {
+    /* display: block; */
+    width: 40px;
+    height: 32px;
+    position: absolute;
+    top: -7px;
+    left: -5px;
+    cursor: pointer;
+    opacity: 0; /* hide this */
+    z-index: 2; /* and place it over the hamburger */
+    -webkit-touch-callout: none;
+  }
+  
+  #menuToggle span {
+    display: block;
+    width: 33px;
+    height: 4px;
+    margin-bottom: 5px;
+    position: relative;
+    background: red;
+    border-radius: 3px;
+    z-index: 1;
+    transform-origin: 4px 0px;
+    transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1),
+      background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1), opacity 0.55s ease;
+  }
+  
+  #menuToggle span:first-child {
+    transform-origin: 0% 0%;
+  }
+  
+  #menuToggle span:nth-last-child(2) {
+    transform-origin: 0% 100%;
+  }
+  
+  #menuToggle input:checked ~ span {
+    opacity: 1;
+    transform: rotate(45deg) translate(-2px, -1px);
+    background: red;
+  }
+  
+  #menuToggle input:checked ~ span:nth-last-child(3) {
+    opacity: 0;
+    transform: rotate(0deg) scale(0.2, 0.2);
+  }
+  
+  #menuToggle input:checked ~ span:nth-last-child(2) {
+    opacity: 1;
+    transform: rotate(-45deg) translate(0, -1px);
+  }
+  #menu {
+    position: absolute;
+    width: 300px;
+    margin: -100px 0 0 0;
+    padding-left: 30px;
+    padding-top: 100px;
+    right: -100px;
+    background: white;
+    list-style-type: none;
+    -webkit-font-smoothing: antialiased;
+    box-shadow: inset;
+    box-shadow: 0px 1px 3px 0px rgba(50, 50, 50, 0.8);
+    border-radius: 2%;
+    transform-origin: 0% 0%;
+    transform: translate(100%, 0);
+    transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+  }
+  
+  #menu li {
+    /* padding: 1px 0; */
+    font-size: 1.2em;
+  }
+  
+  /*
+    * And let's fade it in from the left
+    */
+  #menuToggle input:checked ~ ul {
+    transform: scale(1, 1);
+    opacity: 1;
+  }
+  
+  fieldset {
+    width: auto;
+    padding: 10px;
+    border: 1px ridge #ccc;
+    font-family: Arial, sans-serif;
+    margin: 0 40px 20px 40px;
+  }
+  
+  legend {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    width: auto;
+    padding: 0 5px;
+    margin-left: 20px;
+  }
+  
+  mat-label {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+  }
+  
+  ::ng-deep .mat-focused .mat-form-field-label {
+    /*change color of label*/
+    color: black !important;
+  }
+  
+  ::ng-deep.mat-form-field-underline {
+    /*change color of underline*/
+    background-color: black !important;
+  }
+  
+  ::ng-deep.mat-form-field-ripple {
+    /*change color of underline when focused*/
+    background-color: red !important;
+  }
+  
+  .example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
+  
+  .col3 {
+    width: 33.333%;
+    padding: 0 7.5px;
+  }
+  
+  .col4 {
+    width: 25%;
+    padding: 0 7.5px;
+  }
+  
+  h6 {
+    margin-left: 10px;
+  }
+  
+  .example-full-width {
+    width: 100%;
+  }
+  
+  .mat-radio-button ~ .mat-radio-button {
+    margin-left: 16px;
+  }
+  
+  .radio-btn {
+    margin: 2px;
+  }
+  
+  mat-radio-button {
+    padding-top: 10px;
+    padding-left: 5px;
+  }
+  
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  td,
+  th {
+    /* border: 1px solid #dddddd; */
+    text-align: left;
+    padding: 8px;
+    width: 33.333%;
+  }
+  
+  [type="checkbox"] {
+    width: 30px; /*Desired width*/
+    height: 30px; /*Desired height*/
+    vertical-align: middle;
+  }
+  
+  input,
+  label {
+    font-size: 1.2rem;
+  }
+  
+  .space {
+    margin-left: 10px;
+  }
+  .radioWrap{
+    float: left;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+.imgWrap{
+  float: left;
+  width:100%;
+  background: #fff;
+  padding: 10px;
+  position: relative;
+  font-size: 1.2em;
+  padding-right: 170px;
+  height: 41px;
+  border: 1px solid #afafaf;
+  margin-bottom: 10px;
+  label{
+      float: left;
+      top: 10px;
+      left: 10px;
+  }
+  input{
+      width: 150px;
+      position: absolute;
+      right: 0;
+      top: 0;
+      height: 39px;
+      z-index: 9;
+      opacity: 0;
+      cursor: pointer;
+  }
+  span{
+      position: absolute;
+      right: 0;
+      background: #12bb99;
+      color: #fff;
+      top: 0;
+      height: 100%;
+      width: 150px;
+      text-align: left;
+      padding-top: 9px;
+      font-size: 1.1em;
+      cursor: pointer;
+      padding-left: 10px;
+      i{
+          right: 10px;
+          top: 8px;
+      }
+  }
+  p{
+      float: right;
+      color: #a71c20;
+      top: 11px;
+      right: 157px;
+  }
+}
+@media only screen and (max-width: 767px) {
+    .col3,
+    .col4 {
+      width: 100%;
+      padding: 0;
+    }
+  
+    td,
+    th {
+      width: 100%;
+    }
+    fieldset{
+      margin: 0 15px 20px;
+    }
+}

@@ -1,0 +1,11 @@
+12:09:40 Module Name : CommonFunction (UCORequestAsync(string url,dynamic content=null)) Error Source : mscorlib  Error Message : An error occurred while sending the request. 
+12:45:53 Module Name : CommonFunction (UCORequestAsync(string url,dynamic content=null)) Error Source : mscorlib  Error Message : An error occurred while sending the request. 
+12:48:24 Module Name : CommonFunction (UCORequestAsync(string url,dynamic content=null)) Error Source : mscorlib  Error Message : An error occurred while sending the request. 
+12:49:55 Module Name : CommonFunction (UCORequestAsync(string url,dynamic content=null)) Error Source : mscorlib  Error Message : An error occurred while sending the request. 
+13:09:17 Module Name : CommonFunction (UCORequestAsync(string url,dynamic content=null)) Error Source : mscorlib  Error Message : An error occurred while sending the request. 
+14:39:34 Module Name : CommonFunction (UCORequestAsync(string url,dynamic content=null)) Error Source : mscorlib  Error Message : An error occurred while sending the request. 
+14:40:12 Module Name : CommonFunction (UCORequestAsync(string url,dynamic content=null)) Error Source : mscorlib  Error Message : An error occurred while sending the request. 
+14:41:25 Module Name : CommonController (getPolicyCopy(Common obj)) Error Source : System.Net.Http  Error Message : Value cannot be null.
+Parameter name: content 
+14:43:55 Module Name : CommonFunction (UCORequestAsync(string url,dynamic content=null)) Error Source : mscorlib  Error Message : An error occurred while sending the request. 
+14:45:02 Module Name : CommonFunction (UCORequestAsync(string url,dynamic content=null)) Error Source : mscorlib  Error Message : An error occurred while sending the request. 

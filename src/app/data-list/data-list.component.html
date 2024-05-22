@@ -1,0 +1,64 @@
+<app-header></app-header>
+<section>
+    <!-- <h1>Winner Edge</h1> -->
+    <div class="tableGrid">
+        <div class="filter">
+            <div class="searchInput">
+                <input type="text" placeholder="Search By SM Code" [(ngModel)]="filterTicket">
+                <i class="fa fa-search"></i>
+            </div>
+            <select [(ngModel)]="pageEnd">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+        </div>
+        <div class="tableWrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>SM Code</th>
+                        <th>SM Name</th>
+                        <th>Target</th>
+                        <th>Achievement</th>
+                        <th>Retail Health (2x)</th>
+                        <th>Two Wheeler</th>
+                        <th>Non-Motor (1.5x)</th>
+                        <th>Others (1x)</th>
+                        <th>Adjusted Achievement</th>
+                        <th>Achievement %</th>
+                        <th>No of New Agents</th>
+                        <th>No of New Active Agents</th>
+                        <th>Rank</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr
+                        *ngFor="let u of userList | myfilter:filterTicket | paginate:{ itemsPerPage: pageEnd, currentPage: p }">
+                        <td>{{u['SM Code']}}</td>
+                        <td>{{u['SM Name']}}</td>
+                        <td>{{u.Target}}</td>
+                        <td>{{u.Achievement}}</td>
+                        <td>{{u['Retail Health_2x']}}</td>
+                        <td>{{u['Two Wheeler_1.5x']}}</td>
+                        <td>{{u['Non-Motor_1.5x']}}</td>
+                        <td>{{u['Others_1x']}}</td>
+                        <td>{{u['Adjusted Achievement']}}</td>
+                        <td>{{u['Achievement Perctg']}}</td>
+                        <td>{{u['No of New Agents']}}</td>
+                        <td>{{u['No of New Active Agents']}}</td>
+                        <td>{{u.Rank}}</td>
+                    </tr>
+                    <tr *ngIf="!userList || userList.length==0" class="noRecord">
+                        <td colspan="13">No record found!</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="paginationWrap">
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
+    </div>
+</section>
+<ngx-loading [show]="loading"></ngx-loading>

@@ -1,0 +1,71 @@
+<div class="bg">
+<mat-card>
+  <div class="logoWrap">
+    <img src="assets/img/logo1.png" />
+    <h1 matTooltip="Banca Application Policy Insurance Servies">FG BAPIS</h1>
+
+
+  </div>
+  <mat-card-content class="matcontent">
+    <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">
+      <h3>
+        Welcome Back ! <br />
+        Login to your account : )
+      </h3>
+      <mat-form-field class="col1">
+        <mat-label>Select Bank Name</mat-label>
+        <mat-select formControlName="bankName" size="1" id="sbank">
+          <mat-option>-- Select --</mat-option>
+          <!-- <mat-option value="AAROHAN" matTooltip="AAROHAN POLICY ISSUANCE">AAROHAN</mat-option> -->
+          <mat-option value="UCO" matTooltip="UNITED COMMERCIAL BANK">UCO</mat-option>
+          <mat-option value="BOI" matTooltip="BANK OF INDIA">BOI</mat-option>
+          <mat-option value="GBC" matTooltip="The GREATER BOMBAY CO-OP BANK">GBC</mat-option>
+          <mat-option value="PGB" matTooltip="PUNJAB GRAMIN BANK">PGB</mat-option>
+          <mat-option value="BOM" matTooltip="BANK OF MAHARASHTRA">BOM</mat-option>
+          <mat-option value="HPG" matTooltip="HIMACHAL PRADESH GRAMIN BANK">HPG</mat-option>
+          <mat-option value="PBGB" matTooltip="PASCHIM BANGA GRAMIN BANK">PBGB</mat-option>
+          <mat-option value="SHGB" matTooltip="SARVA HARYANA GRAMIN BANK">SHGB</mat-option>
+          <mat-option value="TPUCB" matTooltip="THE PANIPAT URBAN CO-OP BANK LTD.">TPUC</mat-option>
+          <mat-option value="BRKGB" matTooltip="BARODA RAJASTHAN KSHETRIYA GRAMIN BANK">BRKGB</mat-option>
+          <mat-option value="HPSCB" matTooltip="HIMACHAL PRADESH STATE CO-OP BANK">HPSCB</mat-option>
+          <mat-option value="PUPGB" matTooltip="THE PRATHAMA UP GRAMIN BANK">PUPGB</mat-option>
+          <mat-option value="VKGB" matTooltip="VIDHARBHA KONKAN GRAMIN BANK">VKGB</mat-option>
+        </mat-select>
+        <mat-error *ngIf="CD.bankName.invalid">Please select Bank Name</mat-error>
+      </mat-form-field>
+      <p class="col1">
+        <mat-form-field>
+          <input type="text" matInput placeholder="Username" formControlName="username" />
+          <mat-error *ngIf="CD.username.invalid">Please enter username</mat-error>
+        </mat-form-field>
+      </p>
+      <p class="col1">
+        <mat-form-field>
+          <input [type]="hide ? 'password' : 'text'" matInput placeholder="Password" formControlName="password" />
+          <mat-icon class="eye" matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide">
+            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+          </mat-icon>
+          <mat-error *ngIf="CD.password.invalid">Please enter password</mat-error>
+        </mat-form-field>
+      </p>
+      <p *ngIf="msg != ''" class="loginError">
+        {{ msg }}
+      </p>
+      <p class="button">
+        <button type="submit" mat-raised-button color="warn">Login</button>
+      </p>
+      <p class="message" (click)="downloadExcelFormate()">Don't have an account?</p>
+      <p class="footer">
+        © Future Generali India Insurance Company Ltd.<br />All Rights Reserved.
+      </p>
+
+    </form>
+
+    <img src="https://online.futuregenerali.in/UCO/web/assets/img/banklog.PNG" class="bankimg" />
+
+  </mat-card-content>
+
+</mat-card>
+</div>
+<ngx-loading [show]="loading"></ngx-loading>
