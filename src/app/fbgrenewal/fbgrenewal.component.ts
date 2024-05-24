@@ -2784,7 +2784,7 @@ export class FbgrenewalComponent implements OnInit {
         return item;
       }
     });
-
+alert(val);
     if (o) {
       this.sumInsuredLimit = o.Sum_insured_limit;
       this.terrorisRate = o.Terrorism_Rate;

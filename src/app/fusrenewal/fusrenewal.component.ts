@@ -2267,8 +2267,8 @@ export class FusrenewalComponent implements OnInit {
                 state: this.state,
                 pincode: this.pincode,
                 fgbranchName: this.fgbranchName,
-                OccupancyCode: this.coverType == "FRG" ? this.OccupancyCode : this.OccupancyCode + this.OccupancyName[0],
-                OccupancyName: this.coverType == "FRG" ? this.OccupancyName : this.OccupancyName.slice(1),
+                OccupancyCode: this.coverType == "FUS" ? this.OccupancyCode : this.OccupancyCode + this.OccupancyName[0],
+                OccupancyName: this.coverType == "FUS" ? this.OccupancyName : this.OccupancyName.slice(1),
                 sumInsured: this.TotalSI,
                 businessType: res.OccupancyCode
               });
